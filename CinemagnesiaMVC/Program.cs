@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Concrete;
 using Global.Entity.Entities;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -11,12 +12,18 @@ var connectionString = builder.Configuration.GetConnectionString("ApplicationDbC
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultUI()
-    .AddDefaultTokenProviders();
+//builder.Services.AddIdentityCore<ApplicationUser>(options =>
+//{
+//    // Configure identity options if needed
+//})
+//    .AddRoles<IdentityRole>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>()
+//    .AddDefaultUI()
+//    .AddDefaultTokenProviders();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<ISystemClock>(new SystemClock());
 
 var app = builder.Build();
 
@@ -40,11 +47,12 @@ app.UseEndpoints(endpoints =>
         name: "Admin",
         areaName: "Admin",
         pattern: "Admin/{controller=Dashboards}/{action=Dashboard_1}"
-    ).RequireAuthorization("Admin");
+    ).RequireAuthorization(new AuthorizeAttribute { Roles = "Admin" });
 
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
 });
+
 
 app.Run();
