@@ -67,4 +67,9 @@
     <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\Global.Entity\Global.Entity.csproj" />
+  </ItemGroup>
+
 </Project>
