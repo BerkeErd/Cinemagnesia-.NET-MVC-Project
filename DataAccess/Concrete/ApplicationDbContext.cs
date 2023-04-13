@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace CinemagnesiaMVC.Areas.Identity.Data
+namespace DataAccess.Concrete
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -16,7 +16,6 @@ namespace CinemagnesiaMVC.Areas.Identity.Data
             : base(options)
         {
         }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -24,5 +23,6 @@ namespace CinemagnesiaMVC.Areas.Identity.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
     }
 }

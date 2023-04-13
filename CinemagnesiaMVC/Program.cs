@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using CinemagnesiaMVC.Areas.Identity.Data;
+using DataAccess.Concrete;
 using Global.Entity.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
