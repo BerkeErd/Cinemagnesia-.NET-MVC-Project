@@ -18,6 +18,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             .AddDefaultTokenProviders()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddHttpClient("rapidapi", c =>
+{
+    c.BaseAddress = new Uri("https://moviesdatabase.p.rapidapi.com");
+    c.DefaultRequestHeaders.Add("X-RapidAPI-Key", "fdcfdb9d98mshf0a8ac4934e1a88p138684jsn90c0b90433f3");
+    c.DefaultRequestHeaders.Add("X-RapidAPI-Host", "moviesdatabase.p.rapidapi.com");
+}
+);
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -35,7 +43,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication(); 
+app.UseAuthentication();
 
 app.UseAuthorization();
 
