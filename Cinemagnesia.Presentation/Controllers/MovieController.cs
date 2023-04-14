@@ -19,7 +19,7 @@ namespace Cinemagnesia.Presentation.Controllers
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("/titles/tt0001702", UriKind.Relative)
+                RequestUri = new Uri("/titles?page=2", UriKind.Relative)
             };
             using (var response = await _httpClient.SendAsync(request))
             {
