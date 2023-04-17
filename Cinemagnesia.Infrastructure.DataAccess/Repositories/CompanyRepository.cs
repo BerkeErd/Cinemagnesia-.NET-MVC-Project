@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.DataAccess.Repositories
 {
-    public class MovieRepository : BaseRepository<Movie>, IMovieRepository
+    public class CompanyRepository : BaseRepository<Company>, ICompanyRepository
     {
-        public MovieRepository(ApplicationDbContext dbContext) : base(dbContext)
-        {
-
+        public CompanyRepository(ApplicationDbContext dbContext) : base(dbContext) {
         }
     }
 }
