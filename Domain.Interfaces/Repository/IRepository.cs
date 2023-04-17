@@ -6,9 +6,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.DataAccess.Repostories
+namespace Domain.Interfaces.Repostory
 {
-    public interface IRepostory <TEntity> where TEntity : BaseEntity, new()
+    public interface IRepository <TEntity> where TEntity : BaseEntity, new()
     {
         Task<TEntity> CreateAsync (TEntity entity);
         Task<TEntity> UpdateAsync (TEntity entity);

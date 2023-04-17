@@ -1,5 +1,6 @@
 ﻿using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
+using Domain.Interfaces.Repostory;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,15 +9,15 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.DataAccess.Repostories
+namespace Infrastructure.DataAccess.Repositories
 {
-    public class BaseRepostory<TEntity> : IRepostory<TEntity> where TEntity : BaseEntity, new()
+    public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity, new()
     {
         protected readonly ApplicationDbContext _dbContext;
 
         private readonly DbSet<TEntity> _dbSet;
 
-        public BaseRepostory(ApplicationDbContext dbContext)
+        public BaseRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;   
             _dbSet = _dbContext.Set<TEntity>();
