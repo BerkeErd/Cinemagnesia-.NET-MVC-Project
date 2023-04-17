@@ -1,5 +1,4 @@
-﻿using Domain.Entities.Abstract;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities.Concrete
 {
-    public class BaseEntity : IEntity
+    public class Director : BaseEntity
     {
-        [Key]
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        [Required]
+        [MaxLength(100)]
+        public string Name { get; set; }
+        public ICollection<Movie> Movies { get; set; }
+
     }
 }

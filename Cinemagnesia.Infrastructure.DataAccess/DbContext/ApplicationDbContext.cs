@@ -1,4 +1,5 @@
 ﻿using Cinemagnesia.Domain.Domain.Entities.Concrete;
+using Domain.Entities.Concrete;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +13,20 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    DbSet<CastMember> CastMembers { get; set; }
+    DbSet<Company> Companies { get; set; }
+    DbSet<CompanyUser> CompanyUsers { get; set; }
+    DbSet<Director> Directors { get; set; }
+    DbSet<Genre> Genres { get; set; }
+    DbSet<Movie> Movies { get; set; }
+    DbSet<MovieComment> MoviesComments { get; set; }
+    DbSet<ProductorRequest> ProductorRequests { get; set; }
+    DbSet<Rating> Ratings { get; set; }
+    DbSet<WatchList> WatchList { get; set; }
+    
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
-        // Customize the ASP.NET Identity model and override the defaults if needed.
-        // For example, you can rename the ASP.NET Identity table names and more.
-        // Add your customizations after calling base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
     }
 }

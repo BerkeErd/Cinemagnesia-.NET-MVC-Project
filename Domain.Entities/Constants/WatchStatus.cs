@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities.Constants
 {
-    public enum Status
+    public enum WatchStatus
     {
-        Waiting, Rejected, Approved
-
+        None,
+        Watched,
+        WantsToWatch
     }
 }

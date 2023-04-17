@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Constants;
+﻿using Cinemagnesia.Domain.Domain.Entities.Concrete;
+using Domain.Entities.Constants;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +11,10 @@ namespace Domain.Entities.Concrete
 {
     public class Movie : BaseEntity
     {
+        [Required]
+        [MaxLength(100)]
         public string Title { get; set; }
+        [MaxLength(5000)]
         public string Description { get; set; }
         public string PosterPath { get; set; }
         public DateTime ReleaseDate { get; set; }
@@ -18,15 +22,12 @@ namespace Domain.Entities.Concrete
         public float ImdbRating { get; set; }
         [Range(0, 10f)]
         public float CinemagAvgScore { get; set; }
-        public Status Status { get; set; }
+        public ApprovalStatus Status { get; set; } = ApprovalStatus.Waiting;
         public string TrailerUrl { get; set; }
         public ICollection<Director> Directors { get; set; }
         public ICollection<Genre> Genres { get; set; }
-        public ICollection<CastMembers> CastMembers { get; set; }
+        public ICollection<CastMember> CastMembers { get; set; }
         public ICollection<MovieComment> MovieComments { get; set; }
-        public ICollection<User> WatchedUsers { get; set; }
-        public ICollection<User> RatedUsers { get; set; }
-        public ICollection<User> WantToWatchUsers { get; set; }
 
     }
 }
