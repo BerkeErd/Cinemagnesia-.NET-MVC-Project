@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Cinemagnesia.Infrastructure.DataAccess\Infrastructure.DataAccess.csproj" />
     <ProjectReference Include="..\Domain.Entities\Domain.Entities.csproj" />
+    <ProjectReference Include="..\Infrastructure.Email\Infrastructure.Email.csproj" />
   </ItemGroup>
 
   <ItemGroup>

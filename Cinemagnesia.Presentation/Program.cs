@@ -4,6 +4,9 @@ using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using System;
 using Infrastructure.DataAccess.Seed;
+using Infrastructure.Email.Customs;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Infrastructure.Email.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -12,6 +15,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddRazorPages();
+
+var emailSenderConfig = builder.Configuration.GetSection("EmailSender").Get<EmailConfig>();
+
+builder.Services.AddSingleton(emailSenderConfig);
+builder.Services.AddTransient<IEmailSender, CustomEmailSender>();
+
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
