@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Domain.Interfaces.Repository
 {
     public interface IRepository <TEntity> where TEntity : BaseEntity, new()
