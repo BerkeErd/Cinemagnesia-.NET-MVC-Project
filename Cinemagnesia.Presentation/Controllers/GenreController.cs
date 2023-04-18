@@ -38,7 +38,7 @@ namespace Cinemagnesia.Presentation.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetById(Guid id)
+        public IActionResult GetById(string id)
         {
             var genre = _genreService.GetById(id);
             return Ok(genre);

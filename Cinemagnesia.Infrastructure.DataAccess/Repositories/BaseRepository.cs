@@ -1,7 +1,6 @@
 ﻿using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
-using Domain.Interfaces.Repositoryies;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -31,7 +30,7 @@ namespace Infrastructure.DataAccess.Repositories
             return entity;
         }
 
-        public async Task<TEntity> DeleteAsync(Guid id)
+        public async Task<TEntity> DeleteAsync(string id)
         {
             var entity = await _dbSet.FindAsync(id);
             if (entity == null)
@@ -53,12 +52,12 @@ namespace Infrastructure.DataAccess.Repositories
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<TEntity> GetByIdAsync(Guid id)
+        public async Task<TEntity> GetByIdAsync(string id)
         {
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<TEntity> UpdateAsync(Guid id, TEntity entity)
+        public async Task<TEntity> UpdateAsync(string id, TEntity entity)
         {
             var existingEntity = await _dbContext.Set<TEntity>().FindAsync(id);
 
