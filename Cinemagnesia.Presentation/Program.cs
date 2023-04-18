@@ -3,6 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using System;
+
+
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Events;
+using Serilog.Core;
 using Infrastructure.DataAccess.Seed;
 using Infrastructure.Email.Customs;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -40,6 +47,16 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             .AddDefaultTokenProviders()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
+var logger = new LoggerConfiguration()
+  .ReadFrom.Configuration(builder.Configuration)
+  .Enrich.FromLogContext()
+  .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+
+
+
+
 builder.Services.AddHttpClient("rapidapi", c =>
 {
     c.BaseAddress = new Uri("https://moviesdatabase.p.rapidapi.com");
@@ -47,6 +64,8 @@ builder.Services.AddHttpClient("rapidapi", c =>
     c.DefaultRequestHeaders.Add("X-RapidAPI-Host", "moviesdatabase.p.rapidapi.com");
 }
 );
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -92,3 +111,4 @@ app.UseEndpoints(endpoints =>
 app.MapRazorPages();
 
 app.Run();
+
