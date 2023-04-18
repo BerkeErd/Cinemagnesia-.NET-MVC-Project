@@ -7,6 +7,9 @@ using Infrastructure.DataAccess.Seed;
 using Infrastructure.Email.Customs;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Infrastructure.Email.Config;
+using Microsoft.VisualStudio.Web.CodeGeneration;
+using Application.Services;
+using QRCoder;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -20,6 +23,7 @@ var emailSenderConfig = builder.Configuration.GetSection("EmailSender").Get<Emai
 
 builder.Services.AddSingleton(emailSenderConfig);
 builder.Services.AddTransient<IEmailSender, CustomEmailSender>();
+builder.Services.AddSingleton(new QRCodeService(new QRCodeGenerator()));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {

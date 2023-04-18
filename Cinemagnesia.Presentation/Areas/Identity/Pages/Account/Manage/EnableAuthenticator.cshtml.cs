@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Application.Services;
 using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,8 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<EnableAuthenticatorModel> _logger;
         private readonly UrlEncoder _urlEncoder;
+
+        public string QrCodeAsBase64 { get; set; }
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
@@ -85,7 +88,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             public string Code { get; set; }
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync([FromServices] QRCodeService qrCodeService)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -94,7 +97,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             }
 
             await LoadSharedKeyAndQrCodeUriAsync(user);
-
+            QrCodeAsBase64 = qrCodeService.GetQRCodeAsBase64(AuthenticatorUri);
             return Page();
         }
 
@@ -181,7 +184,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             return string.Format(
                 CultureInfo.InvariantCulture,
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("Microsoft.AspNetCore.Identity.UI"),
+                _urlEncoder.Encode("Cinemagnesia"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }
