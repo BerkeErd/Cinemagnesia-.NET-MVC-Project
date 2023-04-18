@@ -17,7 +17,7 @@ namespace Domain.Entities.Concrete
         [MaxLength(20000)]
         public string CommentText { get; set; }
         public bool HasSpoiler { get; set; }
-        
+
         public ApprovalStatus Status { get; set; } = ApprovalStatus.Waiting;
         public int LikeCount { get; set; }
 
