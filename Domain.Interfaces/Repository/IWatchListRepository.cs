@@ -1,7 +1,6 @@
 ﻿using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
-using Domain.Interfaces.Repositoryies;
-
+using Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

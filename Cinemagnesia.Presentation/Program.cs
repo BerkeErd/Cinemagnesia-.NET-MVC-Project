@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using System;
+using Infrastructure.DataAccess.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -31,6 +32,14 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
+    var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+    var roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+
+    DbSeeder.Seed(dbContext, userManager, roleManager);
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
