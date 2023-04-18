@@ -1,6 +1,7 @@
 ﻿using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
+using Domain.Interfaces.Repositoryies;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

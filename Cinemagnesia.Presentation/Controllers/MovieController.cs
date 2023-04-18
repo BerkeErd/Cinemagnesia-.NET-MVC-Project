@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Reflection.PortableExecutable;
+using Microsoft.Extensions.Logging;
 
 namespace Cinemagnesia.Presentation.Controllers
 {
     public class MovieController : Controller
     {
+        private readonly ILogger<MovieController> _logger;
         private readonly HttpClient _httpClient;
 
         public MovieController(IHttpClientFactory httpClientFactory)
@@ -16,6 +18,8 @@ namespace Cinemagnesia.Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            _logger.LogInformation("");
+
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
