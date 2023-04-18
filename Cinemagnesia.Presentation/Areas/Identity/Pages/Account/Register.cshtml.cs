@@ -132,8 +132,8 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "LÜTFEN E-POSTANIZI ONAYLAYIN",
+    $"Merhaba,<br><br>Bu bir onay e-postasıdır. Hesabınızın doğrulanması için aşağıdaki linke tıklayarak e-postanızı onaylayabilirsiniz:<br><br><a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Onaylama Linki</a><br><br>Bu e-posta, sizin tarafınızdan istenmiş ve hizmetimizle ilgili bilgilendirmeler almak istediğinizi belirtmiş olduğunuz için gönderilmiştir. Eğer bu e-postayı isteğiniz dışında aldıysanız, lütfen dikkate almayınız ve bize bildirin.<br><br>Teşekkür ederiz.<br>");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

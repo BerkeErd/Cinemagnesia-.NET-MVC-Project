@@ -1,5 +1,5 @@
 ﻿using Domain.Entities.Concrete;
-using Domain.Interfaces.Repositoryies;
+using Domain.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,3 +13,4 @@ namespace Domain.Interfaces.Repository
 
     }
 }
+
