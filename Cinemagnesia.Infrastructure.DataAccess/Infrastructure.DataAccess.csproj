@@ -18,15 +18,9 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Domain.Entities\Domain.Entities.csproj" />
-    <ProjectReference Include="..\Domain.Interfaces\Domain.Interfaces.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
+	  <ProjectReference Include="..\Domain.Entities\Domain.Entities.csproj" />
+	  <ProjectReference Include="..\Domain.Interfaces\Domain.Interfaces.csproj" />
+	  <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

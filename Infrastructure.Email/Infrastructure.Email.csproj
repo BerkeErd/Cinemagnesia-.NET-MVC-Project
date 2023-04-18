@@ -12,14 +12,8 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.15" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Cinemagnesia.Infrastructure.DataAccess\Infrastructure.DataAccess.csproj" />
+	<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.15" />
+	<ProjectReference Include="..\Cinemagnesia.Infrastructure.DataAccess\Infrastructure.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
