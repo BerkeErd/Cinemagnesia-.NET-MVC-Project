@@ -26,20 +26,19 @@ namespace Application.Services
             return _genreRepository.GetAllAsync().Result;
         }
 
-        public Genre GetById(Guid id)
+        public Genre GetById(string id)
         {
             return _genreRepository.GetByIdAsync(id).Result;
         }
 
-        public void RemoveGenre(Guid id)
+        public void RemoveGenre(string id)
         {
             _genreRepository.DeleteAsync(id).Wait();
         }
 
-        public void UpdateGenre(Guid id, Genre genre)
+        public void UpdateGenre(string id, Genre genre)
         {
             _genreRepository.UpdateAsync(id, genre).Wait();
-
         }
     }
 }

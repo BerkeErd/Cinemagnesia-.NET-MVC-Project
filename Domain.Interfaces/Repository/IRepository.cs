@@ -10,9 +10,9 @@ namespace Domain.Interfaces.Repository
     public interface IRepository<TEntity> where TEntity : BaseEntity, new()
     {
         Task<TEntity> CreateAsync(TEntity entity);
-        Task<TEntity> UpdateAsync(Guid id, TEntity entity);
-        Task<TEntity> DeleteAsync(Guid id);
-        Task<TEntity> GetByIdAsync(Guid id);
+        Task<TEntity> UpdateAsync(string id, TEntity entity);
+        Task<TEntity> DeleteAsync(string id);
+        Task<TEntity> GetByIdAsync(string id);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
     }

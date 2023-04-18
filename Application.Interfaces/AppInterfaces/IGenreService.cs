@@ -11,8 +11,8 @@ namespace Application.Interfaces.AppInterfaces
     {
         IEnumerable<Genre> GetAllGenres();
         void AddGenre(Genre genre);
-        void RemoveGenre(Guid id);
-        void UpdateGenre(Guid id, Genre genre);
-        Genre GetById(Guid id);
+        void RemoveGenre(string id);
+        void UpdateGenre(string id, Genre genre);
+        Genre GetById(string id);
     }
 }
