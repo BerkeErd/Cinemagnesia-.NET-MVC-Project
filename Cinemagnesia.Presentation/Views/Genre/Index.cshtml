@@ -1,0 +1,35 @@
+﻿@model dynamic
+<form method="post" , asp-action="CreateGenre" asp-controller="Genre">
+    <label for="Name">Tür adı yazınız: </label>
+    <input name="Name" />
+    <button type="submit">Ekle</button>
+</form>
+<select>
+    @foreach (var item in Model)
+    {
+        <option value="@item.Id" id="genreId">
+            @item.Name
+        </option>
+
+    }
+</select>
+<button id="get">Getir</button>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#get").click(function () {
+                var id = $("#genreId").val();
+                $.ajax({
+                    url: "GetById/" + id,
+                    type: "GET",
+                    success: function (response) {
+                        console.log(response)
+                    }
+                }).done(function () {
+                    $(this).addClass("done");
+                });
+            });
+        });
+    </script>
+}

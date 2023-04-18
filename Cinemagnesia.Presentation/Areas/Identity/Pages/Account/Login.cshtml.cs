@@ -116,6 +116,15 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    var isAdmin = await _signInManager.UserManager.IsInRoleAsync(user, "Admin");
+
+
+                    if (isAdmin)
+                    {
+                        returnUrl = "~/Admin";
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

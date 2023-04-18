@@ -10,6 +10,10 @@ using Infrastructure.Email.Config;
 using Microsoft.VisualStudio.Web.CodeGeneration;
 using Application.Services;
 using QRCoder;
+using Microsoft.AspNetCore.Authorization;
+using Application.Interfaces.AppInterfaces;
+using Domain.Interfaces.Repository;
+using Infrastructure.DataAccess.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -24,6 +28,10 @@ var emailSenderConfig = builder.Configuration.GetSection("EmailSender").Get<Emai
 builder.Services.AddSingleton(emailSenderConfig);
 builder.Services.AddTransient<IEmailSender, CustomEmailSender>();
 builder.Services.AddSingleton(new QRCodeService(new QRCodeGenerator()));
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+
+builder.Services.AddScoped<IGenreService, GenreService>();
+
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -78,7 +86,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapAreaControllerRoute(
         name: "Admin",
         areaName: "Admin",
-        pattern: "Admin/{controller=Dashboards}/{action=Dashboard_1}");
+        pattern: "Admin/{controller=Dashboards}/{action=Dashboard_1}").RequireAuthorization(new AuthorizeAttribute { Roles = "Admin" });
 });
 
 app.MapRazorPages();

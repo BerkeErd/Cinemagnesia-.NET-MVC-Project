@@ -57,11 +57,17 @@ namespace Infrastructure.DataAccess.Repositories
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity)
+        public async Task<TEntity> UpdateAsync(Guid id, TEntity entity)
         {
-            _dbContext.Entry(entity).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
-            return entity;
+            var existingEntity = await _dbContext.Set<TEntity>().FindAsync(id);
+
+            if (existingEntity != null)
+            {
+                _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return existingEntity;
         }
 
     }
