@@ -1,6 +1,5 @@
 ﻿using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
-using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,9 +19,9 @@ namespace Infrastructure.DataAccess.Repositories
 
         public BaseRepository(ApplicationDbContext dbContext)
         {
-            _dbContext = dbContext;   
+            _dbContext = dbContext;
             _dbSet = _dbContext.Set<TEntity>();
-            
+
         }
         public async Task<TEntity> CreateAsync(TEntity entity)
         {
