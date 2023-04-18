@@ -14,7 +14,7 @@ namespace Domain.Entities.Validation
         {
             RuleFor(Director => Director.Name)
                 .NotEmpty()
-                .WithMessage("{PropertyName} alanı boş olamaz.")
+                .WithMessage("{PropertyName} alanı boş olamaz.");
         }
     }
 }

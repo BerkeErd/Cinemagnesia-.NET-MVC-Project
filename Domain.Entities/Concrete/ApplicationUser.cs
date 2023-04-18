@@ -17,6 +17,7 @@ public class ApplicationUser : IdentityUser
     [MaxLength(40)]
     public string LastName { get; set; }
     public DateTime Birthday { get; set; }
+    public DateTime AccountCreationDate { get; set; }
     public string ProfilePicture { get; set; }
     public ICollection<Movie> RatedMovies { get; set; }
     public ICollection<MovieComment> MovieComments { get; set; }
