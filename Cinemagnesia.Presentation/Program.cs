@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using System;
-
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
