@@ -117,7 +117,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapAreaControllerRoute(
         name: "Admin",
         areaName: "Admin",
-        pattern: "Admin/{controller=Dashboards}/{action=Dashboard_1}").RequireAuthorization(new AuthorizeAttribute { Roles = "Admin" });
+        pattern: "Admin/{controller=Statistic}/{action=Index}").RequireAuthorization(new AuthorizeAttribute { Roles = "Admin" });
 });
 
 app.MapRazorPages();

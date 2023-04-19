@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNET_Core_2_1
 {
@@ -18,6 +19,7 @@ namespace ASPNET_Core_2_1
             string currentAction = (string)html.ViewContext.RouteData.Values["action"];
             string currentController = (string)html.ViewContext.RouteData.Values["controller"];
 
+           
             if (String.IsNullOrEmpty(controller))
                 controller = currentController;
 
@@ -26,6 +28,16 @@ namespace ASPNET_Core_2_1
 
             return controller == currentController && action == currentAction ?
                 cssClass : String.Empty;
+        }
+
+        public static string? CustomAction(this IUrlHelper helper, string? action, string? controller)
+        {
+            if (helper == null)
+            {
+                throw new ArgumentNullException(nameof(helper));
+            }
+            controller = "Admin/" + controller;
+            return helper.Action(action, controller, values: null, protocol: null, host: null, fragment: null).Replace("%2F", "/");
         }
 
         public static string PageClass(this IHtmlHelper htmlHelper)

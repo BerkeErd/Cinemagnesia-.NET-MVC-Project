@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNET_Core_2_1.Controllers
 {
+
+    [Area("Admin")]
     public class MailboxController : Controller
     {
         public IActionResult Inbox()

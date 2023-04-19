@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNET_Core_2_1.Controllers
 {
+    [Area("Admin")]
     public class AppViewsController : Controller
     {
-
         public ActionResult Contacts()
         {
             return View();

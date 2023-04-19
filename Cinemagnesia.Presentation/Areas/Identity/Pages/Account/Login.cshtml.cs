@@ -123,7 +123,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
 
                     if (isAdmin)
                     {
-                        returnUrl = "~/Admin";
+                        returnUrl = "~/Admin/Statistic";
                     }
                     return LocalRedirect(returnUrl);
                 }

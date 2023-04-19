@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace ASPNET_Core_2_1.Controllers
 {
     [Area("Admin")]
-    public class DashboardsController : Controller
+    public class StatisticController : Controller
     {
-        public IActionResult Dashboard_1()
+        public IActionResult Index()
         {
             return View();
         }
