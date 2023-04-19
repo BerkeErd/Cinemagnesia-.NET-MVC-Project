@@ -21,6 +21,16 @@ namespace Infrastructure.DataAccess
                 var role = new IdentityRole("Admin");
                 await roleManager.CreateAsync(role);
             }
+            if (!await roleManager.RoleExistsAsync("User"))
+            {
+                var role = new IdentityRole("User");
+                await roleManager.CreateAsync(role);
+            }
+            if (!await roleManager.RoleExistsAsync("Productor"))
+            {
+                var role = new IdentityRole("Productor");
+                await roleManager.CreateAsync(role);
+            }
         }
 
         private static async Task SeedAdminAsync(UserManager<ApplicationUser> userManager)

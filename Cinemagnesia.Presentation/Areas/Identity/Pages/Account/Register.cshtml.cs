@@ -158,6 +158,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
             <p style='color: #e50914; font-weight: bold;'>Cinemagnesia Ekibi</p>
         </body>
     </html>");
+                    await _userManager.AddToRoleAsync(user, "User");
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
