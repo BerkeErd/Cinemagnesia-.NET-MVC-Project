@@ -34,9 +34,23 @@ builder.Services.AddSingleton(emailSenderConfig);
 builder.Services.AddTransient<IEmailSender, CustomEmailSender>();
 builder.Services.AddSingleton(new QRCodeService(new QRCodeGenerator()));
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
-
 builder.Services.AddScoped<IGenreService, GenreService>();
-
+builder.Services.AddScoped<ICastMemberRepository, CastMemberRepository>();
+builder.Services.AddScoped<ICastMemberService, CastMemberService>();
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<ICompanyService, CompanyService>(); 
+builder.Services.AddScoped<IDirectorRepository, DirectorRepository>();
+builder.Services.AddScoped<IDirectorService, DirectorService>();
+builder.Services.AddScoped<IMovieCommentRepository, MovieCommentRepository>();
+builder.Services.AddScoped<IMovieCommentService, MovieCommentService>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<IProductorRequestRepository, ProductorRequestRepository>();
+builder.Services.AddScoped<IProductorRequestService, ProductorRequestService>();
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
+builder.Services.AddScoped<IRatingService, RatingService>();
+builder.Services.AddScoped<IWatchListRepository, WatchListRepository>();
+builder.Services.AddScoped<IWatchListService, WatchListService>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
