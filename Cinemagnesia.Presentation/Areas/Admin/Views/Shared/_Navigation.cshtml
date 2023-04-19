@@ -1,4 +1,6 @@
-﻿<nav class="navbar-default navbar-static-side" role="navigation">
+﻿@using Cinemagnesia.Presentation.Areas.Identity.Pages.Account;
+@model LogoutModel
+<nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
@@ -13,7 +15,20 @@
                         <li><a class="dropdown-item" href="@Url.Action("Contacts", "AppViews")">Contacts</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("Inbox", "Mailbox")">Mailbox</a></li>
                         <li class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="@Url.Action("Login", "Pages")">Logout</a></li>
+                        <li>
+                            @{
+                                if (User.Identity?.IsAuthenticated ?? false)
+                                {
+                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
+                                        <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <p>You have successfully logged out of the application.</p>
+                                }
+                            }
+                        </li>
                     </ul>
                 </div>
                 <div class="logo-element">
