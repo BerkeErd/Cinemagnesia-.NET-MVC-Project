@@ -28,6 +28,10 @@ namespace Domain.Entities.Concrete
         public ICollection<Genre> Genres { get; set; }
         public ICollection<CastMember> CastMembers { get; set; }
         public ICollection<MovieComment> MovieComments { get; set; }
+        public int MovieMinutes { get; set; }
+        public string Language { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime? UpdatedAt { get; set; } 
 
     }
 }
