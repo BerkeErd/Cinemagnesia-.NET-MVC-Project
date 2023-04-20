@@ -2,7 +2,7 @@
 @using Cinemagnesia.Presentation.Areas.Identity.Pages.Account;
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.AspNetCore.Mvc.Rendering;
-@using Microsoft.AspNetCore.Mvc;
+
 
 @model LogoutModel
 
@@ -60,6 +60,56 @@
                 <a href="@Url.CustomAction("Index", "UserData")">
                     <i class="fa-sharp fa-regular fa-table"></i>
                     <span class="nav-label" data-i18n="nav.dashboard">Kullanıcı Verileri</span>
+                </a>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "AddData")">
+                <a href="@Url.CustomAction("Index", "AddData")">
+                    <i class="fa-sharp fa-regular fa-table"></i>
+                    <span class="nav-label" data-i18n="nav.dashboard">Veri Kayıt</span>
+                </a>
+            </li>
+
+             <li class="@Html.IsSelected(controller: "CommentRequest")">
+                <a href="@Url.CustomAction("Index", "CommentRequest")">
+                    <i class="fa-sharp fa-regular fa-table"></i>
+                    <span class="nav-label" data-i18n="nav.dashboard">Yorum İstekleri</span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "ProductorRequest")">
+                <a href="@Url.CustomAction("Index", "ProductorRequest")">
+                    <i class="fa-sharp fa-regular fa-table"></i>
+                    <span class="nav-label" data-i18n="nav.dashboard">Yapımcı Başvuru İstekleri</span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "ProductorDataRequest")">
+                <a href="@Url.CustomAction("Index", "ProductorDataRequest")">
+                    <i class="fa-sharp fa-regular fa-table"></i>
+                    <span class="nav-label" data-i18n="nav.dashboard">Yapımcı Veri İstekleri</span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "LogList")">
+                <a href="@Url.CustomAction("Index", "LogList")">
+                    <i class="fa-sharp fa-regular fa-table"></i>
+                    <span class="nav-label" data-i18n="nav.dashboard">Log Kayıtlı</span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "UIEdit")">
+                <a href="@Url.CustomAction("Index", "UIEdit")">
+                    <i class="fa-sharp fa-regular fa-table"></i>
+                    <span class="nav-label" data-i18n="nav.dashboard">UI Güncelleme</span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "ExportFile")">
+                <a href="@Url.CustomAction("Index", "ExportFile")">
+                    <i class="fa-sharp fa-regular fa-table"></i>
+                    <span class="nav-label" data-i18n="nav.dashboard">Dosya Çıktısı Al</span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "SendEmail")">
+                <a href="@Url.CustomAction("Index", "SendEmail")">
+                    <i class="fa-sharp fa-regular fa-table"></i>
+                    <span class="nav-label" data-i18n="nav.dashboard">E-posta Gönder</span>
                 </a>
             </li>
         </ul>
