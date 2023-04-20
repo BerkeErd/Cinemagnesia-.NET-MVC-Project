@@ -1,6 +1,38 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<h4>send email sayfası</h4>
+﻿<!-- Include the TinyMCE JavaScript and CSS files -->
+<script src="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<link href="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/skins/ui/oxide/skin.min.css" rel="stylesheet" />
+
+<form method="post">
+    <div class="form-group">
+        <label for="customerSelect">Send to:</label>
+        <select id="customerSelect" name="customerId" class="form-control">
+            <option value="all">All Customers</option>
+            @*@foreach (var customer in Model.Customers)
+            {
+            <option value="@customer.Id">@customer.Name</option>
+            }*@
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="emailInput">Email:</label>
+        <textarea id="emailInput" name="email"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send Email</button>
+</form>
+
+<!-- Initialize TinyMCE -->
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        height: 500,
+        menubar: false,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | bold italic backcolor | \
+            alignleft aligncenter alignright alignjustify | \
+            bullist numlist outdent indent | removeformat | help'
+    });
+</script>
