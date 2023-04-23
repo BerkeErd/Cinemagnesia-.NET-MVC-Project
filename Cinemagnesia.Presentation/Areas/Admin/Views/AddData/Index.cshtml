@@ -1,6 +1,119 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "DataTables";
 }
-<h4>Add data page</h4>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <form method="post" action="/Admin/AddData/AddGenre">
+            <h3>Kategori Ekle</h3>
+            <div class="row">
+                <div class="col-lg-2">
+                    <label for="name" class="form-label mt-2">Kategori İsmi:</label>
+                </div>
+                <div class="col-lg-10">
+                    <input type="text" name="name" class="form-control" />
+                </div>
+                <div class="col-lg-12">
+                    <button type="submit" class="btn btn-primary mt-3">Ekle</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Film Kategori Listesi</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#" class="dropdown-item">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <table class="table table-striped table-bordered table-hover" id="genreListTable">
+                        <thead>
+                            <tr>
+                                <th>Kategori İsmi</th>
+                                <th>Durum</th>
+                                <th>Aksiyonlar</th>
+
+                            </tr>
+                        </thead>
+                       <tbody>
+
+                       </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Styles {
+        <environment names="Development,Staging,Production">
+            <link rel="stylesheet" href="~/lib/dataTables/datatables.min.css" />
+        </environment>
+}
+
+@section Scripts {
+        <environment names="Development,Staging,Production">
+            <script src="~/lib/dataTables/datatables.min.js"></script>
+            <script src="~/lib/dataTables/dataTables.bootstrap4.min.js"></script>
+        </environment>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $('#genreListTable').DataTable({
+                    pageLength: 25,
+                    dom: '<"html5buttons"B>lTfgitp',
+                    buttons: [
+                        { extend: 'copy' },
+                        { extend: 'csv' },
+                        { extend: 'excel', title: 'ExampleFile' },
+                        { extend: 'pdf', title: 'ExampleFile' },
+
+                        {
+                            extend: 'print',
+                            customize: function (win) {
+                                $(win.document.body).addClass('white-bg');
+                                $(win.document.body).css('font-size', '10px');
+
+                                $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                            }
+                        }
+                    ]
+
+                });
+
+
+            });
+
+
+        </script>
+}
