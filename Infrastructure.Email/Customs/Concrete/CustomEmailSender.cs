@@ -22,22 +22,26 @@ namespace Infrastructure.Email.Customs.Concrete
             _config = config.Value;
         }
 
-        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
+        public async Task SendCustomEmailAsync(string email, string subject, string htmlMessage)
         {
-            using var message = new MailMessage();
-            message.To.Add(new MailAddress(email));
-            message.From = new MailAddress("profitdeneme@yandex.com");
-            message.Subject = subject;
-            message.Body = htmlMessage;
-            message.IsBodyHtml = true;
+            
+                using var message = new MailMessage();
+                message.To.Add(new MailAddress(email));
+                message.From = new MailAddress("profitdeneme@yandex.com");
+                message.Subject = subject;
+                message.Body = htmlMessage;
+                message.IsBodyHtml = true;
 
-            using var client = new SmtpClient("smtp.yandex.com.tr", 587);
-            client.EnableSsl = true;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("profitdeneme@yandex.com", "mqpgpfyybwmonsks");
+                using var client = new SmtpClient("smtp.yandex.com.tr", 587);
+                client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("profitdeneme@yandex.com", "mqpgpfyybwmonsks");
 
-            await client.SendMailAsync(message);
+                await client.SendMailAsync(message);
+            
+            
         }
+
 
         public async Task SendConfirmationEmailAsync(string email, string callbackUrl)
         {

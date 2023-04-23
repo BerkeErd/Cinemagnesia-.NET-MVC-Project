@@ -1,29 +1,28 @@
-﻿<!-- Include the TinyMCE JavaScript and CSS files -->
+﻿@model dynamic
+
 <script src="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <link href="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/skins/ui/oxide/skin.min.css" rel="stylesheet" />
-
-<form method="post">
+<form method="post" action="SendEmail/SendCustomEmail" onsubmit="sendEmailButton.disabled = true; sendEmailButton.innerHTML = '<span class=\'spinner-border spinner-border-sm\' role=\'status\' aria-hidden=\'true\'></span> Sending...';">
     <div class="form-group">
-        <label for="customerSelect">Send to:</label>
-        <select id="customerSelect" name="customerId" class="form-control">
-            <option value="all">All Customers</option>
-            @*@foreach (var customer in Model.Customers)
+        <label for="customerSelect">Gönderilecek kişi:</label>
+        <select id="customerSelect" name="userEmail" class="form-control">
+            <option value="all">Tüm Üyeler</option>
+            @foreach (var customer in ViewBag.Users)
             {
-            <option value="@customer.Id">@customer.Name</option>
-            }*@
+                <option value="@customer.Email">@customer.FirstName</option>
+            }
         </select>
     </div>
     <div class="form-group">
-        <label for="emailSubject">Subject:</label>
-        <input id="emailSubjectInput" name="subject"/>
+        <label for="emailSubject">Başlık:</label>
+        <input id="emailSubject" name="emailSubject" />
     </div>
     <div class="form-group">
-        <label for="emailInput">Email:</label>
-        <textarea id="emailInput" name="email"></textarea>
+        <label for="emailText">Email:</label>
+        <textarea id="emailText" name="emailText"></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Send Email</button>
+    <button id="sendEmailButton" type="submit" class="btn btn-primary">Send Email</button>
 </form>
-
 <!-- Initialize TinyMCE -->
 <script>
     tinymce.init({
@@ -36,7 +35,7 @@
             'insertdatetime media table paste code help wordcount'
         ],
         toolbar: 'undo redo | formatselect | bold italic backcolor | \
-            alignleft aligncenter alignright alignjustify | \
-            bullist numlist outdent indent | removeformat | help'
+                alignleft aligncenter alignright alignjustify | \
+                bullist numlist outdent indent | removeformat | help'
     });
 </script>

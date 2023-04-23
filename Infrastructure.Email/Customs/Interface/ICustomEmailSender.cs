@@ -9,7 +9,7 @@ namespace Infrastructure.Email.Customs.Interface
     public interface ICustomEmailSender
     {
 
-        Task SendEmailAsync(string email, string subject, string htmlMessage);
+        Task SendCustomEmailAsync(string email, string subject, string htmlMessage);
         Task SendConfirmationEmailAsync(string email, string callback);
     }
 }
