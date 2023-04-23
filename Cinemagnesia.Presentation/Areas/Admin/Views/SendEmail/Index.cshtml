@@ -1,5 +1,4 @@
-﻿@model dynamic
-
+﻿
 <script src="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <link href="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/skins/ui/oxide/skin.min.css" rel="stylesheet" />
 <form method="post" action="SendEmail/SendCustomEmail" onsubmit="sendEmailButton.disabled = true; sendEmailButton.innerHTML = '<span class=\'spinner-border spinner-border-sm\' role=\'status\' aria-hidden=\'true\'></span> Gönderiliyor...';">
@@ -9,7 +8,11 @@
             <option value="all">Tüm Üyeler</option>
             @foreach (var customer in ViewBag.Users)
             {
-                <option value="@customer.Email">@customer.FirstName</option>
+                if(customer.EmailConfirmed)
+                {
+                    <option value="@customer.Email">@customer.FirstName + " " + @customer.LastName</option>
+                }
+                
             }
         </select>
     </div>
