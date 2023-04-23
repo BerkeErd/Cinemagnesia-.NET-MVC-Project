@@ -22,7 +22,7 @@ namespace Application.Services
             _movieRepository.CreateAsync(movie).Wait();
         }
 
-        IEnumerable<Movie> IMovieService.GetAllMovies()
+        public IEnumerable<Movie> GetAllMovies()
         {
             return _movieRepository.GetAllAsync().Result;
         }
