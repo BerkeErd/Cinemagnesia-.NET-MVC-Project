@@ -1,6 +1,139 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@*@model List<MovieComment>*@
+
 @{
+    ViewBag.Title = "Movie Comments";
 }
-<h4>yorum istekelr sayfası</h4>
+
+<h2>Movie Comments</h2>
+
+<div id="SelectedDatatable" "class="btn-group">
+    <button type="button" class="btn btn-primary active" data-status="waiting">Waiting</button>
+    <button type="button" class="btn btn-primary" data-status="rejected">Rejected</button>
+    <button type="button" class="btn btn-primary" data-status="approved">Approved</button>
+</div>
+
+<br />
+
+<table id="comment-table" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Movie Name</th>
+            <th>Comment</th>
+            <th>Has Spoiler</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Set up DataTable
+            var table = $('#comment-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '@Url.Action("GetComments", "Comment")',
+                    type: 'POST',
+                    data: function (d) {
+                        d.status = $('.btn-group .active').data('status');
+                    }
+                },
+                columns: [
+                    { data: 'UserName' },
+                    { data: 'MovieName' },
+                    { data: 'Comment' },
+                    {
+                        data: 'HasSpoiler',
+                        render: function (data, type, row, meta) {
+                            if (type === 'display') {
+                                return '<input type="checkbox" disabled' + (data ? ' checked' : '') + '>';
+                            }
+                            return data;
+                        }
+                    },
+                    { data: 'Status' },
+                    {
+                        data: null,
+                        render: function (data, type, row, meta) {
+                            if (row.Status === "Waiting") {
+                                return '<button type="button" class="btn btn-success btn-sm approve-comment" data-comment-id="' + row.Id + '">Approve</button>' +
+                                    '<button type="button" class="btn btn-danger btn-sm reject-comment" data-comment-id="' + row.Id + '">Reject</button>';
+                            } else {
+                                return '';
+                            }
+                        }
+                    }
+                ]
+            });
+        // Handle button clicks
+        $('.btn-group button').on('click', function () {
+            $('.btn-group button').removeClass('active');
+            $(this).addClass('active');
+            table.ajax.reload();
+        });
+
+        // Handle comment approval
+        $('#comment-table').on('click', '.approve-comment', function () {
+            var commentId = $(this).data('comment-id');
+            var row = table.row($(this).closest('tr')).data();
+            var hasSpoiler = row.HasSpoiler;
+            var newStatus = "Approved";
+            if ($("#cbx-" + commentId).prop("checked")) {
+                hasSpoiler = true;
+            } else {
+                hasSpoiler = false;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ApproveComment", "Comment")',
+                data: { id: commentId, status: newStatus, hasSpoiler: hasSpoiler },
+                success: function (result) {
+                    if (result.success) {
+                        table.ajax.reload();
+                    } else {
+                        alert("Failed to approve comment.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        // Handle comment rejection
+        $('#comment-table').on('click', '.reject-comment', function () {
+            var commentId = $(this).data('comment-id');
+            var newStatus = "Rejected";
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("RejectComment", "Comment")',
+                data: { id: commentId, status: newStatus },
+                success: function (result) {
+                    if (result.success) {
+                        table.ajax.reload();
+                    } else {
+                        alert("Failed to reject comment.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        // Handle selected datatable button
+        $('#SelectedDatatable button').on('click', function () {
+            if (!$(this).hasClass('active')) {
+                $('#SelectedDatatable button').removeClass('active').prop('disabled', false);
+                $(this).addClass('active').prop('disabled', true);
+                table.ajax.reload();
+                };
+        });})
+
+    </script>
+}

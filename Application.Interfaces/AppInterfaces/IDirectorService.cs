@@ -9,7 +9,7 @@ namespace Application.Interfaces.AppInterfaces
 {
     public interface IDirectorService
     {
-        IEnumerable<Director> GetAllGenres();
+        IEnumerable<Director> GetAllDirectors();
         void AddDirector(Director genre);
         void RemoveDirector(string id);
         void UpdateDirector(string id, Director genre);

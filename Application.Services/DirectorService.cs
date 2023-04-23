@@ -22,7 +22,7 @@ namespace Application.Services
             _DirectorRepository.CreateAsync(director).Wait();
         }
 
-        public IEnumerable<Director> GetAllGenres()
+        public IEnumerable<Director> GetAllDirectors()
         {
           return _DirectorRepository.GetAllAsync().Result;
         }

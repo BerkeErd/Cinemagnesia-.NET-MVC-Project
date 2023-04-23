@@ -9,5 +9,9 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult Index_2()
+        {
+            return View();
+        }
     }
 }

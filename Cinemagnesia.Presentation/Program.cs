@@ -9,7 +9,6 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Core;
 using Infrastructure.DataAccess.Seed;
-using Infrastructure.Email.Customs;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Infrastructure.Email.Config;
 using Microsoft.VisualStudio.Web.CodeGeneration;
@@ -19,6 +18,8 @@ using Microsoft.AspNetCore.Authorization;
 using Application.Interfaces.AppInterfaces;
 using Domain.Interfaces.Repository;
 using Infrastructure.DataAccess.Repositories;
+using Infrastructure.Email.Customs.Interface;
+using Infrastructure.Email.Customs.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -31,7 +32,7 @@ builder.Services.AddRazorPages();
 var emailSenderConfig = builder.Configuration.GetSection("EmailSender").Get<EmailConfig>();
 
 builder.Services.AddSingleton(emailSenderConfig);
-builder.Services.AddTransient<IEmailSender, CustomEmailSender>();
+builder.Services.AddTransient<ICustomEmailSender, CustomEmailSender>();
 builder.Services.AddSingleton(new QRCodeService(new QRCodeGenerator()));
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IGenreService, GenreService>();
@@ -59,12 +60,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             .AddDefaultTokenProviders()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
 var logger = new LoggerConfiguration()
-  .ReadFrom.Configuration(builder.Configuration)
-  .Enrich.FromLogContext()
-  .CreateLogger();
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
+
 
 
 
