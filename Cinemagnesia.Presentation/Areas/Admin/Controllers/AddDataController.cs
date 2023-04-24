@@ -1,4 +1,8 @@
-﻿using Cinemagnesia.Presentation.Areas.Admin.Models;
+﻿using Application.Dtos;
+using Application.Interfaces.AppInterfaces;
+using AutoMapper;
+using Cinemagnesia.Presentation.Areas.Admin.Models;
+using Cinemagnesia.Presentation.Mappings;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
@@ -6,22 +10,17 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
     [Area("Admin")]
     public class AddDataController : Controller
     {
+        private readonly IMapper _mapper;
+        private readonly IGenreService _genreService;
+
+        public AddDataController(IMapper mapper, IGenreService genreService)
+        {
+            _genreService = genreService; 
+            _mapper = mapper;
+        }
         public IActionResult Index()
         {
-            List<GenreViewModel> genreViewModels = new List<GenreViewModel>
-            {
-                new GenreViewModel
-                {
-                    Id = "0C161892-979C-4A15-8876-E4FE6C044D41",
-                    Name = "Korku"
-                },
-                new GenreViewModel
-                {
-                    Id = "0C161892-979C-4A15-8876-E4FE6C044D42",
-                    Name = "Drama"
-                },
-            };
-            ViewBag.GenreViewModels = genreViewModels;
+
             return View();
         }
 
@@ -29,9 +28,21 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                return Ok(addGenreViewModel);
+                GenreDto genreDto = _mapper.Map<GenreDto>(addGenreViewModel);
+                _genreService.AddGenre(genreDto);
+                return Ok("Eklendi: "+genreDto);
             }
             return BadRequest("Eklenmedi");
         }
+
+        [HttpGet]
+        public IActionResult ListGenres()
+        {
+            IQueryable<GenreDto> genreDtos = _genreService.GetAllGenres().AsQueryable();
+            IQueryable<GenreViewModel> genreViewModels = _mapper.ProjectTo<GenreViewModel>(genreDtos);
+
+            return Ok(genreViewModels);
+        }
+
     }
 }

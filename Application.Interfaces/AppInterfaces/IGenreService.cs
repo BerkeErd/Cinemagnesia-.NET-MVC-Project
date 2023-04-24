@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Concrete;
+﻿using Application.Dtos;
+using Domain.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace Application.Interfaces.AppInterfaces
 {
     public interface IGenreService
     {
-        IEnumerable<Genre> GetAllGenres();
-        void AddGenre(Genre genre);
+        IEnumerable<GenreDto> GetAllGenres();
+        void AddGenre(GenreDto genre);
         void RemoveGenre(string id);
         void UpdateGenre(string id, Genre genre);
         Genre GetById(string id);

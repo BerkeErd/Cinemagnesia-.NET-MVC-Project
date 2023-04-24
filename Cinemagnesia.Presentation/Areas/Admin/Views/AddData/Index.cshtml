@@ -55,7 +55,6 @@
                         <thead>
                             <tr>
                                 <th>Kategori İsmi</th>
-                                <th>Durum</th>
                                 <th>Aksiyonlar</th>
 
                             </tr>
@@ -86,7 +85,6 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-
                 $('#genreListTable').DataTable({
                     pageLength: 25,
                     dom: '<"html5buttons"B>lTfgitp',
@@ -95,24 +93,50 @@
                         { extend: 'csv' },
                         { extend: 'excel', title: 'ExampleFile' },
                         { extend: 'pdf', title: 'ExampleFile' },
-
                         {
                             extend: 'print',
                             customize: function (win) {
                                 $(win.document.body).addClass('white-bg');
                                 $(win.document.body).css('font-size', '10px');
-
                                 $(win.document.body).find('table')
                                     .addClass('compact')
                                     .css('font-size', 'inherit');
                             }
                         }
+                    ],
+                    ajax: {
+                        url: '/Admin/AddData/ListGenres',
+                        dataSrc: ''
+                    },
+                    columns: [
+                    { data: 'name' },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return '<button class="btn btn-xs btn-warning">Edit</button> ' +
+                                '<button class="btn btn-xs btn-danger">Delete</button>';
+                        }
+                    }
                     ]
-
                 });
-
-
             });
+
+       
+
+            //$.ajax({
+            //    url: '/your-controller/ListGenres',
+            //    type: 'GET',
+            //    dataType: 'json',
+            //    success: function (data) {
+            //        // Do something with the data
+            //        console.log(data);
+            //    },
+            //    error: function (xhr, textStatus, errorThrown) {
+            //        // Handle error
+            //        console.log(xhr.responseText);
+            //    }
+            //});
+        
 
 
         </script>

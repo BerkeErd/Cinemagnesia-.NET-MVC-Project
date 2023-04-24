@@ -1,4 +1,6 @@
-﻿using Application.Interfaces.AppInterfaces;
+﻿using Application.Dtos;
+using Application.Interfaces.AppInterfaces;
+using AutoMapper;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
 using System;
@@ -12,18 +14,23 @@ namespace Application.Services
     public class GenreService : IGenreService
     {
         private readonly IGenreRepository _genreRepository;
-        public GenreService(IGenreRepository genreRepository)
+        private readonly IMapper _mapper;
+        public GenreService(IGenreRepository genreRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _genreRepository = genreRepository;
         }
-        public void AddGenre(Genre genre)
+        public void AddGenre(GenreDto genreDto)
         {
+             var genre = _mapper.Map<Genre>(genreDto);
             _genreRepository.CreateAsync(genre).Wait();
         }
 
-        public IEnumerable<Genre> GetAllGenres()
+        public IEnumerable<GenreDto> GetAllGenres()
         {
-            return _genreRepository.GetAllAsync().Result;
+            IQueryable<Genre> genres = _genreRepository.GetAllAsync().Result.AsQueryable();
+            IQueryable<GenreDto> genreDtos = _mapper.ProjectTo<GenreDto>(genres);
+            return genreDtos;
         }
 
         public Genre GetById(string id)

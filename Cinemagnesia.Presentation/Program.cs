@@ -20,6 +20,9 @@ using Domain.Interfaces.Repository;
 using Infrastructure.DataAccess.Repositories;
 using Infrastructure.Email.Customs.Interface;
 using Infrastructure.Email.Customs.Concrete;
+using AutoMapper;
+using Application.Services.Mappings;
+using Cinemagnesia.Presentation.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -85,6 +88,8 @@ builder.Services.AddHttpClient("rapidapi", c =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAutoMapper(typeof(GenreDtoMapper));
+builder.Services.AddAutoMapper(typeof(ViewModelMapper));
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
