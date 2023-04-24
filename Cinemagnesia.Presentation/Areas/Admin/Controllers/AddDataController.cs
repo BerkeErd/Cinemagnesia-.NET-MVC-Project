@@ -30,7 +30,7 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
             {
                 GenreDto genreDto = _mapper.Map<GenreDto>(addGenreViewModel);
                 _genreService.AddGenre(genreDto);
-                return Ok("Eklendi: "+genreDto);
+                return RedirectToAction("Index");
             }
             return BadRequest("Eklenmedi");
         }

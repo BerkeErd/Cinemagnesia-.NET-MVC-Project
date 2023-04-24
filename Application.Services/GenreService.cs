@@ -28,8 +28,8 @@ namespace Application.Services
 
         public IEnumerable<GenreDto> GetAllGenres()
         {
-            IQueryable<Genre> genres = _genreRepository.GetAllAsync().Result.AsQueryable();
-            IQueryable<GenreDto> genreDtos = _mapper.ProjectTo<GenreDto>(genres);
+            var genres = _genreRepository.GetAllAsync().Result.AsQueryable();
+            var genreDtos = _mapper.ProjectTo<GenreDto>(genres);
             return genreDtos;
         }
 
