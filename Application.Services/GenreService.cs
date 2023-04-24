@@ -20,12 +20,13 @@ namespace Application.Services
             _mapper = mapper;
             _genreRepository = genreRepository;
         }
-        public void AddGenre(GenreDto genreDto)
+        public GenreDto AddGenre(GenreDto genreDto)
         {
-             var genre = _mapper.Map<Genre>(genreDto);
-            _genreRepository.CreateAsync(genre).Wait();
+            var genre = _mapper.Map<Genre>(genreDto);
+            var response = _genreRepository.CreateAsync(genre).Result;
+            var dbGenreDto = _mapper.Map<GenreDto>(response);
+            return dbGenreDto;
         }
-
         public IEnumerable<GenreDto> GetAllGenres()
         {
             var genres = _genreRepository.GetAllAsync().Result.AsQueryable();

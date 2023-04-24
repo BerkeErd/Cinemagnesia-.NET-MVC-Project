@@ -10,8 +10,11 @@ namespace Cinemagnesia.Presentation.Mappings
         {
             CreateMap<GenreDto, GenreViewModel>();
 
+            CreateMap<GenreViewModel, GenreDto>();
+
             CreateMap<AddGenreViewModel, GenreDto>();
-            
+
+            CreateMap<GenreDto, AddGenreViewModel>(); 
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
 
         public AddDataController(IMapper mapper, IGenreService genreService)
         {
-            _genreService = genreService; 
+            _genreService = genreService;
             _mapper = mapper;
         }
         public IActionResult Index()
@@ -24,13 +24,15 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult AddGenre(AddGenreViewModel addGenreViewModel)
         {
             if (ModelState.IsValid)
             {
                 GenreDto genreDto = _mapper.Map<GenreDto>(addGenreViewModel);
-                _genreService.AddGenre(genreDto);
-                return RedirectToAction("Index");
+                var response = _genreService.AddGenre(genreDto);
+                GenreViewModel genreViewModel = _mapper.Map<GenreViewModel>(response);
+                return Ok(genreViewModel);
             }
             return BadRequest("Eklenmedi");
         }
@@ -43,6 +45,5 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
 
             return Ok(genreViewModels);
         }
-
     }
 }

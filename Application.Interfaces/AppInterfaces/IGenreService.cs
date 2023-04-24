@@ -11,7 +11,7 @@ namespace Application.Interfaces.AppInterfaces
     public interface IGenreService
     {
         IEnumerable<GenreDto> GetAllGenres();
-        void AddGenre(GenreDto genre);
+        GenreDto AddGenre(GenreDto genre);
         void RemoveGenre(string id);
         void UpdateGenre(string id, Genre genre);
         Genre GetById(string id);

@@ -14,7 +14,7 @@ namespace Application.Services.Mappings
         public GenreDtoMapper() 
         {
             CreateMap<GenreDto, Genre>().ForMember(dest => dest.Id, opt => opt.Ignore());
-            CreateMap<Genre, GenreDto>().ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<Genre, GenreDto>();
 
         }
     }
