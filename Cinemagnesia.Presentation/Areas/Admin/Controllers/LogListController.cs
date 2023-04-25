@@ -17,7 +17,7 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            //var logEvents = _logger.
+            //var logEvents = _logger.readform
             //    .SqlServer("YourConnectionString", "YourTableName")
             //    .CreateLogger()
             //    .ReadLogEvents()
