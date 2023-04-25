@@ -75,7 +75,7 @@ namespace Infrastructure.Email.Customs.Concrete
             throw new NotImplementedException();
         }
 
-        public Task SendMuteNotification(string email)
+        public Task SendMutedNotification(string email)
         {
             throw new NotImplementedException();
         }
