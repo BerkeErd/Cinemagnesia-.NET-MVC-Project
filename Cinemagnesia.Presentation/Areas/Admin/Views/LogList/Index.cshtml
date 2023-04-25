@@ -1,6 +1,57 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Serilog.Events;
+@model IEnumerable<LogEvent>
+
 @{
+    ViewData["Title"] = "Log";
 }
-<h4>log kayıtları sayfası</h4>
+
+<h1>Log</h1>
+
+<div class="table-responsive">
+    <table id="logTable" class="table table-striped table-bordered table-hover" style="width:100%">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Level</th>
+                <th>Message</th>
+                <th>Exception</th>
+                <th>Source Context</th>
+                <th>Event ID</th>
+                <th>Properties</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var log in Model)
+            {
+                <tr>
+                    <td>@log.Timestamp</td>
+                    <td>@log.Level</td>
+                    <td>@log.Message</td>
+                    <td>@log.Exception</td>
+                    <td>@log.Properties["SourceContext"]</td>
+                    <td>@log.Properties["EventId_Id"]</td>
+                    <td>@log.Properties["Properties"]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#logTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+    </script>
+}

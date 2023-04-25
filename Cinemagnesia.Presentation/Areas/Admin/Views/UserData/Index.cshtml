@@ -1,10 +1,26 @@
 ﻿ <ul class="nav nav-tabs nav nav-pills nav-justified" id="myTabs" role="tablist">
     <li class="nav-item">
-      <a class="nav-link active" id="tab1" data-toggle="tab" href="#content1" role="tab" aria-controls="content1" aria-selected="true">Kullanıcı</a>
+      <a class="nav-link active" id="tab1" data-toggle="tab" href="#content1" role="tab" aria-controls="content1" aria-selected="true">Kullanıcılar</a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" id="tab2" data-toggle="tab" href="#content2" role="tab" aria-controls="content2" aria-selected="false">Yapımcı</a>
+      <a class="nav-link" id="tab2" data-toggle="tab" href="#content2" role="tab" aria-controls="content2" aria-selected="false">Yapımcılar</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" id="tab3" data-toggle="tab" href="#content3" role="tab" aria-controls="content3" aria-selected="false">Film Türleri</a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" id="tab4" data-toggle="tab" href="#content4" role="tab" aria-controls="content4" aria-selected="false">Filmler</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" id="tab5" data-toggle="tab" href="#content5" role="tab" aria-controls="content5" aria-selected="false">Yönetmenler</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" id="tab6" data-toggle="tab" href="#content6" role="tab" aria-controls="content6" aria-selected="false">Yorumlar</a>
     </li>
   </ul>
 
@@ -16,25 +32,32 @@
     <thead>
         <tr>
             <th>Kullanıcı</th>
-            <th>Film</th>
-            <th>Yorum</th>
+            <th>Yorum Sayısı</th>
+            <th>Durumu</th>
+            <th>Aksiyonlar</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Kullanıcı 1</td>
-            <td>Film adı</td>
-            <td>Yorum</td>
+            <td>14</td>
+            <td>Kalıcı olarak yasaklandı</td>
+            <td><button class="btn btn-xs btn-warning" value="">Warn</button><button class="btn btn-xs btn-danger" value="">Ban</button><button class="btn btn-xs btn-info" value="">Send Email</button></td>
+
         </tr>
         <tr>
             <td>Kullanıcı 2</td>
-            <td>Film adı</td>
-            <td>Yorum</td>
+            <td>1</td>
+            <td>Normal</td>
+            <td><button class="btn btn-xs btn-warning" value="">Warn</button><button class="btn btn-xs btn-danger" value="">Ban</button><button class="btn btn-xs btn-info" value="">Send Email</button></td>
+
         </tr>
         <tr>
             <td>Kullanıcı 3</td>
-            <td>Film adı</td>
-            <td>Yorum</td>
+            <td>3</td>
+            <td>3 günlük susturuldu</td>
+            <td><button class="btn btn-xs btn-warning" value="">Warn</button><button class="btn btn-xs btn-danger" value="">Ban</button><button class="btn btn-xs btn-info" value="">Send Email</button></td>
+
         </tr>
     </tbody>
        </table>
@@ -42,26 +65,162 @@
     <div class="tab-pane fade" id="content2" role="tabpanel" aria-labelledby="tab2">
         Yapımcı verileri görüntülenmektedir.
 
-        <table class="table table-hover no-margins">
+        <table class="table table-hover no-margins">  <!-- Yapımcılar sonsuza dek mi yapımcı yoksa süreli mi düşünmek lazım -->
     <thead>
         <tr>
             <th>Yapımcı</th>
-            <th>Film</th>
+            <th>Film Sayısı</th>
+            <th>Yorum Sayısı</th>
+            <th>Durumu</th>
+            <th>Aksiyonlar</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Yapımcı 1</td>
-            <td>Movie name</td>
+            <td>2</td>
+            <td>22</td>
+            <td>Normal</td>
+            <td><button class="btn btn-xs btn-warning" value="">Demote to User</button><button class="btn btn-xs btn-warning" value="">Warn</button><button class="btn btn-xs btn-danger" value="">Ban</button><button class="btn btn-xs btn-info" value="">Send Email</button></td>
+                    
         </tr>
         <tr>
             <td>Yapımcı 2</td>
-            <td>Movie name</td>
+            <td>3</td>
+            <td>12</td>
+            <td>Normal</td>
+            <td><button class="btn btn-xs btn-warning" value="">Demote to User</button><button class="btn btn-xs btn-warning" value="">Warn</button><button class="btn btn-xs btn-danger" value="">Ban</button><button class="btn btn-xs btn-info" value="">Send Email</button></td>
+            
         </tr>
     </tbody>
        </table>
         </div>
-  </div>
+    <div class="tab-pane fade" id="content3" role="tabpanel" aria-labelledby="tab3">
+        Film Türleri görüntülenmektedir.
+
+        <table class="table table-hover no-margins">
+            <thead>
+                <tr>
+                    <th>Film Türü</th>
+                    <th>Film Sayısı</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Korku</td>
+                    <td>12</td>
+                </tr>
+                <tr>
+                    <td>Dram</td>
+                    <td>20</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="content4" role="tabpanel" aria-labelledby="tab4">
+        Filmlerin verileri görüntülenmektedir.
+
+        <table class="table table-hover no-margins">
+            <thead>
+                <tr>
+                    <th>Filmin Adı</th>
+                    <th>Filmin Türleri</th>
+                    <th>Filmin Durumu</th>
+                    <th>Filmin Yorum Sayısı</th>
+                    <th>Filmin Favorilenme Sayısı</th>
+                    <th>Filmin Ortalama Cinemagnesia Puanı</th>
+                    <th>Filmin Sahip Olduğu Yapımcı</th>
+                    <th>Aksiyonlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Yüzüklerin Efendisi</td>
+                    <td>Fantastik, Aksiyon, Macera</td>
+                    <td>Yayında</td>
+                    <td>154</td>
+                    <td>300</td>
+                    <td>7,7</td>
+                    <td>Yapımcı 1</td>
+                    <td><button class="btn btn-xs btn-warning" value="">Yayından Kaldır</button><button class="btn btn-xs btn-success" value="">Öne Çıkar</button></td>
+
+                </tr>
+                <tr>
+                    <td>Korkunç Bir Film</td>
+                    <td>Korku, Komedi</td>
+                    <td>Onay Bekliyor</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>Yapımcı 2</td>
+                    <td><button class="btn btn-xs btn-warning" value="">Yayınla</button><button class="btn btn-xs btn-success disabled" value="">Öne Çıkar</button></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="content5" role="tabpanel" aria-labelledby="tab5">
+        Yönetmen verileri görüntülenmektedir.
+
+        <table class="table table-hover no-margins">
+            <thead>
+                <tr>
+                    <th>Yönetmen</th>
+                    <th>Film Sayısı</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Yönetmen 1</td>
+                    <td>3</td>
+                   
+                </tr>
+                <tr>
+                    <td>Yönetmen 2</td>
+                    <td>1</td>
+                   
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="content6" role="tabpanel" aria-labelledby="tab6">
+        Yorumlar görüntülenmektedir.
+
+        <table class="table table-hover no-margins">
+            <thead>
+                <tr>
+                    <th>Yorum</th>
+                    <th>Film</th>
+                    <th>Kullanıcı</th>
+                    <th>Durumu</th>
+                    <th>Spoiler İçeriyor mu?</th>
+                    <th>Aksiyonlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Yorum</td>
+                    <td>Film 1</td>
+                    <td>Kullanıcı 2</td>
+                    <td>Aktif</td>
+                    <td>Hayır</td>
+                    <td><button class="btn btn-xs btn-danger" value="">Delete Comment</button><button class="btn btn-xs btn-warning" value="">Toggle Spoiler</button><button class="btn btn-xs btn-danger" value="">Ban User</button></td>
+
+                </tr>
+                <tr>
+                    <td>Yorum</td>
+                    <td>Film 2</td>
+                    <td>Kullanıcı 2</td>
+                    <td>Beklemede</td>
+                    <td>Hayır</td>
+                    <td><button class="btn btn-xs btn-danger" value="">Delete Comment</button><button class="btn btn-xs btn-warning" value="">Toggle Spoiler</button><button class="btn btn-xs btn-danger" value="">Ban User</button></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+  
 
  
 
