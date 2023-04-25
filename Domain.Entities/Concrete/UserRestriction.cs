@@ -18,7 +18,6 @@ namespace Domain.Entities.Concrete
         public DateTime BannedEndDate;
 
         public string UserId;
-        public string bannedbyAdminUserId;
 
     }
 }

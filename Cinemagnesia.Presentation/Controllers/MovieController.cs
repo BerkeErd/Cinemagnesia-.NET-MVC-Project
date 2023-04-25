@@ -32,6 +32,11 @@ namespace Cinemagnesia.Presentation.Controllers
                 return Ok(body);
             }
         }
+
+        public IActionResult MoviePage()
+        {
+            return View();
+        }
     }
 }
 

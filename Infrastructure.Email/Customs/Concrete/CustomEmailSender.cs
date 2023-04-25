@@ -48,7 +48,7 @@ namespace Infrastructure.Email.Customs.Concrete
             using var message = new MailMessage();
             message.To.Add(new MailAddress(email));
             message.From = new MailAddress("profitdeneme@yandex.com");
-            message.Subject = "Hesabınızın Onaylanması İçin Lütfen E-Postanızı Onaylayın";
+            message.Subject = "Cinemagnesia Hesabınızın Onaylanması İçin Lütfen E-Postanızı Onaylayın";
             message.Body = @"<html>
         <body style='font-family: Arial, sans-serif; font-size: 14px; color: #000000;'>
             <p style='color: #e50914;'>Sayın Film Sever,</p>
@@ -70,6 +70,41 @@ namespace Infrastructure.Email.Customs.Concrete
             await client.SendMailAsync(message);
         }
 
+        public Task SendBannedNotification(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SendMuteNotification(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task SendForgotPasswordEmail(string email, string callbackUrl)
+        {
+            using var message = new MailMessage();
+            message.To.Add(new MailAddress(email));
+            message.From = new MailAddress("profitdeneme@yandex.com");
+            message.Subject = "Cinemagnesia Şifre Sıfırlama Talebi";
+            message.Body = @"<body style='font-family: Arial, sans-serif; font-size: 14px; color: #000000;'>
+                            <p style='color: #e50914;'>Merhaba,</p>
+                            <p>Şifrenizi sıfırlamak için aşağıdaki bağlantıya tıklayabilirsiniz:</p>
+                            <p style='color: red;'><a href='" + HtmlEncoder.Default.Encode(callbackUrl) + @"' style='background-color: #e50914; border: none; color: #ffffff; padding: 10px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin-bottom: 15px;'>Şifre Sıfırlama</a></p>
+                            <p>Eğer şifrenizi sıfırlamak istemediyseniz, bu mesajı görmezden gelebilirsiniz.</p>
+                            <p>İyi günler!</p>
+                            <p style='color: #e50914; font-weight: bold;'>Cinemagnesia Ekibi</p>
+                            </body>";
+
+
+
+            message.IsBodyHtml = true;
+            using var client = new SmtpClient("smtp.yandex.com.tr", 587);
+            client.EnableSsl = true;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("profitdeneme@yandex.com", "mqpgpfyybwmonsks");
+
+            await client.SendMailAsync(message);
+        }
 
     }
 }
