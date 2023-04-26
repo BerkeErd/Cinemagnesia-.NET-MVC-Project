@@ -4,6 +4,7 @@ using AutoMapper;
 using Cinemagnesia.Presentation.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 
 namespace Cinemagnesia.Presentation.Controllers
@@ -41,7 +42,15 @@ namespace Cinemagnesia.Presentation.Controllers
 
 
             }
-            return Ok("Eklenmedi");
+            List<string> errors = new List<string>();
+            foreach (ModelStateEntry modelStateEntry in ModelState.Values)
+            {
+                foreach (ModelError error in modelStateEntry.Errors)
+                {
+                    errors.Add(error.ErrorMessage);
+                }
+            }
+            return Ok(errors);
         }
     }
 }
