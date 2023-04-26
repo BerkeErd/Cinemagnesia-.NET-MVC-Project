@@ -10,7 +10,7 @@ namespace Application.Interfaces.AppInterfaces
 {
     public interface IGenreService
     {
-        IEnumerable<GenreDto> GetAllGenres();
+        List<GenreDto> GetAllGenres();
         GenreDto AddGenre(GenreDto genre);
         void RemoveGenre(string id);
         void UpdateGenre(string id, Genre genre);

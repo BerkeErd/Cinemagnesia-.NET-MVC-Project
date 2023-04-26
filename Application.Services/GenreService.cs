@@ -27,10 +27,10 @@ namespace Application.Services
             var dbGenreDto = _mapper.Map<GenreDto>(response);
             return dbGenreDto;
         }
-        public IEnumerable<GenreDto> GetAllGenres()
+        public List<GenreDto> GetAllGenres()
         {
-            var genres = _genreRepository.GetAllAsync().Result.AsQueryable();
-            var genreDtos = _mapper.ProjectTo<GenreDto>(genres);
+            var genres = _genreRepository.GetAllAsync().GetAwaiter().GetResult();
+            var genreDtos = _mapper.Map<List<GenreDto>>(genres);
             return genreDtos;
         }
 

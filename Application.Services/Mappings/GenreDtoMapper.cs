@@ -15,7 +15,6 @@ namespace Application.Services.Mappings
         {
             CreateMap<GenreDto, Genre>().ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<Genre, GenreDto>();
-
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Cinemagnesia.Presentation.Mappings
             CreateMap<AddGenreViewModel, GenreDto>();
 
             CreateMap<GenreDto, AddGenreViewModel>(); 
+            CreateMap<GenreDto,GenreNameViewModel>();
         }
     }
 }
