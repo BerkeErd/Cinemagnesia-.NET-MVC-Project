@@ -35,6 +35,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item"><a class="nav-link flaming-text" id="admin-panel" href="~/Admin" style="color: red;">Admin Paneli</a></li>
+                        }
+                        @if (User.IsInRole("Productor"))
+                        {
+                            <li class="nav-item"><a class="nav-link" id="productor-page" asp-page="~/?" >Yapımcı Sayfası</a></li>
+                        }
                     </ul>
                     <ul class="navbar-nav">
                         @if (SignInManager.IsSignedIn(User))

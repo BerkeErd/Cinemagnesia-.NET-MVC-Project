@@ -10,11 +10,11 @@ namespace Application.Interfaces.AppInterfaces
 {
     public interface IProductorRequestService
     {
-        ProductorRequest GetProductorRequestById(string productorRequestId);
+        ProductorRequestDto GetProductorRequestById(string productorRequestId);
         ProductorRequestDto AddProductorRequest(AddProductorRequestDto productorRequest);
 
         List<ProductorRequestDto> GetAllProductorRequest();
         void DeleteProductorRequest(string id);
-        void UpdateProductorRequest(string id, ProductorRequest productorRequest);  
+        void UpdateProductorRequest(string id, ProductorRequestDto productorRequest);  
     }
 }

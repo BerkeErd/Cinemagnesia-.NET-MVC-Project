@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Concrete;
+﻿using Application.Dtos;
+using Domain.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Application.Interfaces.AppInterfaces
     public interface ICompanyService
     {
         IEnumerable<Company> GetAllCompanies();
-        void AddCompany(Company company);
+        AddCompanyDto AddCompany(AddCompanyDto company);
         void RemoveCompany(string id);
         void UpdateCompany(string id, Company company);
         Company GetById(string id);
