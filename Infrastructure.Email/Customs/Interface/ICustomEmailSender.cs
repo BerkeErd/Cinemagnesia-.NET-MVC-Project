@@ -10,9 +10,12 @@ namespace Infrastructure.Email.Customs.Interface
     {
 
         Task SendCustomEmailAsync(string email, string subject, string htmlMessage);
-        Task SendBannedNotification(string email);
-        Task SendMutedNotification(string email);
+        Task SendBannedNotificationEmailAsync(string email, int? days);
+        Task SendMutedNotificationEmailAsync(string email, int? days);
         Task SendConfirmationEmailAsync(string email, string callback);
-        Task SendForgotPasswordEmail(string email, string callback);
+        Task SendForgotPasswordEmailAsync(string email, string callback);
+        Task SendProductorRequestCreatedEmailAsync(string email);
+        Task SendProductorRequestApprovedEmailAsync(string email);
+        Task SendProductorRequestRejectedEmailAsync(string email);
     }
 }
