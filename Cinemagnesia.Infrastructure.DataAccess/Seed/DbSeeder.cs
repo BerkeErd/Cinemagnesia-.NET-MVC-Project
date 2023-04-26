@@ -12,7 +12,7 @@ namespace Infrastructure.DataAccess.Seed
 {
     public class DbSeeder
     {
-        public static void Seed(ApplicationDbContext dbContext ,UserManager<ApplicationUser> userManager,RoleManager<IdentityRole>roleManager)
+        public static void Seed(ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             dbContext.Database.Migrate();
             AdminSeed.InitializeAsync(userManager, roleManager).Wait();
