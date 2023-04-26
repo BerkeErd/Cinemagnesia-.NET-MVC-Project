@@ -34,10 +34,11 @@
                     <table class="table table-striped table-bordered table-hover" id="productorRequestTable">
                         <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Email</th>
                                 <th>Şirket Adı</th>
                                 <th>Vergi No</th>
+                                <th>Kuruluş tarihi</th>
+                                <th>Durum</th>
                                 <th>Başvuru tarihi</th>
                                 <th>Aksiyonlar</th>
 
@@ -90,8 +91,32 @@
                                     .css('font-size', 'inherit');
                             }
                         }
-                    ]
-
+                    ],
+                ajax: {
+                    url: '/Admin/ProductorRequest/ListProductorRequest',
+                    type: 'GET',
+                    success: function (data) {
+                        var table = $('#productorRequestTable').DataTable();
+                        console.log(data);
+                        table.clear();
+                        $.each(data, function (key, value) {
+                            var html = '<tr>' +
+                                '<td>' + value.email + '</td>' +
+                                '<td>' + value.companyName + '</td>' +
+                                '<td>' + value.taxNumber + '</td>' +
+                                '<td>' + value.foundDate + '</td>' +
+                                '<td>' + (value.approvalStatus == 0 ? 'Bekliyor' : '') + '</td>' +
+                                '<td>' + value.applicationDate + '</td>' +
+                                '<td>' + '<button class="btn btn-xs btn-warning" value="' + value.id + '">Onayla</button> ' + '<button class="btn btn-xs btn-danger" value="' + value.id + '">Reddet</button>' + '</td>' +
+                                '</tr>';
+                            table.row.add($(html)).draw();
+                        });
+                    },
+                    error: function (data, message) {
+                        console.log(data, message)
+                    }
+                }
+                    
                 });
 
 

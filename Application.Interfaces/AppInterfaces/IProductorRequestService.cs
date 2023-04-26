@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Concrete;
+﻿using Application.Dtos;
+using Domain.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,9 @@ namespace Application.Interfaces.AppInterfaces
     public interface IProductorRequestService
     {
         ProductorRequest GetProductorRequestById(string productorRequestId);
-        void AddProductorRequest(ProductorRequest productorRequest);
+        ProductorRequestDto AddProductorRequest(AddProductorRequestDto productorRequest);
+
+        List<ProductorRequestDto> GetAllProductorRequest();
         void DeleteProductorRequest(string id);
         void UpdateProductorRequest(string id, ProductorRequest productorRequest);  
     }

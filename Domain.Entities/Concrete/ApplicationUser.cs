@@ -21,6 +21,8 @@ public class ApplicationUser : IdentityUser
     public string ProfilePicture { get; set; }
     public ICollection<Movie> RatedMovies { get; set; }
     public ICollection<MovieComment> MovieComments { get; set; }
+    public string? CompanyId { get; set; }
+    public Company? Company { get; set; }
 
 }
 

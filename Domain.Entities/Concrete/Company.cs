@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cinemagnesia.Domain.Domain.Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace Domain.Entities.Concrete
         [Required]
         [MaxLength(20)]
         public string TaxNumber { get; set; }
+        public DateTime FoundDate { get; set; }
+        public ICollection<Movie> Movies { get; set; }
     }
 }

@@ -15,7 +15,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     DbSet<CastMember> CastMembers { get; set; }
     DbSet<Company> Companies { get; set; }
-    DbSet<CompanyUser> CompanyUsers { get; set; }
     DbSet<Director> Directors { get; set; }
     DbSet<Genre> Genres { get; set; }
     DbSet<Movie> Movies { get; set; }
@@ -28,5 +27,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
     }
 }

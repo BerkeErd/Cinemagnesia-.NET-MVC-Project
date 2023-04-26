@@ -4,6 +4,7 @@ using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230425104707_Productor2")]
+    partial class Productor2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,7 +116,9 @@ namespace Infrastructure.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
+                    b.HasIndex("CompanyId")
+                        .IsUnique()
+                        .HasFilter("[CompanyId] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -162,8 +166,9 @@ namespace Infrastructure.DataAccess.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("FoundDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -325,10 +330,6 @@ namespace Infrastructure.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CompanyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -561,8 +562,8 @@ namespace Infrastructure.DataAccess.Migrations
             modelBuilder.Entity("Cinemagnesia.Domain.Domain.Entities.Concrete.ApplicationUser", b =>
                 {
                     b.HasOne("Domain.Entities.Concrete.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
+                        .WithOne("User")
+                        .HasForeignKey("Cinemagnesia.Domain.Domain.Entities.Concrete.ApplicationUser", "CompanyId");
 
                     b.Navigation("Company");
                 });
@@ -733,6 +734,9 @@ namespace Infrastructure.DataAccess.Migrations
             modelBuilder.Entity("Domain.Entities.Concrete.Company", b =>
                 {
                     b.Navigation("Movies");
+
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Concrete.Movie", b =>

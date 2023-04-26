@@ -4,6 +4,7 @@ using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230425100017_Productor")]
+    partial class Productor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,7 +116,9 @@ namespace Infrastructure.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
+                    b.HasIndex("CompanyId")
+                        .IsUnique()
+                        .HasFilter("[CompanyId] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -162,8 +166,9 @@ namespace Infrastructure.DataAccess.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("FoundDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -324,23 +329,15 @@ namespace Infrastructure.DataAccess.Migrations
                     b.Property<int>("ApprovalStatus")
                         .HasColumnType("int");
 
-                    b.Property<string>("CompanyName")
+                    b.Property<string>("CompanyId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FoundDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TaxNumber")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("ProductorRequests");
                 });
@@ -561,8 +558,8 @@ namespace Infrastructure.DataAccess.Migrations
             modelBuilder.Entity("Cinemagnesia.Domain.Domain.Entities.Concrete.ApplicationUser", b =>
                 {
                     b.HasOne("Domain.Entities.Concrete.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
+                        .WithOne("User")
+                        .HasForeignKey("Cinemagnesia.Domain.Domain.Entities.Concrete.ApplicationUser", "CompanyId");
 
                     b.Navigation("Company");
                 });
@@ -615,6 +612,14 @@ namespace Infrastructure.DataAccess.Migrations
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Domain.Entities.Concrete.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
 
                     b.Navigation("User");
                 });
@@ -733,6 +738,9 @@ namespace Infrastructure.DataAccess.Migrations
             modelBuilder.Entity("Domain.Entities.Concrete.Company", b =>
                 {
                     b.Navigation("Movies");
+
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Concrete.Movie", b =>

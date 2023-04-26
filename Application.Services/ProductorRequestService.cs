@@ -1,5 +1,8 @@
-﻿using Application.Interfaces.AppInterfaces;
+﻿using Application.Dtos;
+using Application.Interfaces.AppInterfaces;
+using AutoMapper;
 using Domain.Entities.Concrete;
+using Domain.Interfaces.Repository;
 using Infrastructure.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,16 +14,38 @@ namespace Application.Services
 {
     public class ProductorRequestService : IProductorRequestService
     {
-        private readonly ProductorRequestRepository _productorRequestRepository;
-        public void AddProductorRequest(ProductorRequest productorRequest)
+        private readonly IMapper _mapper;
+        private readonly IProductorRequestRepository _productorRequestRepository;
+
+        public ProductorRequestService(IMapper mapper, IProductorRequestRepository productorRequestRepository)
         {
-            _productorRequestRepository.CreateAsync(productorRequest).Wait();
+            _mapper = mapper;
+            _productorRequestRepository = productorRequestRepository;
+        }
+
+        public ProductorRequestDto AddProductorRequest(AddProductorRequestDto productorRequest)
+        {
+            // eklenecek dto ile entity maplenmesi
+            var addProductorRequest = _mapper.Map<ProductorRequest>(productorRequest);
+            var response = _productorRequestRepository.CreateAsync(addProductorRequest).Result;
+            // dönen entity ile dönüş dto'nun maplenmesi
+            var productorRequestDto = _mapper.Map<ProductorRequestDto>(response);
+            return productorRequestDto;
         }
 
         public void DeleteProductorRequest(string id)
         {
             _productorRequestRepository.DeleteAsync(id).Wait();
         }
+
+        public List<ProductorRequestDto> GetAllProductorRequest()
+        {
+            var response = _productorRequestRepository.GetAllAsync().GetAwaiter().GetResult();
+            var productorRequests = _mapper.Map<List<ProductorRequestDto>>(response);
+
+            return productorRequests;
+        }
+
 
         public ProductorRequest GetProductorRequestById(string productorRequestId)
         {

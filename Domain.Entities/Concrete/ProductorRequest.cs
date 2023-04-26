@@ -13,6 +13,11 @@ namespace Domain.Entities.Concrete
         public ApprovalStatus ApprovalStatus { get; set; } = ApprovalStatus.Waiting;
         public string ApplicationUserId { get; set; }
         public ApplicationUser User { get; set; }
+        public string Email { get; set; }
         public DateTime ApplicationDate { get; set; } =  DateTime.Now;
+        public string CompanyName { get; set; }
+        public int TaxNumber { get; set; }
+        public DateTime FoundDate { get; set; }
+
     }
 }
