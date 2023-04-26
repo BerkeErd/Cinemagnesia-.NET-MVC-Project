@@ -24,10 +24,7 @@ namespace ASPNET_Core_2_1.Controllers
 
         public IActionResult Index()
         {
-            var response = _genreService.GetAllGenres();
-            List<GenreNameViewModel> genreNames = _mapper.Map<List<GenreDto>, List<GenreNameViewModel>>(response);
-
-            return View("Index",genreNames);
+            return View();
         }
 
         public IActionResult Dashboard_2()

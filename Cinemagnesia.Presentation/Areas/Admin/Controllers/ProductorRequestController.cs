@@ -5,6 +5,7 @@ using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using Cinemagnesia.Presentation.Areas.Admin.Models;
 using Domain.Entities.Concrete;
 using Domain.Entities.Constants;
+using Infrastructure.DataAccess.Migrations;
 using Infrastructure.Email.Customs.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -45,33 +46,54 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
         {
            ProductorRequestDto productRequestDto = _productorRequestService.GetProductorRequestById(id);
             // ID'ye göre Request bulunacak. 
-            productRequestDto.ApprovalStatus = ApprovalStatus.Approved;
-            // Request Statusu Approved olacak.
-            _productorRequestService.UpdateProductorRequest(id, productRequestDto);
-            AddCompanyDto companyDto = new AddCompanyDto();
-            companyDto.Name = productRequestDto.CompanyName;
-            companyDto.TaxNumber = productRequestDto.TaxNumber;
-            companyDto.FoundDate = productRequestDto.FoundDate;
-            // Request'in içindeki Company bilgileri Company tablosuna eklenecek.
-            AddCompanyDto company = _companyService.AddCompany(companyDto);
-            // Request'in içindeki UserID'den User bulunacak.
-            ApplicationUser user = await _userManager.FindByIdAsync(productRequestDto.ApplicationUserId);
-            // User'a eklenen company'nin IDsi CompanyID olarak eklenecek.
-            user.CompanyId = company.Id;
-            await _userManager.UpdateAsync(user);
-            // User'ın Rolü Productor olarak değiştirilecek.
-            await _userManager.RemoveFromRoleAsync(user, "User");
-            await _userManager.AddToRoleAsync(user, "Productor");
+            if(productRequestDto.ApprovalStatus != ApprovalStatus.Approved)
+            {
+                productRequestDto.ApprovalStatus = ApprovalStatus.Approved;
+                // Request Statusu Approved olacak.
+                _productorRequestService.UpdateProductorRequest(id, productRequestDto);
+                AddCompanyDto companyDto = new AddCompanyDto();
+                companyDto.Name = productRequestDto.CompanyName;
+                companyDto.TaxNumber = productRequestDto.TaxNumber;
+                companyDto.FoundDate = productRequestDto.FoundDate;
+                // Request'in içindeki Company bilgileri Company tablosuna eklenecek.
+                AddCompanyDto company = _companyService.AddCompany(companyDto);
+                // Request'in içindeki UserID'den User bulunacak.
+                ApplicationUser user = await _userManager.FindByIdAsync(productRequestDto.ApplicationUserId);
+                // User'a eklenen company'nin IDsi CompanyID olarak eklenecek.
+                user.CompanyId = company.Id;
+                await _userManager.UpdateAsync(user);
+                // User'ın Rolü Productor olarak değiştirilecek.
+                await _userManager.RemoveFromRoleAsync(user, "User");
+                await _userManager.AddToRoleAsync(user, "Productor");
+
+                // User'a Mail gönderilecek.
+                await _EmailSender.SendProductorRequestApprovedEmailAsync(user.Email); // SIKINTILI
+                return Ok("Başarıyla onaylandı.");
+            }
+            else
+            {
+                return Ok("Başarısız");
+            }
             
-            // User'a Mail gönderilecek.
-            await _EmailSender.SendProductorRequestApprovedEmailAsync(user.Email);
-            return Ok("Başarıyla onaylandı.");
         }
-        //public IActionResult RejectProductorRequest(string id)
-        //{
-        //    // ID'ye göre Request bulunacak. 
-        //    // Request Statusu Rejected olacak.
-        //    // User'a Mail gönderilecek.
-        //}
+        public async Task<IActionResult> RejectProductorRequest(string id)
+        {
+            ProductorRequestDto productRequestDto = _productorRequestService.GetProductorRequestById(id);
+            if (productRequestDto.ApprovalStatus != ApprovalStatus.Approved)
+            {
+                // ID'ye göre Request bulunacak. 
+                productRequestDto.ApprovalStatus = ApprovalStatus.Rejected;
+                _productorRequestService.UpdateProductorRequest(id, productRequestDto);
+                // Request Statusu Rejected olacak.
+                ApplicationUser user = await _userManager.FindByIdAsync(productRequestDto.ApplicationUserId);
+                await _EmailSender.SendProductorRequestRejectedEmailAsync(user.Email); // SIKINTILI
+                // User'a Mail gönderilecek.
+                return Ok("Başarıyla reddedildi.");
+            }
+            else
+            {
+                return Ok("Başarıyla reddedilemedi.");
+            }
+        }
     }
 }

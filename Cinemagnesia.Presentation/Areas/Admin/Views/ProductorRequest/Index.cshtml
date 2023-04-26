@@ -101,15 +101,27 @@
                         console.log(data);
                         table.clear();
                         $.each(data, function (key, value) {
+                            var approvalText = value.approvalStatus == 0 ? 'Bekliyor' :
+                                               value.approvalStatus == 1 ? 'Reddedildi' :
+                                               value.approvalStatus == 2 ? 'Kabul Edildi' :
+                                               '';
+
                             var html = '<tr>' +
                                 '<td>' + value.email + '</td>' +
                                 '<td>' + value.companyName + '</td>' +
                                 '<td>' + value.taxNumber + '</td>' +
                                 '<td>' + value.foundDate + '</td>' +
-                                '<td>' + (value.approvalStatus == 0 ? 'Bekliyor' : '') + '</td>' +
+                                '<td>' + approvalText + '</td>' +
                                 '<td>' + value.applicationDate + '</td>' +
-                                '<td>' + '<button class="btn btn-xs btn-warning approve-btn" value="' + value.id + '">Onayla</button> ' + '<button class="btn btn-xs btn-danger reject-btn" value="' + value.id + '">Reddet</button>' + '</td>' +
+                                '<td>' +
+                                (value.approvalStatus == 0 ?
+                                    '<button class="btn btn-xs btn-warning approve-btn" value="' + value.id + '">Onayla</button> ' +
+                                    '<button class="btn btn-xs btn-danger reject-btn" value="' + value.id + '">Reddet</button>' :
+                                    ''
+                                ) +
+                                '</td>' +
                                 '</tr>';
+
                             table.row.add($(html)).draw();
                         });
                     },
@@ -123,19 +135,22 @@
 
             // Approve Start
             $('#productorRequestTable').on('click', '.approve-btn', function () {
-               var buttonId = $(this).val();
+                var buttonId = $(this).val();
+                var row = $(this).closest('tr');
                 $.ajax({
                     url: "ProductorRequest/ApproveProductorRequest",
                     type: 'POST',
                     data: { id: buttonId },
-                    success: function(response){
+                    success: function (response) {
                         console.log(response);
+                        $('#productorRequestTable').row(row).invalidate().draw();
+                        
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         // Hata işleme
                         console.log(xhr.responseText);
+                        $('#productorRequestTable').row(row).invalidate().draw();
                     }
-
                 })
             });
             // Approve End
