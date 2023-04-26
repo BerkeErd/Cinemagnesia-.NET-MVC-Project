@@ -72,7 +72,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendForgotPasswordEmail(Input.Email,callbackUrl);
+                await _emailSender.SendForgotPasswordEmailAsync(Input.Email,callbackUrl);
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
