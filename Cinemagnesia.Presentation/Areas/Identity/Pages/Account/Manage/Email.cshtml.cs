@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Cinemagnesia.Domain.Domain.Entities.Concrete;
+using Infrastructure.Email.Customs.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +21,12 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly ICustomEmailSender _emailSender;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+			ICustomEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -70,7 +71,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "Yeni Email")]
             public string NewEmail { get; set; }
         }
 
@@ -124,16 +125,13 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
                     pageHandler: null,
                     values: new { area = "Identity", userId = userId, email = Input.NewEmail, code = code },
                     protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(
-                    Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                await _emailSender.SendConfirmationEmailAsync(Input.NewEmail,callbackUrl);
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                StatusMessage = "Email adresi değişikliği için Aktivasyon link'i emailinize gönderildi. Lütfen emailinizi kontrol edin.";
                 return RedirectToPage();
             }
 
-            StatusMessage = "Your email is unchanged.";
+            StatusMessage = "Email adresiniz değiştirilmedi.";
             return RedirectToPage();
         }
 
@@ -160,12 +158,9 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
                 pageHandler: null,
                 values: new { area = "Identity", userId = userId, code = code },
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
-                email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+            await _emailSender.SendConfirmationEmailAsync(email,callbackUrl);
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "Email Aktivasyon link'i emailinize gönderildi. Lütfen emailinizi kontrol edin.";
             return RedirectToPage();
         }
     }

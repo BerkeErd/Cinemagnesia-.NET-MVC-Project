@@ -55,7 +55,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
+            [Display(Name = "Şu anki şifre")]
             public string OldPassword { get; set; }
 
             /// <summary>
@@ -63,18 +63,18 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Şifre en az {2} en fazla {1} karakter uzunluğunda olmalıdır.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "Yeni şifre")]
             public string NewPassword { get; set; }
 
             /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
+            /// Bu API, ASP.NET Core Identity varsayılan UI altyapısını destekler ve doğrudan kodunuzdan kullanılmak için tasarlanmamıştır.
+            /// Bu API, gelecekteki sürümlerde değişebilir veya kaldırılabilir.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Display(Name = "Yeni şifreyi onayla")]
+            [Compare("NewPassword", ErrorMessage = "Yeni şifre ile şifre onayı eşleşmiyor.")]
             public string ConfirmPassword { get; set; }
         }
 

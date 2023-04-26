@@ -8,46 +8,49 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Movie Trailer" frameborder="0" allowfullscreen></iframe>
+            <img src="https://tr.web.img4.acsta.net/pictures/bzp/01/27070.jpg" class="img-fluid" alt="Movie Cover Picture">
         </div>
         <div class="col-md-6">
             <h2>Yüzüklerin Efendisi</h2>
-            <p>Bu filmin açıklaması buraya yazılacak.</p>
             <p><strong>Director:</strong> Yönetmen</p>
             <p><strong>Genre:</strong> Bilim-Kurgu, Aksiyon, Macera</p>
             <p><strong>Length:</strong> 93 Dakika</p>
             <div class="stars">
-                <i class="bi bi-star-fill"></i> 9.2
+                <i class="bi bi-star-fill"></i> 9.3 / 10 (This Website)
             </div>
-            <div class="form-group">
-                <label for="comment">Yorum Bırak:</label>
-                <textarea class="form-control" id="comment" rows="3"></textarea>
+            <div class="d-flex flex-column mb-3">
+                <span class="text-muted">IMDb Rating</span>
+                <span class="fs-4">8.9 <i class="bi bi-star"></i></span>
             </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="has-spoiler">
-                <label class="form-check-label" for="has-spoiler">Spoilers İçerir</label>
+            <div class="mb-3">
+                <label for="movie-description" class="form-label">Description:</label>
+                <p id="movie-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod est vel leo vestibulum elementum. Nulla facilisi. Sed ac nisl diam. Suspendisse potenti. Praesent imperdiet ullamcorper libero in aliquam. Nam eu sagittis lacus, vel pharetra orci.</p>
             </div>
-            <button type="button" class="btn btn-link"><i class="bi bi-heart"></i> Favorilere Ekle</button>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Durum: None
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Watched</a>
-                    <a class="dropdown-item" href="#">Want to Watch</a>
+            <div class="mb-3">
+                <label for="cast-members" class="form-label">Cast:</label>
+                <p id="cast-members">Cast Member 1, Cast Member 2, Cast Member 3, Cast Member 4</p>
+            </div>
+            <div class="mb-3">
+                <label for="movie-trailer" class="form-label">Trailer:</label>
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Movie Trailer" allowfullscreen></iframe>
                 </div>
             </div>
-            <div class="ratings">
-                <div class="rating-item">
-                    <i class="bi bi-star"></i> 4.8
-                </div>
-                <div class="rating-item">
-                    <span class="text-muted">IMDB:</span> <i class="bi bi-star"></i> 9.3
+            <div class="d-flex align-items-center justify-content-between">
+                <button type="button" class="btn btn-danger"><i class="bi bi-heart"></i> Add to Favorites</button>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="movie-status-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        None
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="movie-status-dropdown">
+                        <li><a class="dropdown-item" href="#">Watched</a></li>
+                        <li><a class="dropdown-item" href="#">Want to Watch</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-md-12">
             <h3>Yorumlar:</h3>
             <ul class="list-unstyled">
