@@ -18,6 +18,7 @@ namespace Application.Services.Mappings
             CreateMap<ProductorRequest, ProductorRequestDto>();
 
             CreateMap<ProductorRequestDto, ProductorRequest>();
+
         }
     }
 }

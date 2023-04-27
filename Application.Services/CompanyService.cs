@@ -1,4 +1,6 @@
-﻿using Application.Interfaces.AppInterfaces;
+﻿using Application.Dtos;
+using Application.Interfaces.AppInterfaces;
+using AutoMapper;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
 using System;
@@ -12,14 +14,21 @@ namespace Application.Services
     public class CompanyService : ICompanyService
     {
         private readonly ICompanyRepository _companyRepository;
-        public CompanyService(ICompanyRepository companyRepository)
+        private readonly IMapper _mapper;
+        public CompanyService(ICompanyRepository companyRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _companyRepository = companyRepository;
         }
 
-        public void AddCompany(Company company)
+        public AddCompanyDto AddCompany(AddCompanyDto addCompanyDto)
         {
-            _companyRepository.CreateAsync(company).Wait();
+            var company = _mapper.Map<Company>(addCompanyDto);
+            var response = _companyRepository.CreateAsync(company).GetAwaiter().GetResult();
+
+            var companydto = _mapper.Map<AddCompanyDto>(response);
+            return companydto;
+
         }
 
         public IEnumerable<Company> GetAllCompanies()

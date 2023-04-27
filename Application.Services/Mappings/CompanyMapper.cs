@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 
 namespace Application.Services.Mappings
 {
-    public class GenreDtoMapper : Profile
+    public class CompanyMapper : Profile
     {
-        public GenreDtoMapper() 
+        public CompanyMapper()
         {
-            CreateMap<GenreDto, Genre>().ForMember(dest => dest.Id, opt => opt.Ignore());
-            CreateMap<Genre, GenreDto>();
+            CreateMap<AddCompanyDto, Company>().ForMember(dest => dest.Id, opt => opt.Ignore()); 
+
+            CreateMap<Company, AddCompanyDto>();
+
         }
     }
 }

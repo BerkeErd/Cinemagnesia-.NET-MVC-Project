@@ -71,6 +71,7 @@
         <script type="text/javascript">
             $(document).ready(function () {
 
+            // List Start
             $('#productorRequestTable').DataTable({
                     pageLength: 25,
                     dom: '<"html5buttons"B>lTfgitp',
@@ -100,15 +101,27 @@
                         console.log(data);
                         table.clear();
                         $.each(data, function (key, value) {
+                            var approvalText = value.approvalStatus == 0 ? '<i class="fas fa-clock"></i>' :
+                                value.approvalStatus == 1 ? '<i class="fas fa-times"></i>' :
+                                    value.approvalStatus == 2 ? '<i class="fas fa-check"></i>' :
+                                               '';
+
                             var html = '<tr>' +
                                 '<td>' + value.email + '</td>' +
                                 '<td>' + value.companyName + '</td>' +
                                 '<td>' + value.taxNumber + '</td>' +
                                 '<td>' + value.foundDate + '</td>' +
-                                '<td>' + (value.approvalStatus == 0 ? 'Bekliyor' : '') + '</td>' +
+                                '<td class="text-center">' + approvalText + '</td>' +
                                 '<td>' + value.applicationDate + '</td>' +
-                                '<td>' + '<button class="btn btn-xs btn-warning" value="' + value.id + '">Onayla</button> ' + '<button class="btn btn-xs btn-danger" value="' + value.id + '">Reddet</button>' + '</td>' +
+                                '<td>' +
+                                (value.approvalStatus == 0 ?
+                                    '<button class="btn btn-xs btn-warning approve-btn" value="' + value.id + '">Onayla</button> ' +
+                                    '<button class="btn btn-xs btn-danger reject-btn" value="' + value.id + '">Reddet</button>' :
+                                    ''
+                                ) +
+                                '</td>' +
                                 '</tr>';
+
                             table.row.add($(html)).draw();
                         });
                     },
@@ -118,9 +131,100 @@
                 }
                     
                 });
+            // List End
+
+            // Approve Start
+            $('#productorRequestTable').on('click', '.approve-btn', function () {
+                var buttonId = $(this).val();
+                var row = $(this).closest('tr');
+                $.ajax({
+                    url: "ProductorRequest/ApproveProductorRequest",
+                    type: 'POST',
+                    data: { id: buttonId },
+                    success: function (response) {
+                        console.log(response);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Başarıyla Kabul Edildi',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        var table = $('#productorRequestTable').DataTable();
+                        var satir = table.row(row);
+                        var cell = table.cell(satir, 4); // 5. sütunun index'i 4 olacak
+                        cell.data('<i class="fas fa-check"></i>');
+                        var cell = table.cell(satir, 6);
+                        cell.data('Onaylandı');
+                        // Satırı yenileyin
+                        table.row(satir).invalidate().draw(false);
+                        
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Beklenmedik bir hata ile karşılaştık.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                })
+            });
+
+
+            // Approve End
+            //
+            // Reject Start
+            $('#productorRequestTable').on('click', '.reject-btn', function () {
+                var buttonId = $(this).val();
+                var row = $(this).closest('tr');
+                $.ajax({
+                    url: "ProductorRequest/RejectProductorRequest",
+                    type: 'POST',
+                    data: { id: buttonId },
+                    success: function (response) {
+                        console.log(response);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Başarıyla Reddedildi',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        var table = $('#productorRequestTable').DataTable();
+                        var satir = table.row(row);
+                        var cell = table.cell(satir, 4); // 5. sütunun index'i 4 olacak
+                        cell.data('<i class="fas fa-times"></i>');
+
+                        var cell = table.cell(satir, 6);
+                        cell.data('Reddedildi');
+
+                        // Satırı yenileyin
+                        table.row(satir).invalidate().draw(false);
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Beklenmedik bir hata ile karşılaştık.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                })
+            });
+            // Reject End
+
 
 
             });
+
+
+
 
 
         </script>

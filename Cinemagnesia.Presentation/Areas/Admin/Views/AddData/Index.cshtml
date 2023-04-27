@@ -4,23 +4,22 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-       
-            <h3>Kategori Ekle</h3>
-            <div class="row">
-                <div class="col-lg-2">
-                    <label for="name" class="form-label mt-2">Kategori İsmi:</label>
-                </div>
-                <div class="col-lg-10">
-                    <input id="txtGenre" type="text" name="name" class="form-control" />
-                </div>
-                <div class="col-lg-12">
-                    <button id="btnAddGenre"  class="btn btn-primary mt-3">Ekle</button>
-                </div>
+
+        <h3>Kategori Ekle</h3>
+        <div class="row">
+            <div class="col-lg-2">
+                <label for="name" class="form-label mt-2">Kategori İsmi:</label>
             </div>
-        
+            <div class="col-lg-10">
+                <input id="txtGenre" type="text" name="name" class="form-control" />
+            </div>
+            <div class="col-lg-12">
+                <button id="btnAddGenre" class="btn btn-primary mt-3">Ekle</button>
+            </div>
+        </div>
+
     </div>
     <div class="col-lg-2">
-
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -58,9 +57,8 @@
                                 <th>Aksiyonlar</th>
                             </tr>
                         </thead>
-                       <tbody>
-
-                       </tbody>
+                        <tbody>
+                        </tbody>
 
                     </table>
 
@@ -71,19 +69,22 @@
 
 </div>
 @section Styles {
-        <environment names="Development,Staging,Production">
-            <link rel="stylesheet" href="~/lib/dataTables/datatables.min.css" />
-        </environment>
+    <environment names="Development,Staging,Production">
+        <link rel="stylesheet" href="~/lib/dataTables/datatables.min.css" />
+        <link rel="stylesheet" href="~/lib/sweetalert/dist/sweetalert.css" />
+    </environment>
 }
 
 @section Scripts {
-        <environment names="Development,Staging,Production">
-            <script src="~/lib/dataTables/datatables.min.js"></script>
-            <script src="~/lib/dataTables/dataTables.bootstrap4.min.js"></script>
-        </environment>
+    <environment names="Development,Staging,Production">
+        <script src="~/lib/dataTables/datatables.min.js"></script>
+        <script src="~/lib/dataTables/dataTables.bootstrap4.min.js"></script>
+        <script src="~/lib/sweetalert/dist/sweetalert-dev.js"></script>
+        <script src="~/lib/sweetalert/dist/sweetalert.min.js"></script>
+    </environment>
 
-        <script type="text/javascript">
-            $(document).ready(function () {
+    <script type="text/javascript">
+        $(document).ready(function () {
             $('#genreListTable').DataTable({
                 pageLength: 10,
                 dom: '<"html5buttons"B>lTfgitp',
@@ -123,18 +124,18 @@
                 }
             });
 
-                   
 
-                    $("#btnAddGenre").click(function(){
 
-                        var genre = 
-                        {
-                            name: $("#txtGenre").val()
-                        };
+            $("#btnAddGenre").click(function () {
 
-                        console.log(genre);
+                var genre =
+                {
+                    name: $("#txtGenre").val()
+                };
 
-                    $.ajax({ //BURASI DÜZGÜN ÇALIŞMIYOR
+                console.log(genre);
+
+                    $.ajax({ 
                             url: '/Admin/AddData/AddGenre',
                             type: 'POST',
                             data: genre,
@@ -145,31 +146,33 @@
                                     '<td>' + '<button class="btn btn-xs btn-warning" value="' + response.id + '">Edit</button> ' + '<button class="btn btn-xs btn-danger" value="' + response.id + '">Delete</button>' + '</td>' +
                                     '</tr>';
 
-                                // Tabloya yeni satırı ekleyin
-                                var table = $('#genreListTable').DataTable();
-                               
+                        // Tabloya yeni satırı ekleyin
+                        var table = $('#genreListTable').DataTable();
 
-                                table.row.add($(html)).draw(false);
 
-                                $("#txtGenre").val("");
-                                console.log(response);
+                        table.row.add($(html)).draw(false);
+
+                        $("#txtGenre").val("");
+                        console.log(response);
+
+                        swal('İşlem Başarılı ☺', response.name + ' kategorisi eklendi.', 'success');
                     },
-                            error: function (xhr, textStatus, errorThrown) {
-                                // Hata işleme
-                                console.log(xhr.responseText);
-                            }
-                        });
+                    error: function (xhr, textStatus, errorThrown) {
+                        // Hata işleme
+                        console.log(xhr.responseText);
+                    }
+                });
 
-                    });
-
-
-               
             });
 
-       
-
-            
 
 
-        </script>
+        });
+
+
+
+
+
+
+    </script>
 }

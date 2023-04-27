@@ -47,13 +47,19 @@ namespace Application.Services
         }
 
 
-        public ProductorRequest GetProductorRequestById(string productorRequestId)
+        public ProductorRequestDto GetProductorRequestById(string productorRequestId)
         {
-            return _productorRequestRepository.GetByIdAsync(productorRequestId).Result;
+            var response = _productorRequestRepository.GetByIdAsync(productorRequestId).Result;
+            var responseDTO = _mapper.Map<ProductorRequestDto>(response);
+
+            return responseDTO;
         }
 
-        public void UpdateProductorRequest(string id, ProductorRequest productorRequest)
+        public void UpdateProductorRequest(string id, ProductorRequestDto productorRequestDto)
         {
+            
+            var productorRequest = _mapper.Map<ProductorRequest>(productorRequestDto);
+
             _productorRequestRepository.UpdateAsync(id, productorRequest).Wait();
         }
     }
