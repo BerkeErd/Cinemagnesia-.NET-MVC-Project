@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+      
+
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+
+                    @*sidebar start*@
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Identity/Account/Manage">Profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="AddMovieView" asp-controller="ProductorPage" >Film Ekle</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="ListMovieView" asp-controller="ProductorPage" >Filmlerimin Listesi</a>
+                        </li>
+                    </ul>
+
+                    @*sidebar end*@
+
+                </div>
+                <div class="col-lg-9 col-md-9">
+                    @RenderBody();
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+@await RenderSectionAsync("Scripts", required: false)

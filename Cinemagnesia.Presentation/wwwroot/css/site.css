@@ -229,6 +229,50 @@ body {
 .navbar-nav li a , button{
     color: white !important;
 }
+
+.nav-link {
+    color : white;
+}
+
+h1 {
+    color: white;
+}
+
+h2 {
+    color: white;
+}
+
+h3 {
+    color: white;
+}
+
+h4 {
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+label {
+    color: white;
+}
+
+#registerSubmit {
+    background-color: #E50914 !important;
+}
+
+#login-submit {
+    background-color: #E50914 !important;
+}
+
+a {
+    color: #E50914 !important;
+}
+
+.active {
+    color: black;
+}
 body {
     background: #222222; /* Gradientin baþlangýç rengi */
     background: linear-gradient(to top, #222222, #444444); /* Gradient efekti */
