@@ -101,9 +101,9 @@
                         console.log(data);
                         table.clear();
                         $.each(data, function (key, value) {
-                            var approvalText = value.approvalStatus == 0 ? 'Bekliyor' :
-                                               value.approvalStatus == 1 ? 'Reddedildi' :
-                                               value.approvalStatus == 2 ? 'Kabul Edildi' :
+                            var approvalText = value.approvalStatus == 0 ? '<i class="fas fa-clock"></i>' :
+                                value.approvalStatus == 1 ? '<i class="fas fa-times"></i>' :
+                                    value.approvalStatus == 2 ? '<i class="fas fa-check"></i>' :
                                                '';
 
                             var html = '<tr>' +
@@ -111,7 +111,7 @@
                                 '<td>' + value.companyName + '</td>' +
                                 '<td>' + value.taxNumber + '</td>' +
                                 '<td>' + value.foundDate + '</td>' +
-                                '<td>' + approvalText + '</td>' +
+                                '<td class="text-center">' + approvalText + '</td>' +
                                 '<td>' + value.applicationDate + '</td>' +
                                 '<td>' +
                                 (value.approvalStatus == 0 ?
@@ -143,21 +143,79 @@
                     data: { id: buttonId },
                     success: function (response) {
                         console.log(response);
-                        $('#productorRequestTable').row(row).invalidate().draw();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Başarıyla Kabul Edildi',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        var table = $('#productorRequestTable').DataTable();
+                        var satir = table.row(row);
+                        var cell = table.cell(satir, 4); // 5. sütunun index'i 4 olacak
+                        cell.data('<i class="fas fa-check"></i>');
+                        var cell = table.cell(satir, 6);
+                        cell.data('Onaylandı');
+                        // Satırı yenileyin
+                        table.row(satir).invalidate().draw(false);
                         
                     },
-                    error: function (xhr, textStatus, errorThrown) {
-                        // Hata işleme
-                        console.log(xhr.responseText);
-                        $('#productorRequestTable').row(row).invalidate().draw();
+                    error: function (error) {
+                        console.log(error);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Beklenmedik bir hata ile karşılaştık.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     }
                 })
             });
-            // Approve End
 
+
+            // Approve End
+            //
             // Reject Start
             $('#productorRequestTable').on('click', '.reject-btn', function () {
-                alert("Bu da Çalıştı");
+                var buttonId = $(this).val();
+                var row = $(this).closest('tr');
+                $.ajax({
+                    url: "ProductorRequest/RejectProductorRequest",
+                    type: 'POST',
+                    data: { id: buttonId },
+                    success: function (response) {
+                        console.log(response);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Başarıyla Reddedildi',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        var table = $('#productorRequestTable').DataTable();
+                        var satir = table.row(row);
+                        var cell = table.cell(satir, 4); // 5. sütunun index'i 4 olacak
+                        cell.data('<i class="fas fa-times"></i>');
+
+                        var cell = table.cell(satir, 6);
+                        cell.data('Reddedildi');
+
+                        // Satırı yenileyin
+                        table.row(satir).invalidate().draw(false);
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Beklenmedik bir hata ile karşılaştık.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                })
             });
             // Reject End
 

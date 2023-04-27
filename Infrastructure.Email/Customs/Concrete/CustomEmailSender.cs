@@ -208,7 +208,7 @@ namespace Infrastructure.Email.Customs.Concrete
                     </html>";
 
             message.IsBodyHtml = true;
-            using var client = new SmtpClient("smtp.gmail.com", 587);
+            using var client = new SmtpClient("smtp.yandex.com.tr", 587);
             client.EnableSsl = true;
             client.UseDefaultCredentials = false;
             client.Credentials = new NetworkCredential("profitdeneme@yandex.com", "mqpgpfyybwmonsks");
@@ -221,7 +221,7 @@ namespace Infrastructure.Email.Customs.Concrete
         {
             using var message = new MailMessage();
             message.To.Add(new MailAddress(email));
-            message.From = new MailAddress("noreply@yourdomain.com");
+            message.From = new MailAddress("profitdeneme@yandex.com");
             message.Subject = "Yapımcı Olma İsteğiniz Reddedildi";
             message.Body = @"<html>
                         <head>
@@ -237,7 +237,7 @@ namespace Infrastructure.Email.Customs.Concrete
                     </html>";
 
             message.IsBodyHtml = true;
-            using var client = new SmtpClient("smtp.yourdomain.com", 587);
+            using var client = new SmtpClient("smtp.yandex.com.tr", 587);
             client.EnableSsl = true;
             client.UseDefaultCredentials = false;
             client.Credentials = new NetworkCredential("profitdeneme@yandex.com", "mqpgpfyybwmonsks");
