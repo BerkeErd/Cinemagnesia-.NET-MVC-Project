@@ -18,12 +18,248 @@ body {
 }
 
 .profileImage {
-    width: 75px;
-    height: 75px;
+    width: 50px;
+    height: 50px;
 }
 
     .profileImage img {
         width: 100%;
         height: 100%;
         object-fit: contain;
+    }
+
+.banner_section {
+    width: 100%;
+    float: left;
+    background-image: url(../images/banner-bg.png);
+    height: auto;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.banner_taital {
+    width: 100%;
+    margin: 0 auto;
+    font-size: 100px;
+    color: #000;
+    line-height: 90px;
+    padding-top: 20px;
+    font-family: 'Great Vibes', cursive;
+}
+
+.banner_text {
+    width: 100%;
+    float: left;
+    font-size: 16px;
+    color: #000;
+    margin: 20px 0px;
+}
+
+.read_bt {
+    width: 170px;
+    float: left;
+    padding-top: 30px;
+}
+
+    .read_bt a {
+        width: 100%;
+        float: left;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #252525;
+        text-align: center;
+        padding: 10px 0px;
+        border-radius: 5px;
+        text-transform: uppercase;
+    }
+
+        .read_bt a:hover {
+            color: #ffffff;
+            background-color: #f5ddb6;
+        }
+.product_section {
+    width: 100%;
+    float: left;
+    padding-bottom: 90px;
+}
+
+.product_taital {
+    width: 100%;
+    float: left;
+    font-size: 40px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #232322;
+    font-weight: bold;
+}
+
+.product_text {
+    width: 100%;
+    float: left;
+    font-size: 16px;
+    text-align: center;
+    color: #50504f;
+    margin: 0px;
+}
+
+.product_section_2 {
+    width: 100%;
+    float: left;
+
+}
+
+.product_box {
+    width: 100%;
+    background-color: #ffffff;
+    height: auto;
+    border: 1px solid #7d7d7c;
+    padding: 20px 0px 0px 0px;
+    margin-top: 30px;
+}
+
+.bursh_text {
+    width: 100%;
+    font-size: 20px;
+    text-align: center;
+    color: #1a1c1b;
+    font-weight: 600;
+}
+
+.lorem_text {
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+    color: #50504f;
+    margin: 0px;
+}
+
+.image_1 {
+    width: 100%;
+    text-align: center;
+    margin: 20px 0px;
+    padding: 0px 20px;
+    height: 200px;
+}
+
+.btn_main {
+    width: 100%;
+    display: flex;
+    background-color: #000;
+    height: auto;
+    padding: 20px 10px 13px 10px;
+}
+
+.buy_bt {
+    float: left;
+    width: 100%;
+}
+
+    .buy_bt ul {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .buy_bt li a {
+        float: left;
+        font-size: 12px;
+        color: #252525;
+        padding: 5px 10px;
+        background-color: #ffffff;
+        text-transform: uppercase;
+        margin-right: 5px;
+        border-radius: 40px;
+    }
+
+        .buy_bt li a:hover {
+            background-color: #f5ddb6;
+            color: #ffffff;
+        }
+
+    .buy_bt li.active a {
+        background-color: #f5ddb6;
+        color: #fff;
+    }
+
+.price_text {
+    font-size: 16px;
+    color: #fefefd;
+    width: 42%;
+    padding-top: 5px;
+    text-align: right;
+}
+
+.seemore_bt {
+    width: 170px;
+    margin: 0 auto;
+    padding-top: 60px;
+}
+
+    .seemore_bt a {
+        width: 100%;
+        float: left;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #333333;
+        text-align: center;
+        padding: 10px 0px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+   .seemore_bt a:hover {
+            color: #ffffff;
+            background-color: dimgrey;
+    }
+
+.navbar {
+    background-color: #1c1c1c !important;
+    color:white !important;
+}
+.navbar-light{
+    color:white !important;
+}
+    .navbar-light .navbar-brand {
+        color: #E50914 !important;
+    }
+.navbar-nav li a , button{
+    color: white !important;
+}
+body {
+    background: #222222; /* Gradientin baþlangýç rengi */
+    background: linear-gradient(to top, #222222, #444444); /* Gradient efekti */
+}
+
+.sidebar .list-group-item {
+    background-color: #333333 !important;
+    color: white;
+}
+
+.sidebar h4 {
+    background-color: #1c1c1c !important;
+    padding: 10px;
+}
+
+#btnFilter {
+    margin-top: 2px;
+    background-color: #333333;
+    color: white;
+    border: 2px solid black;
+}
+
+.footer {
+    background-color: #1c1c1c !important;
+}
+
+.buy_bt a {
+    color: #333333;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+    .buy_bt a:hover {
+        color: #660033;
+        text-shadow: 2px 2px 2px #E50914;
     }
