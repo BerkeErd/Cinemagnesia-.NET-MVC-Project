@@ -1,0 +1,26 @@
+﻿@page
+@model PersonalDataModel
+@{
+	ViewData["Title"] = "Yapımcılığı Bırak";
+	ViewData["ActivePage"] = ManageNavPages.ProductorRequest;
+}
+
+<h3>@ViewData["Title"]</h3>
+
+@if (Model.User.IsInRole("Producer"))
+{
+    <div class="row">
+        <div class="col-md-6">
+            <p>Yapımcı olmaktan vazgeçmek mi istiyorsunuz?</p>
+            <p>
+                <strong>Yapımcılık haklarınızdan vazgeçmek istediğinize emin misiniz?</strong>
+            </p>
+            <p>
+                <a id="delete" asp-page="QuitProductorConfirm" class="btn btn-danger">Yapımcılığı Bırak</a>
+            </p>
+        </div>
+    </div>
+}
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,79 @@
+﻿
+
+    @{
+    Layout = "~/Views/ProductorPage/_ProductorLayout.cshtml";
+}
+
+
+@using Domain.Entities.Concrete;
+@model Movie
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post">
+                <div class="form-group">
+                    <label>Title:</label>
+                    <input type="text" class="form-control" asp-for="Title">
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea class="form-control" rows="5" asp-for="Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Release Date:</label>
+                    <input type="date" class="form-control" asp-for="ReleaseDate">
+                </div>
+                <div class="form-group">
+                    <label>IMDB Rating:</label>
+                    <input type="number" class="form-control" asp-for="ImdbRating" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label>Cinemag Avg Score:</label>
+                    <input type="number" class="form-control" asp-for="CinemagAvgScore" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label>Trailer URL:</label>
+                    <input type="url" class="form-control" asp-for="TrailerUrl">
+                </div>
+                <div class="form-group">
+                    <label>Directors:</label>
+                    <select class="form-control" asp-for="Directors" asp-items="ViewBag.Directors"></select>
+                </div>
+                <div class="form-group">
+                    <label>Genres:</label>
+                    <select class="form-control" asp-for="Genres" asp-items="ViewBag.Genres" multiple></select>
+                </div>
+                <div class="form-group">
+                    <label>Cast Members:</label>
+                    <select class="form-control" asp-for="CastMembers" asp-items="ViewBag.CastMembers" multiple></select>
+                </div>
+                <div class="form-group">
+                    <label>Movie Minutes:</label>
+                    <input type="number" class="form-control" asp-for="MovieMinutes">
+                </div>
+                <div class="form-group">
+                    <label>Language:</label>
+                    <input type="text" class="form-control" asp-for="Language">
+                </div>
+                <div class="form-group">
+                    <label>Poster Path:</label>
+                    <input type="text" class="form-control" asp-for="PosterPath">
+                </div>
+                <div class="form-group">
+                    <label>Approval Status:</label>
+                    <select class="form-control" asp-for="Status" asp-items="ViewBag.ApprovalStatuses"></select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Movie</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>IMDB Movie ID:</label>
+                <input type="text" class="form-control" id="imdb-movie-id">
+            </div>
+            <button class="btn btn-primary" id="fetch-movie-btn">Fetch Movie Data</button>
+        </div>
+    </div>
+</div>
+

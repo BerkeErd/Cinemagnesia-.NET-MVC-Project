@@ -16,8 +16,10 @@
     }
     <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Çift Faktörlü doğrulama</a></li>
     <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Kişisel Bilgiler</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.ProductorRequestNavClass(ViewContext)" id="product-request" asp-page="./ProductorPage">Yapımcı Sayfası</a></li>
-    
-
-
+    @if(User.IsInRole("Productor"))
+    {
+        <li class="nav-item">
+            <a class="nav-link @ManageNavPages.ProductorRequestNavClass(ViewContext)" id="product-request" asp-page="./ProductorPage" style="color: red">Yapımcılığı Bırak</a>
+        </li>
+    }
 </ul>

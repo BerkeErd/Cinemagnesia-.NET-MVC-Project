@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Views/ProductorPage/_ProductorLayout.cshtml";
+}
+
+<table id="movies-table" class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Poster</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>movie.Title</td>
+            <td><img src="movie.PosterPath" alt="Movie poster" style="max-height: 100px" /></td>
+            <td><a href="/ProductorPage/EditMovie/movie.Id" class="btn btn-primary">Edit</a></td>
+            <td><a href="/ProductorPage/DeleteMovie/movie.Id" class="btn btn-danger">Delete</a></td>
+        </tr>
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#movies-table').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true
+            });
+        });
+    </script>
+}

@@ -1,0 +1,82 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 bg-dark  sidebar m-0 p-0" style="height: 100vh;">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Identity/Account/Manage">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showPartialView('_AddMovie')">Film Ekle</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showPartialView('_EditMovie')">Film Güncelle</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-10 offset-md-2 partialview-container"></div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+
+    <script>
+        function showPartialView(partialViewName) {
+            $('.partialview-container').load('/ProductorPage/' + partialViewName);
+        }
+
+        $(document).ready(function () {
+            $(document).on("click", "#fetch-movie-btn", function () {
+                var imdbMovieId = $("#imdb-movie-id").val();
+                if (!imdbMovieId) {
+                    alert("Please enter an IMDB Movie ID.");
+                    return;
+                }
+
+                $.ajax({
+                    url: "https://moviesdatabase.p.rapidapi.com/titles/" + imdbMovieId,
+                    type: "GET",
+                    headers: {
+                        "content-type": "application/octet-stream",
+                        "X-RapidAPI-Key": "fdcfdb9d98mshf0a8ac4934e1a88p138684jsn90c0b90433f3",
+                        "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        var movieData = response.content;
+
+                        if (!movieData) {
+                            alert("No movie found with the given IMDB Movie ID.");
+                            return;
+                        }
+
+                        $("#Title").val(movieData.title);
+                        $("#Description").val(movieData.plot);
+                        $("#PosterPath").val(movieData.poster);
+                        $("#ReleaseDate").val(movieData.year);
+                        $("#ImdbRating").val(movieData.rating);
+                        $("#MovieMinutes").val(movieData.runtime);
+
+                        var genres = movieData.genres;
+                        $("#Genres").val(genres);
+
+                        var directors = movieData.directors;
+                        $("#Directors").val(directors);
+
+                        var castMembers = movieData.actors;
+                        $("#CastMembers").val(castMembers);
+                    },
+                    error: function () {
+                        alert("An error occurred while fetching the movie data.");
+                    }
+                });
+            });
+        });
+
+
+
+    </script>
+}
