@@ -18,10 +18,10 @@
                     {
                         <img width="75px" height="75px" src="~/images/Cinemagnesia/@UserManager.GetUserAsync(User).Result.ProfilePicture" />
 
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                       
                             <span class="block m-t-xs font-bold">@UserManager.GetUserAsync(User).Result.FirstName</span>
-                            <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
-                        </a>
+                            <span class="text-muted text-xs block">Yönetim Paneli<b class="caret"></b></span>
+                        
 
                     }
 
@@ -65,14 +65,14 @@
 
             <li class="@Html.IsSelected(controller: "AddData")">
                 <a href="@Url.CustomAction("Index", "AddData")">
-                    <i class="fa-solid fa-rectangle-history-circle-plus"></i>
+                    <i class="fa-solid fa-pen-to-square"></i>
                     <span class="nav-label" data-i18n="nav.dashboard">Veri Kayıt</span>
                 </a>
             </li>
 
              <li class="@Html.IsSelected(controller: "CommentRequest")">
                 <a href="@Url.CustomAction("Index", "CommentRequest")">
-                    <i class="fa-solid fa-comment-check"></i>
+                   <i class="fa-solid fa-comment"></i>
                     <span class="nav-label" data-i18n="nav.dashboard">Yorum İstekleri</span>
                 </a>
             </li>
