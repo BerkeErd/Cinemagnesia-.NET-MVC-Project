@@ -1,79 +1,217 @@
-﻿
+﻿@using Cinemagnesia.Presentation.Areas.Admin.Models;
 
-    @{
+@{
     Layout = "~/Views/ProductorPage/_ProductorLayout.cshtml";
 }
 
+@model List<GenreViewModel>
 
-@using Domain.Entities.Concrete;
-@model Movie
 
-<div class="container">
+<div class="container addmovie-form">
     <div class="row">
         <div class="col-md-6">
-            <form asp-action="Create" method="post">
                 <div class="form-group">
-                    <label>Title:</label>
-                    <input type="text" class="form-control" asp-for="Title">
+                    <label for="Title">Film Adı:</label>
+                    <input id="movieTitle" type="text" class="form-control" name="Title">
                 </div>
                 <div class="form-group">
-                    <label>Description:</label>
-                    <textarea class="form-control" rows="5" asp-for="Description"></textarea>
+                    <label>Film Açıklaması:</label>
+                    <textarea id="movieDescription" class="form-control" rows="5" name="Description"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Release Date:</label>
-                    <input type="date" class="form-control" asp-for="ReleaseDate">
+                    <label>Filmin Çıkış Tarihi:</label>
+                    <input id="movieReleaseDate" type="date" class="form-control" name="ReleaseDate">
                 </div>
                 <div class="form-group">
-                    <label>IMDB Rating:</label>
-                    <input type="number" class="form-control" asp-for="ImdbRating" step="0.1">
+                    <label>IMDB Puanı:</label>
+                    <input id="movieImdbRating" type="number" class="form-control" name="ImdbRating" step="0.1">
                 </div>
                 <div class="form-group">
-                    <label>Cinemag Avg Score:</label>
-                    <input type="number" class="form-control" asp-for="CinemagAvgScore" step="0.1">
+                    <label>Fragman URL:</label>
+                    <input id="movieTrailerUrl" type="url" class="form-control" name="TrailerUrl">
                 </div>
                 <div class="form-group">
-                    <label>Trailer URL:</label>
-                    <input type="url" class="form-control" asp-for="TrailerUrl">
+                    <label>Yönetmenler:</label>
+                    <input id="addDirectorInput" type="text" class="form-control" name="Directors"></input>
+                    <button id="addDirectorBtn" class="btn btn-primary">Ekle</button>
+                    <div id="addDirectorListDiv"></div>
                 </div>
                 <div class="form-group">
-                    <label>Directors:</label>
-                    <select class="form-control" asp-for="Directors" asp-items="ViewBag.Directors"></select>
+                    <label>Türler:</label>
+                    <ul id="movieGenreSelect" class="list-group" name="Genres" multiple>
+
+                      @foreach (var genre in Model)
+                        {
+                            <li class="list-group-item"><input type="checkbox" value = "@genre.Id" />@genre.Name</li>
+                        }
+
+                    </ul>
                 </div>
                 <div class="form-group">
-                    <label>Genres:</label>
-                    <select class="form-control" asp-for="Genres" asp-items="ViewBag.Genres" multiple></select>
+                    <label>Oyuncular:</label>
+                    <input id="addCastMemberInput" type="text" class="form-control" name="CastMembers"></input>
+                    <button id="addCastMemberBtn" class="btn btn-primary">Ekle</button>
+                    <div id="addCastMemberListDiv"></div>
                 </div>
                 <div class="form-group">
-                    <label>Cast Members:</label>
-                    <select class="form-control" asp-for="CastMembers" asp-items="ViewBag.CastMembers" multiple></select>
+                    <label>Film Süresi:</label>
+                    <input id="movieMinutes" type="number" class="form-control" name="MovieMinutes">
                 </div>
                 <div class="form-group">
-                    <label>Movie Minutes:</label>
-                    <input type="number" class="form-control" asp-for="MovieMinutes">
+                    <label>Filmin Orjinal Dili:</label>
+                    <select id="movieLanguage"class="form-control" name="Language">
+                        <option class="form-control" value="Türkçe">Türkçe</option>
+                        <option class="form-control" value="İngilizce">İngilizce</option>
+                        <option class="form-control" value="Almanca">Almanca</option>
+                        <option class="form-control" value="İspanyolca">İspanyolca</option>
+                        <option class="form-control" value="Hintçe">Hintçe</option>
+                        <option class="form-control" value="Rusça">Rusça</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label>Language:</label>
-                    <input type="text" class="form-control" asp-for="Language">
+                    <label>Film Kapağının PathURL:</label>
+                    <input id="moviePosterPath" type="file" class="form-control" name="PosterPath">
                 </div>
-                <div class="form-group">
-                    <label>Poster Path:</label>
-                    <input type="text" class="form-control" asp-for="PosterPath">
-                </div>
-                <div class="form-group">
-                    <label>Approval Status:</label>
-                    <select class="form-control" asp-for="Status" asp-items="ViewBag.ApprovalStatuses"></select>
-                </div>
-                <button type="submit" class="btn btn-primary">Add Movie</button>
-            </form>
+                <button id="addMovieBtn" type="submit" class="btn btn-primary">Film Ekle</button>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label>IMDB Movie ID:</label>
                 <input type="text" class="form-control" id="imdb-movie-id">
             </div>
-            <button class="btn btn-primary" id="fetch-movie-btn">Fetch Movie Data</button>
+            <button class="btn btn-primary" id="fetch-movie-btn">Film Bilgilerini Çek</button>
         </div>
     </div>
 </div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function(){
+
+            
+            var selectedGenres = [];
+            var addCastMemberList= [];
+            var addDirectorList = [];
+
+            //director list start
+            $("#addDirectorBtn").click(function(){
+                var director = $("#addDirectorInput").val();
+                var newDirector = { name: director, index: addDirectorList.length }; // yeni yönetici nesnesi oluştur
+                addDirectorList.push(newDirector);
+
+                var addDirectorListDiv = $("#addDirectorListDiv");
+                addDirectorListDiv.find("ul").remove(); // önceki sıralı listeyi kaldır
+
+                addDirectorListDiv.append("<ul></ul>");
+
+                $.each(addDirectorList, function(index, value) {
+                    var li = $("<li>" + value.name + " <a class='remove-director' data-director-index='" + value.index + "'><i class='fa-solid fa-trash' style='color: #9B4E4E;'></i></a></li>");
+                    addDirectorListDiv.find("ul").append(li);
+                });
+
+                addDirectorListDiv.find(".remove-director").click(function() {
+                    var directorIndex = $(this).data("director-index");
+                    var index = addDirectorList.findIndex(function(director) {
+                            return director.index === directorIndex;
+                    });
+                    if (index > -1) {
+                        addDirectorList.splice(index, 1);
+                    }
+                    $(this).parent().remove();
+                });
+
+            });
+
+
+
+            //Direktör Listeye ekleme end
+
+            //Oyuncu Listeye ekleme start
+           $("#addCastMemberBtn").click(function(){
+                var castMember = $("#addCastMemberInput").val();
+                var newCastMember = { name: castMember, index: addCastMemberList.length }; // yeni oyuncu nesnesi oluştur
+                addCastMemberList.push(newCastMember);
+
+                var addCastMemberListDiv = $("#addCastMemberListDiv");
+                addCastMemberListDiv.find("ul").remove(); // önceki sıralı listeyi kaldır
+
+                addCastMemberListDiv.append("<ul></ul>");
+
+                $.each(addCastMemberList, function(index, value) {
+                    var li = $("<li>" + value.name + " <a class='remove-cast-member' data-cast-member-index='" + value.index + "'><i class='fa-solid fa-trash' style='color: #9B4E4E;'></i></a></li>");
+                    addCastMemberListDiv.find("ul").append(li);
+                });
+
+                addCastMemberListDiv.find(".remove-cast-member").click(function() {
+                    var castMemberIndex = $(this).data("cast-member-index");
+                    var index = addCastMemberList.findIndex(function(castMember) {
+                        return castMember.index === castMemberIndex;
+                    });
+                    if (index > -1) {
+                        addCastMemberList.splice(index, 1);
+                    }
+                    $(this).parent().remove();
+                });
+            });
+
+            //Oyuncu Listeye ekleme end
+
+            // film ekleme start
+
+            $("#addMovieBtn").click(function(){
+                var movieTitle = $("#movieTitle").val();
+                var movieDescription = $("#movieDescription").val();
+                var movieReleaseDate = $("#movieReleaseDate").val();
+                var movieImdbRating = $("#movieImdbRating").val();
+                var movieTrailerUrl = $("#movieTrailerUrl").val();
+                var movieMinutes = $("#movieMinutes").val();
+                var movieLanguage = $("#movieLanguage").val();
+                var moviePosterPath = $("#moviePosterPath").val();
+                     $('#movieGenreSelect input[type=checkbox]').each(function () {
+
+                    if (this.checked) {
+                        selectedGenres.push({ id: $(this).val(), name: $(this).parent().text().trim() });
+                    }
+                });
+                var image;
+                 $("#moviePosterPath").on("change", function() {
+                    var file = this.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        image = e.target.result;
+                        // burada yüklenen dosyanın pathURL değerini kullanarak işlemler yapabilirsiniz
+
+                    }
+                    reader.readAsDataURL(file);
+                });
+                var movie = {
+               
+                        title: movieTitle,
+                        description: movieDescription,
+                        posterPath: image,
+                        releaseDate: movieReleaseDate,
+                        imdbRating: movieImdbRating,
+                        trailerUrl: movieTrailerUrl,
+                        directors: addDirectorList,
+                        genres: selectedGenres,
+                        castMembers: addCastMemberList,
+                        movieMinute: movieMinutes,
+                        language: movieLanguage,
+                     
+                };
+
+               
+                console.log(movie);
+               
+
+            })
+
+            //film ekleme end
+
+
+
+        })
+    </script>
+}
 
