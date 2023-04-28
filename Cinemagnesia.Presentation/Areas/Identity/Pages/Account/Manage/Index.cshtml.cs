@@ -131,7 +131,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
                 }
 
                 // Update profile picture path
-                user.ProfilePicture = $"/images/Cinemagnesia/{fileName}";
+                user.ProfilePicture = $"{fileName}";
                 await _userManager.UpdateAsync(user);
             }
 
