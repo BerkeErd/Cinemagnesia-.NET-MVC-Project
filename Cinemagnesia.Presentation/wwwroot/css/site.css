@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 * {
     font-family: 'Poppins', sans-serif;
 }
+
 html {
     font-size: 14px;
 }
@@ -17,9 +19,7 @@ html {
     min-height: 100%;
 }
 
-body {
-    margin-bottom: 60px;
-}
+
 
 .profileImage {
     width: 50px;
@@ -77,10 +77,8 @@ body {
         text-transform: uppercase;
     }
 
-        .read_bt a:hover {
-            color: #ffffff;
-            background-color: #f5ddb6;
-        }
+
+
 .product_section {
     width: 100%;
     float: left;
@@ -109,7 +107,6 @@ body {
 .product_section_2 {
     width: 100%;
     float: left;
-
 }
 
 .product_box {
@@ -174,10 +171,7 @@ body {
         border-radius: 40px;
     }
 
-        .buy_bt li a:hover {
-            background-color: #f5ddb6;
-            color: #ffffff;
-        }
+
 
     .buy_bt li.active a {
         background-color: #f5ddb6;
@@ -211,36 +205,40 @@ body {
         text-transform: uppercase;
     }
 
-   .seemore_bt a:hover {
+        .seemore_bt a:hover {
             color: #ffffff;
             background-color: dimgrey;
-    }
+        }
 
 .navbar {
     background-color: #1c1c1c !important;
-    color:white !important;
+    color: white !important;
 }
-.navbar-light{
-    color:white !important;
+
+.navbar-light {
+    color: white !important;
 }
+
     .navbar-light .navbar-brand {
         color: #E50914 !important;
     }
-.navbar-nav li a , button{
+
+        .navbar-light .navbar-brand :hover {
+            color: #E50914 !important;
+        }
+
+.navbar-nav li a, button {
     color: white !important;
 }
 
 .nav-link {
-    color : white;
+    color: white;
 }
 
 h1 {
     color: white;
 }
 
-h2 {
-    color: white;
-}
 
 h3 {
     color: white;
@@ -254,9 +252,7 @@ p {
     color: white;
 }
 
-label {
-    color: white;
-}
+
 
 #registerSubmit {
     background-color: #E50914 !important;
@@ -273,20 +269,70 @@ label {
 .active {
     color: black;
 }
+
 body {
     background: #222222; /* Gradientin baþlangýç rengi */
     background: linear-gradient(to top, #222222, #444444); /* Gradient efekti */
 }
 
-.sidebar .list-group-item {
-    background-color: #333333 !important;
-    color: white;
+.sidebar {
+    box-shadow: 0 0 5px #282828;
 }
 
-.sidebar h4 {
-    background-color: #1c1c1c !important;
-    padding: 10px;
+#myCarousel {
+    border: 1px solid #282828;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #282828;
 }
+.crsImg img {
+    border-radius: 5px;
+}
+
+.sidebar .list-group-item {
+    background-color: #3b3b3b !important;
+    color: white;
+    transition: all 0.1s ease-in-out;
+ 
+}
+
+    .sidebar .list-group-item .form-check label {
+        background-color: #3b3b3b !important;
+        color: white;
+    }
+
+.sidebar h5 {
+    background-color: #e58209 !important;
+    padding: 10px;
+    margin-bottom: 0;
+    font-size:17px;
+}
+
+.sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.list-group-item {
+    border: none;
+    border-radius: 0;
+    padding: 10px 20px;
+    font-size: 16px;
+  
+}
+
+.sidebar ul .list-group-item:hover {
+    background-color: #282828 !important;
+    cursor: pointer;
+
+}
+
+.sidebar ul .list-group-item a {
+    color: white;
+    text-decoration: none;
+}
+
+  
 
 .btn-filter {
     width: 50%;
@@ -303,9 +349,11 @@ body {
     border: 1px solid #1c1c1c;
     transition: all 0.1s ease-in-out;
 }
-.btn-filter:hover {
-    background-color: #282828;
-}
+
+    .btn-filter:hover {
+        background-color: #282828;
+    }
+
 .footer {
     background-color: #1c1c1c !important;
 }
@@ -322,13 +370,13 @@ body {
 .movie-card {
     display: flex;
     flex-direction: column;
-    border: 1px solid #ddd;
+    border: 1px solid #282828;
     border-radius: 5px;
-    box-shadow: 0 0 4px #ccc;
+    box-shadow: 0 0 10px #282828;
     overflow: hidden;
-    background-color:#1c1c1c !important;
-    color : white !important;
-    text-align:center;
+    background-color: #1c1c1c !important;
+    color: white !important;
+    text-align: center;
 }
 
     .movie-card img {
@@ -352,7 +400,7 @@ body {
     .movie-info .rating {
         font-size: 14px;
         font-weight: bold;
-        color: #E50914;
+        color: #e58209;
         margin-bottom: 0.5em;
     }
 
@@ -370,11 +418,11 @@ body {
             padding: 3px;
             border-radius: 3px;
             margin-right: 0.5em;
-            font-size:12px;
+            font-size: 12px;
         }
 
     .movie-info .description {
-        font-size: 1.1em;
+        font-size: 14px;
         line-height: 1.4;
         margin-bottom: 1em;
     }
@@ -395,3 +443,15 @@ body {
 
 
 /*card css end*/
+
+.navbar {
+    height: 80px;
+}
+
+    .navbar ul li a {
+        transition: background-color 0.3s ease-in-out;
+    }
+
+        .navbar ul li a:hover {
+            background-color: #E50914;
+        }

@@ -16,11 +16,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/animations/animation.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.10/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white box-shadow  mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cinemagnesia</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -30,11 +31,9 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                       
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item"><a class="nav-link flaming-text" id="admin-panel" href="~/Admin" style="color: red;">Admin Paneli</a></li>
@@ -62,17 +61,17 @@
                             </li>
                             <li class="nav-item">
                                 <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                    <button id="logout" type="submit" class="nav-link btn btn-link k">Logout</button>
+                                    <button id="logout" type="submit" class="nav-link btn btn-link k">Çıkış Yap</button>
                                 </form>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link " id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                <a class="nav-link " id="register" asp-area="Identity" asp-page="/Account/Register">Kayıt Ol</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                <a class="nav-link " id="login" asp-area="Identity" asp-page="/Account/Login">Giriş Yap</a>
                             </li>
                         }
                     </ul>
@@ -86,7 +85,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" >
         <div class="container d-flex justify-content-between">
             <ul class="navbar-nav">
                 <li class="nav-item">
