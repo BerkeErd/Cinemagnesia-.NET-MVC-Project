@@ -228,32 +228,34 @@
    
                //console.log(movie);
                 // post movie
+                var formData = new FormData();
+                formData.append("poster", movie.posterPath);
+                formData.append("companyId", movie.companyId);
+                formData.append("title", movie.title);
+                formData.append("description", movie.description);
+                formData.append("releaseDate", movie.releaseDate);
+                formData.append("imdbRating", movie.imdbRating);
+                formData.append("trailerUrl", movie.trailerUrl);
+                formData.append("directors", JSON.stringify(movie.directors));
+                formData.append("genres", JSON.stringify(movie.genres));
+                formData.append("castMembers", JSON.stringify(movie.castMembers));
+                formData.append("movieMinute", movie.movieMinute);
+                formData.append("language", movie.language);
+
                 $.ajax({
-    url: '/Movie/AddMovie',
-    type: 'POST',
-    data: {
-        companyId: movie.companyId,
-        title: movie.title,
-        description: movie.description,
-        posterPath: movie.posterPath,
-        releaseDate: movie.releaseDate,
-        imdbRating: movie.imdbRating,
-        trailerUrl: movie.trailerUrl,
-        directors: JSON.stringify(movie.directors),
-        genres: JSON.stringify(movie.genres),
-        castMembers: JSON.stringify(movie.castMembers),
-        movieMinute: movie.movieMinute,
-        language: movie.language
-    },
-    processData: false,
-    contentType: false,
-    success: function(response) {
-        console.log(response);
-    },
-    error: function(xhr, status, error) {
-        console.log('Bir hata oluştu. Hata kodu: ' + xhr.status);
-    }
-});
+                    url: '/Movie/AddMovie',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        console.log(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Bir hata oluştu. Hata kodu: ' + xhr.status);
+                    }
+                });
+
                 // post movie end
             })
 
