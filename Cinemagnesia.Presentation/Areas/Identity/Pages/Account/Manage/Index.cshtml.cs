@@ -16,14 +16,20 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
     public class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager; 
+        private readonly ILogger<IndexModel> _logger;
+        private readonly IWebHostEnvironment _env;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager, 
+            ILogger<IndexModel> logger,
+            IWebHostEnvironment env)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
+            _env = env;
         }
 
         /// <summary>
@@ -59,6 +65,10 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Telefon Numarası")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Profil Resmi")]
+            [DataType(DataType.Upload)]
+            public IFormFile ProfilePicture { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -91,7 +101,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Kullanıcı ID '{_userManager.GetUserId(User)}' bulunamadı.");
             }
 
             if (!ModelState.IsValid)
@@ -100,19 +110,33 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            if (Input.PhoneNumber != user.PhoneNumber)
             {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
+                    var userId = await _userManager.GetUserIdAsync(user);
+                    throw new InvalidOperationException($"Telefon numarası ayarlanamadı. Hata kodu: '{string.Join(", ", setPhoneResult.Errors.Select(e => e.Code))}'.");
                 }
             }
 
+            if (Input.ProfilePicture != null)
+            {
+                // Profile picture upload
+                string fileName = $"{user.Id}_{Guid.NewGuid().ToString()}_{Input.ProfilePicture.FileName}";
+                string filePath = Path.Combine(_env.WebRootPath, "images", "Cinemagnesia", fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await Input.ProfilePicture.CopyToAsync(stream);
+                }
+
+                // Update profile picture path
+                user.ProfilePicture = $"/images/Cinemagnesia/{fileName}";
+                await _userManager.UpdateAsync(user);
+            }
+
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Profiliniz Güncellendi";
+            StatusMessage = "Profiliniz güncellendi";
             return RedirectToPage();
         }
     }
