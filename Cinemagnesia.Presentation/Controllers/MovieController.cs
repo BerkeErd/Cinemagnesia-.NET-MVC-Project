@@ -33,6 +33,13 @@ namespace Cinemagnesia.Presentation.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult AddMovie(object obj)
+        {
+            return Ok(obj);
+        }
+
+
         public IActionResult MovieDetail()
         {
             return View();

@@ -1,11 +1,12 @@
 ﻿@using Cinemagnesia.Presentation.Areas.Admin.Models;
+@using Microsoft.AspNetCore.Identity
+@using Cinemagnesia.Domain.Domain.Entities.Concrete;
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     Layout = "~/Views/ProductorPage/_ProductorLayout.cshtml";
 }
-
 @model List<GenreViewModel>
-
 
 <div class="container addmovie-form">
     <div class="row">
@@ -70,9 +71,18 @@
                 </div>
                 <div class="form-group">
                     <label>Film Kapağının PathURL:</label>
-                <img id="image-preview" align='middle' src="https://picsum.photos/id/237/200/300" alt="your image" title='' />
-                    <input id="moviePosterPath" type="file" class="form-control" name="PosterPath">
+                    <form id="form1" runat="server">
+    <input type='file' id="file-input" />
+    <div id='img_contain'>
+      <img id="image-preview" width="75px" height="75px" align='middle'src="https://picsum.photos/id/237/200/300" alt="your image" title=''/>
+    </div>
+  </form>
                 </div>
+                <div class="form-group">
+                    <input type="hidden" id="companyId" name="companyId" value="@UserManager.GetUserAsync(User).Result.CompanyId" />
+                    
+                </div>
+
                 <button id="addMovieBtn" type="submit" class="btn btn-primary">Film Ekle</button>
         </div>
         <div class="col-md-6">
@@ -80,6 +90,7 @@
                 <label>IMDB Movie ID:</label>
                 <input type="text" class="form-control" id="imdb-movie-id">
             </div>
+
             <button class="btn btn-primary" id="fetch-movie-btn">Film Bilgilerini Çek</button>
         </div>
     </div>
@@ -94,7 +105,7 @@
             var selectedGenres = [];
             var addCastMemberList= [];
             var addDirectorList = [];
-
+            var poster;
             //director list start
             $("#addDirectorBtn").click(function(){
                 var director = $("#addDirectorInput").val();
@@ -123,8 +134,6 @@
                 });
 
             });
-
-
 
             //Direktör Listeye ekleme end
 
@@ -158,7 +167,33 @@
 
             //Oyuncu Listeye ekleme end
 
+
+            //img 
+
+                 function readURL(input) {
+                        if (input.files && input.files[0]) {
+                              var reader = new FileReader();
+                               reader.onload = function(e) {
+
+                                  poster= e.target.result
+                      $('#image-preview').attr('src', e.target.result);
+                      $('#image-preview').hide();
+                      $('#image-preview').fadeIn(650);
+                    }
+                            reader.readAsDataURL(input.files[0]);
+                           
+                          }
+                        }
+
+                $("#file-input").change(function() {
+                  readURL(this);
+                });
+
+
+            //img
+
             // film ekleme start
+
 
             $("#addMovieBtn").click(function(){
                 var movieTitle = $("#movieTitle").val();
@@ -168,42 +203,19 @@
                 var movieTrailerUrl = $("#movieTrailerUrl").val();
                 var movieMinutes = $("#movieMinutes").val();
                 var movieLanguage = $("#movieLanguage").val();
-                
+                var companyId = $("#companyId").val();
                      $('#movieGenreSelect input[type=checkbox]').each(function () {
 
                     if (this.checked) {
                         selectedGenres.push({ id: $(this).val(), name: $(this).parent().text().trim() });
                     }
                 });
-                
-
-                var readURL = function (input) {
-                    if (input.files && input.files[0]) {
-                        var reader = new FileReader();
-
-                        reader.onload = function (e) {
-                            $('.image').attr('src', e.target.result);
-                        }
-
-                        reader.readAsDataURL(input.files[0]);
-                    }
-                }
-
-
-                $(".file-upload").on('change', function () {
-                    readURL(this);
-                });
-
-                $(".upload-button").on('click', function () {
-                    $(".file-upload").click();
-                });
-                console.log(readUrl);
-
-                var movie = {
                
+                var movie = {
+                        companyId : companyId,
                         title: movieTitle,
                         description: movieDescription,
-                        posterPath: image,
+                        posterPath: poster,
                         releaseDate: movieReleaseDate,
                         imdbRating: movieImdbRating,
                         trailerUrl: movieTrailerUrl,
@@ -212,19 +224,40 @@
                         castMembers: addCastMemberList,
                         movieMinute: movieMinutes,
                         language: movieLanguage,
-                     
                 };
-
-               
-                console.log(movie);
-               
-
+   
+               //console.log(movie);
+                // post movie
+                $.ajax({
+    url: '/Movie/AddMovie',
+    type: 'POST',
+    data: {
+        companyId: movie.companyId,
+        title: movie.title,
+        description: movie.description,
+        posterPath: movie.posterPath,
+        releaseDate: movie.releaseDate,
+        imdbRating: movie.imdbRating,
+        trailerUrl: movie.trailerUrl,
+        directors: JSON.stringify(movie.directors),
+        genres: JSON.stringify(movie.genres),
+        castMembers: JSON.stringify(movie.castMembers),
+        movieMinute: movie.movieMinute,
+        language: movie.language
+    },
+    processData: false,
+    contentType: false,
+    success: function(response) {
+        console.log(response);
+    },
+    error: function(xhr, status, error) {
+        console.log('Bir hata oluştu. Hata kodu: ' + xhr.status);
+    }
+});
+                // post movie end
             })
 
             //film ekleme end
-
-
-
         })
     </script>
 }

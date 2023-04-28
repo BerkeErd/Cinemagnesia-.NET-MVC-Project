@@ -25,7 +25,7 @@ namespace Cinemagnesia.Presentation.Controllers
         public IActionResult AddMovieView()
         {
             List<GenreDto> genredtos = _genreService.GetAllGenres();
-            List<GenreViewModel> genreViewModels = _mapper.Map<List<GenreViewModel>>(genredtos)  ;
+            List<GenreViewModel> genreViewModels = _mapper.Map<List<GenreViewModel>>(genredtos);
 
             return View(genreViewModels);
         }
