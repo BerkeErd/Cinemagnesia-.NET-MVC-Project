@@ -7,6 +7,9 @@ using Domain.Entities.Concrete;
 using Application.Dtos;
 using System.Data.SqlTypes;
 using Newtonsoft.Json;
+using AutoMapper;
+using Infrastructure.DataAccess.Migrations;
+using Application.Interfaces.AppInterfaces;
 
 namespace Cinemagnesia.Presentation.Controllers
 {
@@ -14,10 +17,15 @@ namespace Cinemagnesia.Presentation.Controllers
     {
         private readonly ILogger<MovieController> _logger;
         private readonly HttpClient _httpClient;
-
-        public MovieController(IHttpClientFactory httpClientFactory)
+        private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _env;
+        private readonly IMovieService _movieService;
+        public MovieController(IHttpClientFactory httpClientFactory, IMapper mapper, IWebHostEnvironment env,IMovieService movieService)
         {
+            _movieService = movieService;
+            _mapper = mapper;
             _httpClient = httpClientFactory.CreateClient("rapidapi");
+            _env = env;
         }
 
         [HttpGet]
@@ -45,7 +53,12 @@ namespace Cinemagnesia.Presentation.Controllers
             List<AddCastMemberViewModel> castmemberNames = JsonConvert.DeserializeObject<List<AddCastMemberViewModel>>(castMembers);
             List<AddDirectorViewModel> directorNames = JsonConvert.DeserializeObject<List<AddDirectorViewModel>>(directors);
 
-
+            string fileName = $"{Guid.NewGuid().ToString()}_{poster.FileName}";
+            string filePath = Path.Combine(_env.WebRootPath, "images", "Cinemagnesia", fileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                poster.CopyToAsync(stream);
+            }
 
             AddMovieViewModel addMovieViewModel = new AddMovieViewModel()
             {
@@ -59,10 +72,14 @@ namespace Cinemagnesia.Presentation.Controllers
                 Language = language,
                 Directors = directorNames,
                 Genres = genreNames,
-                CastMembers = castmemberNames
+                CastMembers = castmemberNames,
+                PosterPath = fileName
+                
             };
 
-            return Ok(addMovieViewModel);
+            AddMovieDto addMovieDto = _mapper.Map<AddMovieDto>(addMovieViewModel);
+            _movieService.AddMovie(addMovieDto);
+            return Ok(addMovieDto);
 
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,6 +24,7 @@ public class ApplicationUser : IdentityUser
     public ICollection<MovieComment> MovieComments { get; set; }
     public string? CompanyId { get; set; }
     public Company? Company { get; set; }
+    public ICollection<UserRestriction> Restrictions { get; set; }
 
 }
 

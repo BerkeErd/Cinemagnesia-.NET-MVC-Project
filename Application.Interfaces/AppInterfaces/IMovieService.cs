@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Concrete;
+﻿using Application.Dtos;
+using Domain.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Application.Interfaces.AppInterfaces
     {
         Movie GetMovieById(string id);
         IEnumerable<Movie> GetAllMovies();
-        void AddMovie(Movie movie);
+        void AddMovie(AddMovieDto movie);
         void RemoveMovie(string id);
         void UpdateMovie(string id, Movie movie);
 

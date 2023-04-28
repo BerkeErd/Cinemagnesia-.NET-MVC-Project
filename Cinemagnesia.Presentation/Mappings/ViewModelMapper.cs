@@ -9,6 +9,10 @@ namespace Cinemagnesia.Presentation.Mappings
     {
         public ViewModelMapper()
         {
+            CreateMap<AddMovieDto, AddMovieViewModel>();
+
+            CreateMap<AddMovieViewModel, AddMovieDto>();
+
             CreateMap<GenreDto, GenreViewModel>();
 
             CreateMap<GenreViewModel, GenreDto>();

@@ -11,6 +11,7 @@ namespace Domain.Entities.Concrete
 {
     public class Movie : BaseEntity
     {
+        public string CompanyId { get; set; }
         [Required]
         [MaxLength(100)]
         public string Title { get; set; }
@@ -31,7 +32,8 @@ namespace Domain.Entities.Concrete
         public int MovieMinutes { get; set; }
         public string Language { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime? UpdatedAt { get; set; } 
+        public DateTime? UpdatedAt { get; set; }
+        
 
     }
 }

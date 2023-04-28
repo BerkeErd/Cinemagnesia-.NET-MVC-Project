@@ -1,4 +1,6 @@
-﻿using Application.Interfaces.AppInterfaces;
+﻿using Application.Dtos;
+using Application.Interfaces.AppInterfaces;
+using AutoMapper;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
 using Infrastructure.DataAccess.Repositories;
@@ -12,13 +14,16 @@ namespace Application.Services
 {
     public class MovieService : IMovieService
     {
+        private readonly IMapper _mapper;
         private readonly IMovieRepository _movieRepository;
-        public MovieService(IMovieRepository movieRepository)
+        public MovieService(IMovieRepository movieRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _movieRepository = movieRepository;
         }
-        public void AddMovie(Movie movie)
+        public void AddMovie(AddMovieDto movieDto)
         {
+            Movie movie = _mapper.Map<Movie>(movieDto);
             _movieRepository.CreateAsync(movie).Wait();
         }
 
