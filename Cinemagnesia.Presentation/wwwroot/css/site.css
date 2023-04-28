@@ -239,7 +239,6 @@ h1 {
     color: white;
 }
 
-
 h3 {
     color: white;
 }
@@ -252,7 +251,15 @@ p {
     color: white;
 }
 
+.addmovie-form label{
+    color: white;
+}
 
+#movieGenreSelect {
+    columns: 3;
+    -webkit-columns: 3;
+    -moz-columns: 3;
+}
 
 #registerSubmit {
     background-color: #E50914 !important;
