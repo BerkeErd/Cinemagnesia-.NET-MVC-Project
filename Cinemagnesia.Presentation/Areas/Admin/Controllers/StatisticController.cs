@@ -8,6 +8,7 @@ using AutoMapper;
 using Cinemagnesia.Presentation.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ASPNET_Core_2_1.Controllers
 {
@@ -24,9 +25,21 @@ namespace ASPNET_Core_2_1.Controllers
 
         public IActionResult Index()
         {
+            //var genres = _genreService.GetAllGenres();
+            //List<GenreViewModel> genreList = _mapper.Map<List<GenreDto>, List<GenreViewModel>>(genres);
+
+            //string serializeData = JsonConvert.SerializeObject(genreList);
+            //ViewBag.genreList = genreList;
             return View();
         }
+        [HttpGet]
+        public IActionResult ListGenres()
+        {
+            IQueryable<GenreDto> genreDtos = _genreService.GetAllGenres().AsQueryable();
+            IQueryable<GenreViewModel> genreViewModels = _mapper.ProjectTo<GenreViewModel>(genreDtos);
 
+            return Ok(genreViewModels);
+        }
         public IActionResult Dashboard_2()
         {
             return View();

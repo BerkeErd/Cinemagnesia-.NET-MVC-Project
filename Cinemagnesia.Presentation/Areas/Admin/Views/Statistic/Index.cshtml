@@ -1,4 +1,4 @@
-﻿@model List<Cinemagnesia.Presentation.Areas.Admin.Models.GenreNameViewModel>
+﻿@*@model List<Cinemagnesia.Presentation.Areas.Admin.Models.GenreViewModel>*@
 @{
     ViewData["Title"] = "Charjs";
 }
@@ -42,7 +42,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row mt-4">
     <div class="col-lg-6">
         <div class="ibox ">
             <div class="ibox-title">
@@ -70,24 +70,103 @@
     </div>
 </div>
 
+<div class="col-lg-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5>Son Eklenen Filmler</h5>
+
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-wrench"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a href="#" class="dropdown-item">Config option 1</a>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-item">Config option 2</a>
+                    </li>
+                </ul>
+                <a class="close-link">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+
+            <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                <thead>
+                    <tr>
+
+                        <th data-toggle="true">Film</th>
+                        <th>Film Kategorisi</th>
+                        <th>Çıkış Tarihi</th>
+                        <th>Orijinal Dil</th>
+                        <th>Film Süresi</th>
+                        <th data-hide="all">Şirket</th>
+                        <th data-hide="all">Yönetmenler</th>
+                        <th data-hide="all">Oyuncu Kadrosu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Leon</td>
+                        <td>Aksiyon</td>
+                        <td>1995</td>
+                        <td>İngilizce</td>
+                        <td><span class="pie">160 dk</span></td>
+                        <td>Legend Film</td>
+                        <td>Luc Besson</td>
+                        <td>Jean Reno, Natalie Portman</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            <ul class="pagination float-right"></ul>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/footable/css/footable.core.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/lib/footable/css/footable.core.min.css" />
+    </environment>
+}
+
 @section Scripts {
 
     <environment names="Development,Staging,Production">
         <script src="~/lib/chartJs/Chart.min.js"></script>
+        <script src="~/lib/footable/dist/footable.all.min.js"></script>
     </environment>
 
     <script type="text/javascript">
+        var list = [];
         $(document).ready(function () {
+            $.get("/Admin/Statistic/ListGenres", function (data) {
+                $.each(data, function (index, genre) {
+                    list.push(genre.name);
+                })
+            });
+            console.log(list);
 
             var doughnutData = {
-                labels: 
-        {
-            
-        },
-                labels: x,
+                labels: list,
                 datasets: [{
-                    data: [300, 50, 100],
-                    backgroundColor: ["#a3e1d4", "#dedede", "#b5b8cf"]
+                    data: [300, 60],
+                    backgroundColor: ["#a3e1d4", "#dedede"]
                 }]
             };
             var doughnutOptions = {
@@ -96,21 +175,25 @@
             var ctx4 = document.getElementById("doughnutChart").getContext("2d");
             new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
 
-
-
-            //if (Json.Serialize(Model) != "null") {
-            //    var barData = {
-            //        labels: Html.Raw(Json.Serialize(Model.Name)),
-            //        datasets: [
-            //            {
-            //                label: "Model.Name",
-            //                backgroundColor: 'rgba(220, 220, 220, 0.5)',
-            //                pointBorderColor: "#fff",
-            //                data: Html.Raw(Json.Serialize(Model.Name))
-            //                                        }
-            //        ]
-            //    };
-            //}
+            var barData = {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [
+                    {
+                        label: "Data 1",
+                        backgroundColor: 'rgba(220, 220, 220, 0.5)',
+                        pointBorderColor: "#fff",
+                        data: [65, 59, 80, 81, 56, 55, 40]
+                    },
+                    {
+                        label: "Data 2",
+                        backgroundColor: 'rgba(26,179,148,0.5)',
+                        borderColor: "rgba(26,179,148,0.7)",
+                        pointBackgroundColor: "rgba(26,179,148,1)",
+                        pointBorderColor: "#fff",
+                        data: [28, 48, 40, 19, 86, 27, 90]
+                    }
+                ]
+            };
 
 
             var barOptions = {
@@ -122,5 +205,9 @@
             new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
 
         });
+
+        $('.footable').footable();
+
+
     </script>
 }
