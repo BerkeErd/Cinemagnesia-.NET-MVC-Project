@@ -85,7 +85,7 @@ namespace Cinemagnesia.Presentation.Controllers
 
 
 
-        public IActionResult MovieDetail()
+        public IActionResult MoviePage()
         {
             return View();
         }
