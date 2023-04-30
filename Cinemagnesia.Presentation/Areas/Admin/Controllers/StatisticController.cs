@@ -4,65 +4,62 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Dtos;
 using Application.Interfaces.AppInterfaces;
+using Application.Services;
 using AutoMapper;
 using Cinemagnesia.Presentation.Areas.Admin.Models;
+using Cinemagnesia.Presentation.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ASPNET_Core_2_1.Controllers
 {
     [Area("Admin")]
     public class StatisticController : Controller
     {
-        private readonly IGenreService _genreService;
         private readonly IMapper _mapper;
-        public StatisticController(IGenreService genreService, IMapper mapper)
+        private readonly UserService _userService;
+        private readonly IGenreService _genreService;
+        private readonly IMovieService _movieService;
+
+        public StatisticController(IMapper mapper, UserService userService, IGenreService genreService, IMovieService movieService)
         {
-            _genreService = genreService;
             _mapper = mapper;
+            _userService = userService;
+            _genreService = genreService;
+            _movieService = movieService;
         }
 
         public IActionResult Index()
         {
-            //var genres = _genreService.GetAllGenres();
-            //List<GenreViewModel> genreList = _mapper.Map<List<GenreDto>, List<GenreViewModel>>(genres);
 
-            //string serializeData = JsonConvert.SerializeObject(genreList);
-            //ViewBag.genreList = genreList;
             return View();
         }
+
         [HttpGet]
-        public IActionResult ListGenres()
+        public int GetNumOfUsers()
         {
-            IQueryable<GenreDto> genreDtos = _genreService.GetAllGenres().AsQueryable();
-            IQueryable<GenreViewModel> genreViewModels = _mapper.ProjectTo<GenreViewModel>(genreDtos);
-
-            return Ok(genreViewModels);
-        }
-        public IActionResult Dashboard_2()
-        {
-            return View();
+            return _userService.GetAllUsers();
         }
 
-        public IActionResult Dashboard_3()
+        [HttpGet]
+        public List<GenreStatisticViewModel> GetStatisticOfGenre()
         {
-            return View();
+            var GenreWithCount = _genreService.GetGenresWithMovies();
+            var MovieCount = _movieService.GetNumOfMovies();
+            var MovieCountDec = Convert.ToDecimal(MovieCount);
+            List<GenreStatisticViewModel> statistic = new List<GenreStatisticViewModel>();
+            foreach (var genre in GenreWithCount) 
+            {
+                GenreStatisticViewModel genreStatisticViewModel = new GenreStatisticViewModel();
+                genreStatisticViewModel.Name = genre.Name;
+                genreStatisticViewModel.Percentage = decimal.Round((genre.MovieCount / MovieCountDec) * 100, 2);
+                statistic.Add(genreStatisticViewModel);
+            }
+            return statistic;
+
         }
 
-        public IActionResult Dashboard_4()
-        {
-            return View();
-        }
-
-        public IActionResult Dashboard_4_1()
-        {
-            return View();
-        }
-
-        public IActionResult Dashboard_5()
-        {
-            return View();
-        }
     }
 }

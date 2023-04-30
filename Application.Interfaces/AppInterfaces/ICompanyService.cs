@@ -15,5 +15,6 @@ namespace Application.Interfaces.AppInterfaces
         void RemoveCompany(string id);
         void UpdateCompany(string id, Company company);
         Company GetById(string id);
+        int GetNumOfCompanies();
     }
 }

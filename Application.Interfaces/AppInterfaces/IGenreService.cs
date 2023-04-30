@@ -15,5 +15,6 @@ namespace Application.Interfaces.AppInterfaces
         void RemoveGenre(string id);
         void UpdateGenre(string id, Genre genre);
         Genre GetById(string id);
+        List<GenreStatisticDto> GetGenresWithMovies();
     }
 }

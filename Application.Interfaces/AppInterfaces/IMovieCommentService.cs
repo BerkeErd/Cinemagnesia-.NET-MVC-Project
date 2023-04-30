@@ -13,7 +13,6 @@ namespace Application.Interfaces.AppInterfaces
         void AddMovieComment(MovieComment movieComment);
         void DeleteMovieComment(string id);
         void UpdateMovieComment(string movieCommentId, MovieComment movieComment);
-        //IEnumerable<MovieComment> GetAllMovieCommentsOfMovie(string movieId);
-        //IEnumerable<MovieComment> GetAllMovieCommentsOfMovieByLikeCount(string movieId);
+        int GetNumOfMovieComments();
     }
 }

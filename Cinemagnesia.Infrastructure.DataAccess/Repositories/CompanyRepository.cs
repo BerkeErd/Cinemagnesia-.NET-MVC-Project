@@ -1,6 +1,8 @@
 ﻿using Cinemagnesia.Infrastructure.DataAccess.DbContext;
+using Domain.Entities.Abstract;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,16 @@ namespace Infrastructure.DataAccess.Repositories
 {
     public class CompanyRepository : BaseRepository<Company>, ICompanyRepository
     {
-        public CompanyRepository(ApplicationDbContext dbContext) : base(dbContext) {
+        private readonly DbSet<Company> _dbSet;
+
+        public CompanyRepository(ApplicationDbContext dbContext) : base(dbContext)
+        {
+            _dbSet = _dbContext.Set<Company>();
+        }
+
+        public int GetNumOfCompanies()
+        {
+            return _dbSet.Count();
         }
     }
 }

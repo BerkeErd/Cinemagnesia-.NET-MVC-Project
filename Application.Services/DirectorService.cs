@@ -11,35 +11,40 @@ namespace Application.Services
 {
     public class DirectorService : IDirectorService
     {
-        private readonly IDirectorRepository _DirectorRepository;
+        private readonly IDirectorRepository _directorRepository;
 
         public DirectorService(IDirectorRepository DirectorRepository)
         {
-            _DirectorRepository = DirectorRepository;
+            _directorRepository = DirectorRepository;
         }
         public void AddDirector(Director director)
         {
-            _DirectorRepository.CreateAsync(director).Wait();
+            _directorRepository.CreateAsync(director).Wait();
         }
 
         public IEnumerable<Director> GetAllDirectors()
         {
-          return _DirectorRepository.GetAllAsync().Result;
+            return _directorRepository.GetAllAsync().Result;
         }
 
         public Director GetById(string id)
         {
-            return _DirectorRepository.GetByIdAsync(id).Result;
+            return _directorRepository.GetByIdAsync(id).Result;
         }
 
         public void RemoveDirector(string id)
         {
-            _DirectorRepository.DeleteAsync(id).Wait();
+            _directorRepository.DeleteAsync(id).Wait();
         }
 
         public void UpdateDirector(string id, Director director)
         {
-            _DirectorRepository.UpdateAsync(id, director).Wait();
+            _directorRepository.UpdateAsync(id, director).Wait();
+        }
+
+        public int GetNumOfDirectors()
+        {
+            return _directorRepository.GetNumOfDirectors();
         }
     }
 }

@@ -50,5 +50,10 @@ namespace Application.Services
         {
             _companyRepository.UpdateAsync(id, company).Wait();
         }
+
+        public int GetNumOfCompanies()
+        {
+            return _companyRepository.GetNumOfCompanies();
+        }
     }
 }

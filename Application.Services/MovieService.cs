@@ -46,5 +46,10 @@ namespace Application.Services
         {
             _movieRepository.UpdateAsync(id, movie).Wait();
         }
+
+        public int GetNumOfMovies()
+        {
+            return _movieRepository.GetNumOfMovies();
+        }
     }
 }

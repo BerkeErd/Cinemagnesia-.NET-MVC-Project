@@ -10,6 +10,6 @@ namespace Domain.Interfaces.Repository
 {
     public interface IMovieRepository : IRepository<Movie>
     {
-        
+        int GetNumOfMovies();
     }
 }

@@ -49,6 +49,7 @@ builder.Services.AddScoped<IMovieCommentRepository, MovieCommentRepository>();
 builder.Services.AddScoped<IMovieCommentService, MovieCommentService>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<IProductorRequestRepository, ProductorRequestRepository>();
 builder.Services.AddScoped<IProductorRequestService, ProductorRequestService>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();

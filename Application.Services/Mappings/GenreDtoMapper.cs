@@ -15,6 +15,8 @@ namespace Application.Services.Mappings
         {
             CreateMap<GenreDto, Genre>().ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<Genre, GenreDto>();
+
+            CreateMap<Genre, GenreStatisticDto>().ForMember(dest => dest.MovieCount, opt => opt.MapFrom(src => src.Movies.Count));
         }
     }
 }

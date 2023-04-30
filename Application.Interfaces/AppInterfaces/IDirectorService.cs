@@ -14,5 +14,6 @@ namespace Application.Interfaces.AppInterfaces
         void RemoveDirector(string id);
         void UpdateDirector(string id, Director genre);
         Director GetById(string id);
+        int GetNumOfDirectors();
     }
 }

@@ -15,8 +15,6 @@ namespace Application.Interfaces.AppInterfaces
         void AddMovie(AddMovieDto movie);
         void RemoveMovie(string id);
         void UpdateMovie(string id, Movie movie);
-
-        //IEnumerable<Movie> GetMoviesByDirectorId(string directorId);
-
+        int GetNumOfMovies();
     }
 }
