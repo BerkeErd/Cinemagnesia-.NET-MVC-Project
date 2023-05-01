@@ -175,7 +175,7 @@
                               var reader = new FileReader();
                                reader.onload = function(e) {
 
-                                  poster= e.target.result
+                                  poster= input.files[0];
                       $('#image-preview').attr('src', e.target.result);
                       $('#image-preview').hide();
                       $('#image-preview').fadeIn(650);

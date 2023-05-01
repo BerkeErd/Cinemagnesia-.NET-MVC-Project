@@ -13,15 +13,15 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    DbSet<CastMember> CastMembers { get; set; }
-    DbSet<Company> Companies { get; set; }
-    DbSet<Director> Directors { get; set; }
-    DbSet<Genre> Genres { get; set; }
-    DbSet<Movie> Movies { get; set; }
-    DbSet<MovieComment> MoviesComments { get; set; }
-    DbSet<ProductorRequest> ProductorRequests { get; set; }
-    DbSet<Rating> Ratings { get; set; }
-    DbSet<WatchList> WatchList { get; set; }
+    public DbSet<CastMember> CastMembers { get; set; }
+    public DbSet<Company> Companies { get; set; }
+    public DbSet<Director> Directors { get; set; }
+    public DbSet<Genre> Genres { get; set; }
+    public DbSet<Movie> Movies { get; set; }
+    public DbSet<MovieComment> MoviesComments { get; set; }
+    public DbSet<ProductorRequest> ProductorRequests { get; set; }
+    public DbSet<Rating> Ratings { get; set; }
+    public DbSet<WatchList> WatchList { get; set; }
     
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

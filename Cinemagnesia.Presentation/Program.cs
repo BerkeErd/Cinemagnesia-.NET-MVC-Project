@@ -23,6 +23,7 @@ using Infrastructure.Email.Customs.Concrete;
 using AutoMapper;
 using Application.Services.Mappings;
 using Cinemagnesia.Presentation.Mappings;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -56,6 +57,8 @@ builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IWatchListRepository, WatchListRepository>();
 builder.Services.AddScoped<IWatchListService, WatchListService>();
+
+
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -93,6 +96,11 @@ builder.Services.AddAutoMapper(typeof(GenreDtoMapper));
 builder.Services.AddAutoMapper(typeof(ProductorRequestMapper));
 builder.Services.AddAutoMapper(typeof(ViewModelMapper));
 builder.Services.AddAutoMapper(typeof(MovieDtoMapper));
+
+builder.Services.AddAutoMapper(typeof(ViewModelMapper));
+
+
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("User", policy =>
@@ -100,7 +108,10 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("User");
     });
 });
+
+
 var app = builder.Build();
+
 
 using (var scope = app.Services.CreateScope())
 {
