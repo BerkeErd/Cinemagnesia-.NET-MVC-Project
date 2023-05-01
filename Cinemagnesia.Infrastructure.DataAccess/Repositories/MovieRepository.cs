@@ -12,16 +12,25 @@ namespace Infrastructure.DataAccess.Repositories
 {
     public class MovieRepository : BaseRepository<Movie>, IMovieRepository
     {
-        private readonly DbSet<Movie> _dbSet;
+        
         public MovieRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
-            _dbSet = _dbContext.Set<Movie>();
+            
+        }
 
+        public IQueryable<Movie> GetAll()
+        {
+            
+            return _dbContext.Movies
+           .Include(m => m.Directors)
+           .Include(m => m.Genres)
+           .Include(m => m.CastMembers)
+           .Include(m => m.MovieComments);
         }
 
         public int GetNumOfMovies()
         {
-            return _dbSet.Count();
+            return _dbContext.Movies.Count();
         }
     }
 }

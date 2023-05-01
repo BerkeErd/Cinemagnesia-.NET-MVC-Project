@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "DataTables";
 }
 
@@ -44,36 +45,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>The Godfather</td>
-                                <td>Paramount Pictures</td>
-                                <td>01/01/2022</td>
-                                <td><button>Detay Görüntüle</button></td>
-                                <td>Bekliyor</td>
-                                <td>Edit/Delete</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Star Wars: A New Hope</td>
-                                <td>Lucasfilm</td>
-                                <td>03/15/2022</td>
-                                <td><button>Detay Görüntüle</button></td>
-                                <td>Bekliyor</td>
-                                <td>Edit/Delete</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>The Shawshank Redemption</td>
-                                <td>Castle Rock Entertainment</td>
-                                <td>05/22/2022</td>
-                                <td><button>Detay Görüntüle</button></td>
-                                <td>Bekliyor</td>
-                                <td>Edit/Delete</td>
-                            </tr>
-                        </tbody>
-
                         </tbody>
 
                     </table>
@@ -98,35 +69,57 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-
-            $('#productorRequestTable').DataTable({
-                pageLength: 25,
-                dom: '<"html5buttons"B>lTfgitp',
-                responsive:true,
-                buttons: [
-                    { extend: 'copy' },
-                    { extend: 'csv' },
-                    { extend: 'excel', title: 'ExampleFile' },
-                    { extend: 'pdf', title: 'ExampleFile' },
-
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-
+            $.ajax({
+                url: 'ProductorDataRequest/GetAllMovies',
+                type: 'GET',
+                success: function (response) {
+                    console.log(response);
+                    $('#productorRequestTable').DataTable({
+                        data: response,
+                        pageLength: 25,
+                        dom: '<"html5buttons"B>lTfgitp',
+                        responsive: true,
+                        buttons: [
+                            { extend: 'copy' },
+                            { extend: 'csv' },
+                            { extend: 'excel', title: 'ExampleFile' },
+                            { extend: 'pdf', title: 'ExampleFile' },
+                            {
+                                extend: 'print',
+                                customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                            }
+                        ],
+                        columns: [
+                            { data: 'id' },
+                            { data: 'title' },
+                            { data: 'companyId' },
+                            { data: 'createdAt' },
+                            {
+                                data: null,
+                                render: function (data, type, row) {
+                                    return '<button>Detay Görüntüle</button>';
+                                }
+                            },
+                            { data: 'status' },
+                            {
+                                data: null,
+                                render: function (data, type, row) {
+                                    return 'Edit/Delete';
+                                }
+                            }
+                        ]
+                    });
+                }
             });
-
-
         });
 
+        
 
     </script>
 }

@@ -11,7 +11,7 @@ namespace Application.Interfaces.AppInterfaces
     public interface IMovieService
     {
         Movie GetMovieById(string id);
-        IEnumerable<Movie> GetAllMovies();
+        List<Movie> GetAllMovies();
         void AddMovie(AddMovieDto movie);
         void RemoveMovie(string id);
         void UpdateMovie(string id, Movie movie);

@@ -70,9 +70,10 @@ namespace Application.Services
             _movieRepository.CreateAsync(movie).Wait();
         }
 
-        public IEnumerable<Movie> GetAllMovies()
+        public List<Movie> GetAllMovies()
         {
-            return _movieRepository.GetAllAsync().Result;
+            var movies = _movieRepository.GetAll().ToList();
+            return movies;
         }
 
         public Movie GetMovieById(string id)

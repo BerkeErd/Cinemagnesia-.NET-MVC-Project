@@ -21,7 +21,7 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
             var directors = _directorService.GetAllDirectors();
             ExportViewModel model = new ExportViewModel();
             ViewBag.model = model;
-            model.movies = movies;
+            //model.movies = movies
             model.directors = directors;
             return View();
         }
