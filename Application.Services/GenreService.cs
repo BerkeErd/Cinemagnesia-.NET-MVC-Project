@@ -46,6 +46,10 @@ namespace Application.Services
 
         public void UpdateGenre(string id, Genre genre)
         {
+            if (_genreRepository.IsExistsByName(genre.Name))
+            {
+                throw new InvalidOperationException("Bu isimde bir kategori mevcut.");
+            }
             _genreRepository.UpdateAsync(id, genre).Wait();
         }
 

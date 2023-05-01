@@ -11,5 +11,6 @@ namespace Domain.Interfaces.Repository
     public interface IGenreRepository : IRepository<Genre>
     {
         List<Genre> GetGenresWithMovies();
+        bool IsExistsByName(string name);
     }
 }
