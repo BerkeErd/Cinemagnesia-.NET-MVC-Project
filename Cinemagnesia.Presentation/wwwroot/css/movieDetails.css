@@ -1,0 +1,302 @@
+﻿.card {
+  position: relative;
+  width: 450px;
+  height: 600px;
+  color: #2e2d31;
+  background: #131313;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.temporary_text {
+  font-weight: bold;
+  font-size: 24px;
+  padding: 6px 12px;
+  color: #f8f8f8;
+}
+
+.card_title {
+  font-weight: bold;
+}
+
+.card_content {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: #E8E8E8;
+    /* edit the width to fit card */
+    width: 100%;
+    padding: 20px;
+    opacity: 0.6;
+    background: #282828;
+    border-top-left-radius: 20px;
+    /* edit here to change the height of the content box */
+    transform: translateY(120px);
+    transition: transform .25s;
+}
+
+.card_content::before {
+  content: '';
+  position: absolute;
+  top: -47px;
+  right: -45px;
+  width: 100px;
+  height: 100px;
+  transform: rotate(-175deg);
+  border-radius: 50%;
+  box-shadow: inset 48px 48px #f2f2f2;
+}
+
+.card_title {
+  color: #131313;
+  line-height: 15px;
+}
+
+.card_subtitle {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.card_description {
+    font-size: 14px;
+    color: #E8E8E8;
+    opacity: 0;
+    transition: opacity .5s;
+}
+
+.card:hover .card_content {
+    transform: translateY(0);
+    opacity: 0.8;
+}
+
+.card:hover .card_description {
+  opacity: 1;
+  transition-delay: .25s;
+}
+
+h1 {
+    color: #E8E8E8;
+    margin-bottom: 1rem; /* veya istediğiniz boşluk değeri */
+}
+
+label {
+    color: #F89012;
+}
+
+p {
+    color: #E8E8E8;
+    margin-bottom: 0.5rem; /* veya istediğiniz boşluk değeri */
+}
+
+p strong {
+        color: #F89012;
+    }
+
+.con-like {
+  --red: #ee427b;
+  position: relative;
+  width: 35px;
+  height: 35px;
+}
+
+.con-like .like {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 20;
+  cursor: pointer;
+}
+
+.con-like .checkmark {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.con-like .outline,
+.con-like .filled {
+  fill: var(--red);
+  position: absolute;
+}
+
+.con-like .filled {
+  animation: kfr-filled 0.5s;
+  display: none;
+}
+
+.con-like .celebrate {
+  position: absolute;
+  animation: kfr-celebrate 0.5s;
+  animation-fill-mode: forwards;
+  display: none;
+}
+
+.con-like .poly {
+  stroke: var(--red);
+  fill: var(--red);
+}
+
+.con-like .like:checked ~ .checkmark .filled {
+  display: block
+}
+
+.con-like .like:checked ~ .checkmark .celebrate {
+  display: block
+}
+
+@keyframes kfr-filled {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes kfr-celebrate {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+    display: none;
+  }
+
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400);
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: roboto;
+}
+
+body {
+    background: #000;
+}
+
+.cont {
+    width: 93%;
+    max-width: 350px;
+    padding: 30px 0;
+    color: #EEE;
+    overflow: hidden;
+}
+
+hr {
+    margin: 20px;
+    border: none;
+    border-bottom: thin solid rgba(255,255,255,.1);
+}
+
+div.title {
+    font-size: 2em;
+}
+
+h1 span {
+    font-weight: 300;
+    color: #Fd4;
+}
+
+div.stars {
+    width: 250px;
+    display: inline-block;
+}
+
+input.star {
+    display: none;
+}
+
+label.star {
+    float: right;
+    padding: 1px;
+    font-size: 36px;
+    color: #444;
+    transition: all .2s;
+}
+
+input.star:checked ~ label.star:before {
+    content: '\f005';
+    color: #FD4;
+    transition: all .25s;
+}
+
+
+input.star-5:checked ~ label.star:before {
+    color: #FE7;
+    text-shadow: 0 0 20px #952;
+}
+
+input.star-1:checked ~ label.star:before {
+    color: #F62;
+}
+
+label.star:hover {
+    transform: rotate(-15deg) scale(1.3);
+}
+
+label.star:before {
+    content: '\f006';
+    font-family: FontAwesome;
+}
+
+.rev-box {
+    overflow: hidden;
+    height: 0;
+    width: 100%;
+    transition: all .25s;
+}
+
+textarea.review {
+    background: #222;
+    border: none;
+    width: 100%;
+    max-width: 100%;
+    height: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+    color: #EEE;
+}
+
+label.review {
+    display: block;
+    transition: opacity .25s;
+}
+
+
+
+input.star:checked ~ .rev-box {
+    height: 125px;
+    overflow: visible;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
