@@ -5,29 +5,22 @@ using Cinemagnesia.Presentation.Areas.Admin.Models;
 using Cinemagnesia.Presentation.Models;
 using Domain.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cinemagnesia.Presentation.Mappings
 {
     public class ViewModelMapper : Profile
     {
-        private readonly ApplicationDbContext _dbContext;
-        public ViewModelMapper(ApplicationDbContext dbContext)
 
+        public ViewModelMapper()
         {
-            _dbContext = dbContext;
 
             CreateMap<AddMovieDto, AddMovieViewModel>();
 
             CreateMap<AddMovieViewModel, AddMovieDto>()
-                   .ForMember(dest => dest.Directors, opt => opt.MapFrom(src => src.Directors.Select(d =>
-                        _dbContext.Directors.FirstOrDefault(x => x.Name == d.Name) ?? new Director { Name = d.Name }
-                    )))
-                    .ForMember(dest => dest.Genres, opt => opt.MapFrom(src => src.Genres.Select(g =>
-                        _dbContext.Genres.FirstOrDefault(x => x.Name == g.Name) ?? new Genre { Name = g.Name }
-                    )))
-                    .ForMember(dest => dest.CastMembers, opt => opt.MapFrom(src => src.CastMembers.Select(c =>
-                        _dbContext.CastMembers.FirstOrDefault(x => x.Name == c.Name) ?? new CastMember { Name = c.Name }
-                    )));
+            .ForMember(dest => dest.Directors, opt => opt.MapFrom(src => src.Directors.Select(d => new Director { Name = d.Name })))
+            .ForMember(dest => dest.Genres, opt => opt.MapFrom(src => src.Genres.Select(g => new Genre { Name = g.Name })))
+            .ForMember(dest => dest.CastMembers, opt => opt.MapFrom(src => src.CastMembers.Select(c => new CastMember { Name = c.Name })));
             CreateMap<GenreDto, GenreViewModel>();
 
             CreateMap<GenreViewModel, GenreDto>();
@@ -43,4 +36,7 @@ namespace Cinemagnesia.Presentation.Mappings
             CreateMap<AdminProductorRequestViewModel, ProductorRequestDto>();
         }
     }
+
+   
+
 }

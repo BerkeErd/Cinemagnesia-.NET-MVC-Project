@@ -53,12 +53,23 @@ namespace Cinemagnesia.Presentation.Controllers
             List<AddCastMemberViewModel> castmemberNames = JsonConvert.DeserializeObject<List<AddCastMemberViewModel>>(castMembers);
             List<AddDirectorViewModel> directorNames = JsonConvert.DeserializeObject<List<AddDirectorViewModel>>(directors);
 
-            string fileName = $"{Guid.NewGuid().ToString()}_{poster.FileName}";
-            string filePath = Path.Combine(_env.WebRootPath, "images", "Cinemagnesia", fileName);
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            string fileName;
+
+            if(poster == null)
             {
-                poster.CopyToAsync(stream);
+                 fileName = "DefaultMoviePicture.png";
             }
+            else
+            {
+                 fileName = $"{Guid.NewGuid().ToString()}_{poster.FileName}";
+                 string filePath = Path.Combine(_env.WebRootPath, "images", "Cinemagnesia", fileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        poster.CopyToAsync(stream);
+                    }
+            }
+            
+            
 
             AddMovieViewModel addMovieViewModel = new AddMovieViewModel()
             {
