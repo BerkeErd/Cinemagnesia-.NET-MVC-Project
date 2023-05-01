@@ -10,5 +10,6 @@ namespace Domain.Interfaces.Repository
 {
     public interface IDirectorRepository : IRepository<Director>
     {
+        int GetNumOfDirectors();
     }
 }

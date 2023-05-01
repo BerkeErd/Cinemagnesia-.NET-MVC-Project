@@ -13,7 +13,7 @@ namespace Application.Services.Mappings
     {
         public CompanyMapper()
         {
-            CreateMap<AddCompanyDto, Company>().ForMember(dest => dest.Id, opt => opt.Ignore()); 
+            CreateMap<AddCompanyDto, Company>().ForMember(dest => dest.Id, opt => opt.Ignore());
 
             CreateMap<Company, AddCompanyDto>();
 

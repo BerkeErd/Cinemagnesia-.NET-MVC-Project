@@ -48,5 +48,14 @@ namespace Application.Services
         {
             _genreRepository.UpdateAsync(id, genre).Wait();
         }
+
+        public List<GenreStatisticDto> GetGenresWithMovies()
+        {
+            var genreWithMovies = _genreRepository.GetGenresWithMovies();
+            List<GenreStatisticDto> statistic = _mapper.Map<List<Genre>, List<GenreStatisticDto>>(genreWithMovies);
+
+
+            return statistic;
+        }
     }
 }

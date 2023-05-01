@@ -15,6 +15,7 @@ namespace Application.Interfaces.AppInterfaces
 
         List<ProductorRequestDto> GetAllProductorRequest();
         void DeleteProductorRequest(string id);
-        void UpdateProductorRequest(string id, ProductorRequestDto productorRequest);  
+        void UpdateProductorRequest(string id, ProductorRequestDto productorRequest);
+        List<ProductorRequestDto> GetNumOfApprovedProductorRequests();
     }
 }

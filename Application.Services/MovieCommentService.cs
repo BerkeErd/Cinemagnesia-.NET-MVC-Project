@@ -33,5 +33,10 @@ namespace Application.Services
         {
             _movieCommentRepository.UpdateAsync(movieCommentId, movieComment).Wait();
         }
+
+        public int GetNumOfMovieComments()
+        {
+            return _movieCommentRepository.GetNumOfMovieComments();
+        }
     }
 }

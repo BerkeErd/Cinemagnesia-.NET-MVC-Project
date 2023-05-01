@@ -2,6 +2,7 @@
 using Application.Interfaces.AppInterfaces;
 using AutoMapper;
 using Domain.Entities.Concrete;
+using Domain.Entities.Constants;
 using Domain.Interfaces.Repository;
 using Infrastructure.DataAccess.Repositories;
 using System;
@@ -57,10 +58,21 @@ namespace Application.Services
 
         public void UpdateProductorRequest(string id, ProductorRequestDto productorRequestDto)
         {
-            
+
             var productorRequest = _mapper.Map<ProductorRequest>(productorRequestDto);
 
             _productorRequestRepository.UpdateAsync(id, productorRequest).Wait();
+        }
+
+        public List<ProductorRequestDto> GetNumOfApprovedProductorRequests()
+        {
+            var response = _productorRequestRepository.GetAllAsync().GetAwaiter().GetResult();
+            var productorRequests = _mapper.Map<List<ProductorRequestDto>>(response);
+
+            var approvedProductors = productorRequests.Where(productorRequest => productorRequest.ApprovalStatus == ApprovalStatus.Approved).ToList();
+
+
+            return approvedProductors;
         }
     }
 }

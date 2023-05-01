@@ -1,140 +1,342 @@
 ﻿@*@model List<Cinemagnesia.Presentation.Areas.Admin.Models.GenreViewModel>*@
 @{
-    ViewData["Title"] = "Charjs";
+
+}
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <i class="fa-solid fa-users"></i>
+                    <h5>Toplam Kullanıcı Sayısı</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins" id="numOfUsers"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <i class="fa-solid fa-building"></i>
+                    <h5>Yapım Şirketi Sayısı</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins" id="numOfCompanies"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <i class="fa-solid fa-people-roof"></i>
+                    <h5>Toplam Yapımcı Sayısı</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins" id="numOfApprovedProductors"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <i class="fa-solid fa-people-roof"></i>
+                    <h5>Yönetmen Sayısı</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins" id="numOfDirectors"></h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <i class="fa-solid fa-film"></i>
+                    <h5> Toplam Film Sayısı</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins" id="numOfMovies"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <i class="fa-solid fa-comment"></i>
+                    <h5>Toplam Yorum Sayısı</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins" id="numOfMovieComments"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <i class="fa-solid fa-star"></i>
+                    <h5>En Beğenilen Film</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">Leon</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <i class="fa-solid fa-star"></i>
+                    <h5>En Beğenilen Kategori</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">Komedi</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <figure class="highcharts-figure">
+                <div id="container"></div>
+                <p class="highcharts-description">
+                    Bu grafik eklenen filmlerdeki kategorilerin dağılışını göstermektedir.
+                </p>
+            </figure>
+        </div>
+
+        <div class="col-lg-6">
+            <figure class="highcharts-figure">
+                <div id="container-donut"></div>
+                <p class="highcharts-description">
+                    Bu grafik eklenen filmlerdeki dillerin dağılışını göstermektedir.
+                </p>
+            </figure>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Son Eklenen Filmler</h5>
+
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#" class="dropdown-item">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                        <thead>
+                            <tr>
+
+                                <th data-toggle="true">Film</th>
+                                <th>Film Kategorisi</th>
+                                <th>Çıkış Tarihi</th>
+                                <th>Orijinal Dil</th>
+                                <th>Film Süresi</th>
+                                <th data-hide="all">Şirket</th>
+                                <th data-hide="all">Yönetmenler</th>
+                                <th data-hide="all">Oyuncu Kadrosu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Leon</td>
+                                <td>Aksiyon</td>
+                                <td>1995</td>
+                                <td>İngilizce</td>
+                                <td><span class="pie">160 dk</span></td>
+                                <td>Legend Film</td>
+                                <td>Luc Besson</td>
+                                <td>Jean Reno, Natalie Portman</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <ul class="pagination float-right"></ul>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+    {
+    <environment names="Development,Staging,Production">
+        <script src="~/lib/chartJs/Chart.min.js"></script>
+        <script src="~/lib/footable/dist/footable.all.min.js"></script>
+    </environment>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <script>
+        var list = [];
+        $(document).ready(function () {
+            //$.get("/Genre/ListGenres", function (data) {
+            //    $.each(data, function (index, genre) {
+            //        list.push(genre.name);
+            //    })
+            //});
+
+            $.get("/Admin/Statistic/GetNumOfUsers", function (data) {
+                $("#numOfUsers").html(data)
+            });
+
+            $.get("/ProductorRequest/GetNumOfApprovedProductors", function (data) {
+                $("#numOfApprovedProductors").html(data)
+            });
+
+            $.get("/Company/GetNumOfCompanies", function (data) {
+                $("#numOfCompanies").html(data)
+            });
+
+            $.get("/Director/GetNumOfDirectors", function (data) {
+                $("#numOfDirectors").html(data)
+            });
+
+            $.get("/Movie/GetNumOfMovies", function (data) {
+                $("#numOfMovies").html(data)
+            });
+
+            $.get("/MovieComment/GetNumOfMovieComments", function (data) {
+                $("#numOfMovieComments").html(data)
+            });
+
+            $.get("/Admin/Statistic/GetStatisticOfGenre", function (data) {
+                $.each(data, function (index, genre) {
+                    if(genre.percentage != 0){
+                        let dataItem = { name: genre.name, y: genre.percentage }
+                        list.push(dataItem);
+                    }
+                     
+                })
+                Highcharts.chart('container', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    credits: false,
+                    title: {
+                        text: 'Film Kategorileri',
+                        align: 'left'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: '%'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [{
+                        name: 'Kategori',
+                        colorByPoint: true,
+                        data: list
+                    }]
+                });
+            });
+        });
+
+        console.log(list);
+        
+
+
+        Highcharts.chart('container-donut', {
+            colors: ['#01BAF2', '#71BF45', '#FAA74B', '#B37CD2'],
+            chart: {
+                type: 'pie'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            credits: false,
+            title: {
+                text: 'Film Dilleri',
+                align: 'left'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}: {y} %'
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Registrations',
+                colorByPoint: true,
+                innerSize: '75%',
+                data: [{
+                    name: 'EV',
+                    y: 68.1
+                }, {
+                    name: 'Hybrids',
+                    y: 11.0
+                }, {
+                    name: 'Diesel',
+                    y: 11.2
+                }, {
+                    name: 'Petrol',
+                    y: 9.7
+                }]
+            }]
+        });
+
+        $('.footable').footable();
+
+    </script>
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card" style="border-radius: 10px; border: 3px solid #003366; box-shadow: 0px 2px 5px #003366;">
-                <div class="card-body">
-                    <h5 class="card-title" style="font-size: 20px;">Kullanıcı Sayısı <i class="fa-solid fa-users"></i></h5>
-                    <p class="card-text" style="font-size: 18px; color: #003366; font-weight: bold;">38</p>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-md-3">
-            <div class="card" style="border-radius: 10px; border: 3px solid #003366; box-shadow: 0px 2px 5px #003366;">
-                <div class="card-body">
-                    <h5 class="card-title" style="font-size: 20px;">Film Sayısı <i class="fa-solid fa-film"></i> </h5>
-                    <p class="card-text" style="font-size: 18px; color: #003366; font-weight: bold;">254</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card" style="border-radius: 10px; border: 3px solid #003366; box-shadow: 0px 2px 5px #003366;">
-                <div class="card-body">
-                    <h5 class="card-title" style="font-size: 20px;">Yorum Sayısı <i class="fa-solid fa-comment"></i></h5>
-                    <p class="card-text" style="font-size: 18px; color: #003366; font-weight: bold;">28</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card" style="border-radius: 10px; border: 3px solid #003366; box-shadow: 0px 2px 5px #003366;">
-                <div class="card-body">
-                    <h5 class="card-title" style="font-size: 20px;">En Çok Beğenilen <i class="fa-solid fa-star"></i></h5>
-                    <p class="card-text" style="font-size: 18px; color: #003366; font-weight: bold;">Leon</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row mt-4">
-    <div class="col-lg-6">
-        <div class="ibox ">
-            <div class="ibox-title">
-                <h5>Film Türleri</h5>
-            </div>
-            <div class="ibox-content">
-                <div>
-                    <canvas id="doughnutChart" height="140"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-6">
-        <div class="ibox ">
-            <div class="ibox-title">
-                <h5>Bar Chart Example</h5>
-            </div>
-            <div class="ibox-content">
-                <div>
-                    <canvas id="barChart" height="140"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="col-lg-12">
-    <div class="ibox ">
-        <div class="ibox-title">
-            <h5>Son Eklenen Filmler</h5>
-
-            <div class="ibox-tools">
-                <a class="collapse-link">
-                    <i class="fa fa-chevron-up"></i>
-                </a>
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-wrench"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li>
-                        <a href="#" class="dropdown-item">Config option 1</a>
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-item">Config option 2</a>
-                    </li>
-                </ul>
-                <a class="close-link">
-                    <i class="fa fa-times"></i>
-                </a>
-            </div>
-        </div>
-        <div class="ibox-content">
-
-            <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
-                <thead>
-                    <tr>
-
-                        <th data-toggle="true">Film</th>
-                        <th>Film Kategorisi</th>
-                        <th>Çıkış Tarihi</th>
-                        <th>Orijinal Dil</th>
-                        <th>Film Süresi</th>
-                        <th data-hide="all">Şirket</th>
-                        <th data-hide="all">Yönetmenler</th>
-                        <th data-hide="all">Oyuncu Kadrosu</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Leon</td>
-                        <td>Aksiyon</td>
-                        <td>1995</td>
-                        <td>İngilizce</td>
-                        <td><span class="pie">160 dk</span></td>
-                        <td>Legend Film</td>
-                        <td>Luc Besson</td>
-                        <td>Jean Reno, Natalie Portman</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="5">
-                            <ul class="pagination float-right"></ul>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-
-        </div>
-    </div>
-</div>
 
 @section Styles {
     <environment names="Development">
@@ -145,69 +347,3 @@
     </environment>
 }
 
-@section Scripts {
-
-    <environment names="Development,Staging,Production">
-        <script src="~/lib/chartJs/Chart.min.js"></script>
-        <script src="~/lib/footable/dist/footable.all.min.js"></script>
-    </environment>
-
-    <script type="text/javascript">
-        var list = [];
-        $(document).ready(function () {
-            $.get("/Admin/Statistic/ListGenres", function (data) {
-                $.each(data, function (index, genre) {
-                    list.push(genre.name);
-                })
-            });
-            console.log(list);
-
-            var doughnutData = {
-                labels: list,
-                datasets: [{
-                    data: [300, 60],
-                    backgroundColor: ["#a3e1d4", "#dedede"]
-                }]
-            };
-            var doughnutOptions = {
-                responsive: true
-            };
-            var ctx4 = document.getElementById("doughnutChart").getContext("2d");
-            new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
-
-            var barData = {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [
-                    {
-                        label: "Data 1",
-                        backgroundColor: 'rgba(220, 220, 220, 0.5)',
-                        pointBorderColor: "#fff",
-                        data: [65, 59, 80, 81, 56, 55, 40]
-                    },
-                    {
-                        label: "Data 2",
-                        backgroundColor: 'rgba(26,179,148,0.5)',
-                        borderColor: "rgba(26,179,148,0.7)",
-                        pointBackgroundColor: "rgba(26,179,148,1)",
-                        pointBorderColor: "#fff",
-                        data: [28, 48, 40, 19, 86, 27, 90]
-                    }
-                ]
-            };
-
-
-            var barOptions = {
-                responsive: true
-            };
-
-
-            var ctx2 = document.getElementById("barChart").getContext("2d");
-            new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
-
-        });
-
-        $('.footable').footable();
-
-
-    </script>
-}

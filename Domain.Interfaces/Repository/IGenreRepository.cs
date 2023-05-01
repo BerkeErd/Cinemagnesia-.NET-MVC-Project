@@ -10,5 +10,6 @@ namespace Domain.Interfaces.Repository
 {
     public interface IGenreRepository : IRepository<Genre>
     {
+        List<Genre> GetGenresWithMovies();
     }
 }

@@ -20,7 +20,7 @@ namespace Cinemagnesia.Presentation.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _env;
         private readonly IMovieService _movieService;
-        public MovieController(IHttpClientFactory httpClientFactory, IMapper mapper, IWebHostEnvironment env,IMovieService movieService)
+        public MovieController(IHttpClientFactory httpClientFactory, IMapper mapper, IWebHostEnvironment env, IMovieService movieService)
         {
             _movieService = movieService;
             _mapper = mapper;
@@ -74,7 +74,7 @@ namespace Cinemagnesia.Presentation.Controllers
                 Genres = genreNames,
                 CastMembers = castmemberNames,
                 PosterPath = fileName
-                
+
             };
 
             AddMovieDto addMovieDto = _mapper.Map<AddMovieDto>(addMovieViewModel);
@@ -83,11 +83,14 @@ namespace Cinemagnesia.Presentation.Controllers
 
         }
 
-
-
-        public IActionResult MovieDetail()
+        public IActionResult MoviePage()
         {
             return View();
+        }
+
+        public int GetNumOfMovies()
+        {
+            return _movieService.GetNumOfMovies();
         }
 
     }

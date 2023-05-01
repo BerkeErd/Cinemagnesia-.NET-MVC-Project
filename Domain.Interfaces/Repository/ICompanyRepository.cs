@@ -10,5 +10,6 @@ namespace Domain.Interfaces.Repository
 {
     public interface ICompanyRepository : IRepository<Company>
     {
+        int GetNumOfCompanies();
     }
 }
