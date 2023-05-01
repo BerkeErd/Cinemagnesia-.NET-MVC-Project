@@ -135,16 +135,16 @@
 
                 console.log(genre);
 
-                    $.ajax({ 
-                            url: '/Admin/AddData/AddGenre',
-                            type: 'POST',
-                            data: genre,
-                            success: function (response) {
-                                // Yeni satırın HTML'ini oluşturun
-                                var html = '<tr>' +
-                                    '<td>' + response.name + '</td>' +
-                                    '<td>' + '<button class="btn btn-xs btn-warning" value="' + response.id + '">Edit</button> ' + '<button class="btn btn-xs btn-danger" value="' + response.id + '">Delete</button>' + '</td>' +
-                                    '</tr>';
+                $.ajax({
+                    url: '/Admin/AddData/AddGenre',
+                    type: 'POST',
+                    data: genre,
+                    success: function (response) {
+                        // Yeni satırın HTML'ini oluşturun
+                        var html = '<tr>' +
+                            '<td>' + response.name + '</td>' +
+                            '<td>' + '<button class="btn btn-xs btn-warning" value="' + response.id + '">Edit</button> ' + '<button class="btn btn-xs btn-danger" value="' + response.id + '">Delete</button>' + '</td>' +
+                            '</tr>';
 
                         // Tabloya yeni satırı ekleyin
                         var table = $('#genreListTable').DataTable();
@@ -165,13 +165,81 @@
 
             });
 
+            $(document).on("click", ".btn-danger", function () {
+                var genrId = $(this).val();
+                var genreData = { id: genrId };
+                console.log(genrId);
+                swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this imaginary file!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete it!",
+                    closeOnConfirm: false
+                }, function () {
+                    console.log(genreData);
+                    $.ajax({
+                        url: '/Genre/Delete/' + genrId,
+                        type: 'POST',
 
+                        success: function (response) {
+
+                            swal('İşlem Başarılı.', 'Kategori silindi.', 'success');
+                            var table = $('#genreListTable').DataTable();
+                            table.ajax.reload();
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            swal('İşlem Başarısız.', 'Bir hata meydana geldi.', 'error');
+                            console.log(xhr.responseText);
+                        }
+                    });
+
+
+                });
+            })
+
+            // yeni ekle butonuna tıklandığında
+            $(document).on("click", ".btn-warning", function () {
+                var id = $(this).val();
+
+                swal({
+                    title: "Kategori Düzenle",
+                    text: "Yeni kategori adı giriniz:",
+                    type: "input",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    inputPlaceholder: "Kategori adı"
+                },
+                    function (inputValue) {
+                        if (inputValue === false) return false;
+
+                        if (inputValue === "") {
+                            swal.showInputError("Bu alan zorunludur!");
+                            return false
+                        }
+                        var item = { Id: id, Name: inputValue };
+                        $.ajax({
+                            url: '/Genre/UpdateGenre',
+                            type: 'POST',
+                            contentType: "application/json;charset=utf-8",
+                            data: JSON.stringify(item),
+
+                            success: function (response) {
+                                swal('İşlem Başarılı.', ' kategori adı güncellendi.', 'success');
+                                var table = $('#genreListTable').DataTable();
+                                table.ajax.reload();
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                swal('İşlem Başarısız.', xhr.responseText, 'error');
+                                console.log(xhr.responseText);
+                            }
+                        });
+                    });
+            });
 
         });
-
-
-
-
 
 
     </script>

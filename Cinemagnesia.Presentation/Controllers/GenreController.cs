@@ -23,7 +23,7 @@ namespace Cinemagnesia.Presentation.Controllers
         public IActionResult Index()
         {
             var data = _genreService.GetAllGenres();
-           
+
             return View(data);
         }
 
@@ -42,6 +42,33 @@ namespace Cinemagnesia.Presentation.Controllers
             return Json(_genreService.GetGenresWithMovies());
         }
 
+        [HttpPost]
+        [Route("Genre/Delete/{id}")]
+        public IActionResult DeleteGenre(string id)
+        {
+            try
+            {
+                _genreService.RemoveGenre(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
+        [HttpPost]
+        public IActionResult UpdateGenre([FromBody] Genre genre)
+        {
+            try
+            {
+                _genreService.UpdateGenre(genre.Id, genre);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

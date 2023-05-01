@@ -22,5 +22,10 @@ namespace Infrastructure.DataAccess.Repositories
         {
             return _dbSet.Include(c => c.Movies).ToList();
         }
+
+        public bool IsExistsByName(string name) 
+        {
+            return _dbSet.Any(c => c.Name == name);
+        }
     }
 }
