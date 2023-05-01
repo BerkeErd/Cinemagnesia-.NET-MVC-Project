@@ -3,11 +3,79 @@
 }
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12">
-            @*start img-slider*@
+
+   <div class="row">
+       <div class="col-lg-3 col-md-3">
+            <div class="list-group sidebar ">
+                <h5 class=" text-white"><i class="fa-solid fa-ellipsis"></i></i> Kategoriler </h5>
+                <div class="list-group-item sidecheck">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="action" id="chkAction" />
+                        <label class="form-check-label" for="chkAction">
+                            Action
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="comedy" id="chkComedy" />
+                        <label class="form-check-label" for="chkComedy">
+                            Comedy
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="drama" id="chkDrama" />
+                        <label class="form-check-label" for="chkDrama">
+                            Drama
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="horror" id="chkHorror" />
+                        <label class="form-check-label" for="chkHorror">
+                            Horror
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="romance" id="chkRomance" />
+                        <label class="form-check-label" for="chkRomance">
+                            Romance
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="thriller" id="chkThriller" />
+                        <label class="form-check-label" for="chkThriller">
+                            Thriller
+                        </label>
+                    </div>
+                </div>
+                <h5 class="  text-white"><i class="fa-solid fa-heart"></i> En Yüksek Puanlılar </h5>
+                <div class="list-group-item">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a>Deadpool</a></li>
+                        <li class="list-group-item"><a>Piyanist</a></li>
+                        <li class="list-group-item"><a>Yenilmezler</a></li>
+                    </ul>
+
+
+
+                </div>
+                <h5 class=" text-white"><i class="fa-solid fa-comment"></i> En Çok Yorumlananlar </h5>
+                <div class="list-group-item">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a>Deadpool</a></li>
+                        <li class="list-group-item"><a>Piyanist</a></li>
+                        <li class="list-group-item"><a>Yenilmezler</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-12 py-1 text-center">
+                    <button type="button" class="btn  btn-filter m-auto" id="btnFilter">Filtrele</button>
+
+                </div>
+            </div>
+       </div>
+       <div class="col-lg-9 col-md-9">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 ">
                     <div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -36,85 +104,54 @@
                     </div>
                 </div>
             </div>
-            @*end img-slider*@
-
-            <div class="row mt-5">
-                <div class="col-lg-2 col-md-2">
-
-
-                    <div class="list-group sidebar ">
-                        <h5 class=" bg-primary text-white">Kategoriler</h5>
-                        <div class="list-group-item">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="action" id="chkAction" />
-                                <label class="form-check-label" for="chkAction">
-                                    Action
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="comedy" id="chkComedy" />
-                                <label class="form-check-label" for="chkComedy">
-                                    Comedy
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="drama" id="chkDrama" />
-                                <label class="form-check-label" for="chkDrama">
-                                    Drama
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="horror" id="chkHorror" />
-                                <label class="form-check-label" for="chkHorror">
-                                    Horror
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="romance" id="chkRomance" />
-                                <label class="form-check-label" for="chkRomance">
-                                    Romance
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="thriller" id="chkThriller" />
-                                <label class="form-check-label" for="chkThriller">
-                                    Thriller
-                                </label>
-                            </div>
-                        </div>
-                        <h5 class=" bg-primary text-white">En Yüksek Puanlılar</h5>
-                        <div class="list-group-item">
-                            <ul class="list-group">
-                              <li class="list-group-item"><a  >Deadpool</a></li>
-                              <li class="list-group-item"><a  >Piyanist</a></li>
-                              <li class="list-group-item"><a  >Yenilmezler</a></li>
-                            </ul>
-
-
-                           
-                        </div>
-                        <h5 class=" bg-primary text-white">En Çok Yorumlananlar</h5>
-                        <div class="list-group-item">
-                              <ul class="list-group">
-                                <li class="list-group-item"><a>Deadpool</a></li>
-                                <li class="list-group-item"><a>Piyanist</a></li>
-                                <li class="list-group-item"><a>Yenilmezler</a></li>
-                            </ul>
+            <div class="row mt-4">
+                <div class="col-lg-12 col-md-12 ">
+                    <div class="row">
+                        <div class="col-lg-12"> 
+                            <h4 class="homeMovieHeader">Popüler Filmler</h4>
                         </div>
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-lg-12 py-1 text-center">
-                            <button type="button" class="btn  btn-filter m-auto" id="btnFilter">Filtrele</button>
-
+                    <div class="row homecards">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card 1</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card 2</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card 3</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card 4</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
                 </div>
-                <div class="col-lg-10 col-md-10">
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-12 col-md-12 px-0">
                     @RenderBody();
                 </div>
             </div>
-
-
-        </div>
-    </div>
+       </div>
+   </div>
 </div>

@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 * {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 html {
@@ -220,7 +219,10 @@ html {
 }
 
     .navbar-light .navbar-brand {
-        color: #E50914 !important;
+        color: #e50914 !important;
+        font-size: 25px !important;
+        border-radius: 30px;
+        padding: 8px;
     }
 
         .navbar-light .navbar-brand :hover {
@@ -277,42 +279,50 @@ p {
     color: black;
 }
 
+
 body {
-    background: #222222; /* Gradientin baþlangýç rengi */
-    background: linear-gradient(to top, #222222, #444444); /* Gradient efekti */
+    background-color: #1c1c1c !important;
 }
 
 .sidebar {
-    box-shadow: 0 0 5px #282828;
+    top: 0;
+    left: 0;
+    background-color: #1c1c1c !important;
+    box-sizing: border-box;
 }
 
 #myCarousel {
     border: 1px solid #282828;
-    border-radius: 5px;
+    border-radius: 30px;
     box-shadow: 0 0 10px #282828;
 }
 .crsImg img {
-    border-radius: 5px;
+    border-radius: 30px;
 }
 
 .sidebar .list-group-item {
-    background-color: #3b3b3b !important;
-    color: white;
+
     transition: all 0.1s ease-in-out;
  
 }
 
-    .sidebar .list-group-item .form-check label {
-        background-color: #3b3b3b !important;
-        color: white;
-    }
+.sidecheck{
+    color: rgb(129,129,129);
+    font-size:18px;
+    margin-left:20px;
+}
+.sidecheck .form-check{
+    margin-bottom:8px !important;
+   
+}
 
 .sidebar h5 {
-    background-color: #e58209 !important;
     padding: 10px;
     margin-bottom: 0;
-    font-size:17px;
+    font-size:20px;
+    border-bottom: 1px solid #2f2f2f;
 }
+
 
 .sidebar ul {
     list-style: none;
@@ -325,7 +335,7 @@ body {
     border-radius: 0;
     padding: 10px 20px;
     font-size: 16px;
-  
+    background-color: #1c1c1c !important;
 }
 
 .sidebar ul .list-group-item:hover {
@@ -335,30 +345,45 @@ body {
 }
 
 .sidebar ul .list-group-item a {
-    color: white;
+    color: rgb(129, 129, 129);
+    text-decoration: none;
+}
+.sidebar ul .list-group-item a:hover {
+    color: rgb(129,129,129);
     text-decoration: none;
 }
 
-  
 
+.homecards .card {
+    background-color:#212121 !important;
+    color: rgb(119,119,119);
+    border-radius:8px;
+}
+.card-text {
+    color: rgb(119,119,119) !important;
+}
+.homeMovieHeader{
+    color:white;
+    font-size:20px;
+    border-bottom:1px solid rgb(45,45,45);
+    padding-bottom:5px;
+}
 .btn-filter {
     width: 50%;
     margin: auto;
     font-size: 16px;
     color: #ffffff;
-    background-color: #1c1c1c;
+    background-color: #E50914;
     text-align: center;
     padding: 10px 0px;
     border-radius: 5px;
-    font-weight: bold;
-    text-transform: uppercase;
     outline: none !important;
     border: 1px solid #1c1c1c;
     transition: all 0.1s ease-in-out;
 }
 
     .btn-filter:hover {
-        background-color: #282828;
+        background-color: #cc0913;
     }
 
 .footer {
@@ -457,8 +482,10 @@ body {
 
     .navbar ul li a {
         transition: background-color 0.3s ease-in-out;
+        border-radius: 8px;
     }
 
-        .navbar ul li a:hover {
+.navbar ul li a:hover {
             background-color: #E50914;
-        }
+            border-radius:8px;
+}
