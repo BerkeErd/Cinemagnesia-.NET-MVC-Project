@@ -18,7 +18,7 @@ namespace Infrastructure.DataAccess.Repositories
         {
             
         }
-
+        
         public IQueryable<Movie> GetAllWaitingMovies()
         {
 
