@@ -1,15 +1,29 @@
 ﻿
-.commentProfileImage {
-    height: 150px !important;
-    width: 150px !important;
+
+
+
+.profileImageDiv{
+    width:100px;
+    height:100px;
+    border-radius: 50%;
+    background-color:white;
+    border: 1px solid red;
+    padding: 2px;
 }
 
-    .commentProfileImage img {
+    .profileImageDiv img {
         height: 100% !important;
-        object-fit: contain !important;
+        object-fit: cover !important;
         width: 100% !important;
+        border-radius: 50%;
     }
 
+
+
+    .yorum-TextArea {
+        background-color: #646464 !important;
+        color: #E8E8E8 !important;
+    }
 
 .card {
   position: relative;
@@ -88,6 +102,10 @@
 }
 
 h1 {
+    color: #E8E8E8;
+    margin-bottom: 1rem; /* veya istediğiniz boşluk değeri */
+}
+h2 {
     color: #E8E8E8;
     margin-bottom: 1rem; /* veya istediğiniz boşluk değeri */
 }
@@ -193,16 +211,13 @@ p strong {
 
 }
 
-
 * {
     margin: 0;
     padding: 0;
     font-family: roboto;
 }
 
-body {
-    background: #000;
-}
+
 
 .cont {
     width: 93%;
@@ -299,9 +314,11 @@ input.star:checked ~ .rev-box {
     overflow: visible;
 }
 
-.yorum-TextArea {
-    background-color: #646464 !important;
-    color: #E8E8E8 !important;
+li strong {
+    font-weight: 300;
+    font-size: 15px;
+    text-align: center;
+    color: #Fd4;
 }
 
 

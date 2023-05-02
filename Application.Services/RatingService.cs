@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.AppInterfaces;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,10 @@ namespace Application.Services
     public class RatingService : IRatingService
     {
         private readonly IRatingRepository _ratingRepository;
-        public RatingService(IRatingRepository ratingRepository)
+        private readonly IMovieRepository _movieRepository; 
+        public RatingService(IRatingRepository ratingRepository, IMovieRepository movieRepository)
         {
+            _movieRepository = movieRepository;
             _ratingRepository = ratingRepository;
         }
         public void AddRating(Rating rating)
@@ -39,6 +42,12 @@ namespace Application.Services
         public void UpdateRating(string id, Rating rating)
         {
             _ratingRepository.Update(id, rating);
+        }
+
+        public int GetRateoftheUser(string userId,string movieId)
+        {
+            
+            return _ratingRepository.GetRateoftheUser(userId, movieId);
         }
 
     }

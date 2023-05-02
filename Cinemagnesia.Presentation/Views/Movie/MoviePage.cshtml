@@ -1,34 +1,42 @@
-﻿@model MovieViewModel
+﻿@model MovieDetailViewModel
 @{
-    ViewBag.Title = "Film @ Detayları";
+    ViewBag.Title = "Film Detayları";
+    bool isRatedBefore = (bool)ViewData["isRatedBefore"];
+    int Rate = (int)ViewData["Rate"];
 }
+@using Cinemagnesia.Domain.Domain.Entities.Concrete;
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<ApplicationUser> UserManager
+
 <script src="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <link href="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/skins/ui/oxide/skin.min.css" rel="stylesheet" />
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400'>
 <link rel="stylesheet" href="~/css/movieDetails.css" />
+
+
 
 <div class="container">
     <div class="row">
         <div class="col-md-6">
             <article class="card">
                 <div class="temporary_text">
-                    <img src="https://tr.web.img4.acsta.net/pictures/bzp/01/27070.jpg" class="img-fluid" alt="Movie Cover Picture">
+                    <img src="@Model.PosterPath" class="img-fluid" alt="Movie Cover Picture">
                 </div>
                 <div class="card_content">
                     <div class="d-flex justify-content-between mb-6">
                         <div class="text-start m-auto">
                             <span class="text-muted">IMDb </span>
-                            <span class="fs-4">8.9 <i class="fa-sharp fa-solid fa-star" style="color: #ffd500;"></i></span>
+                            <span class="fs-4">@Model.ImdbRating <i class="fa-sharp fa-solid fa-star" style="color: #ffd500;"></i></span>
                         </div>
                         <div class="text-end m-auto p-4">
                             <span class="text-muted">Cinemagnesia </span>
-                            <span class="fs-4">4.3 / 5 <i class="fa-sharp fa-solid fa-star" style="color: #ffd500;"></i></span>
+                            <span class="fs-4">@Model.CinemagAvgScore / 5 <i class="fa-sharp fa-solid fa-star" style="color: #ffd500;"></i></span>
                         </div>
                     </div>
 
-                    <span class="card_subtitle">Yüzük Kardeşliği, dünyanın kaderini değişterecek olan yüzükten kurtulmak için verilen mücadeleyi konu ediyor.</span>
-                    <p id="movie-description" class="card_description">Yıllar önce üretilen ve Orta Dünya topraklarına kandan başka hiçbir şey getirmeyen yüzüklerin sonuncusu, üretiminden yüz yıllar sonra ortaya çıkar.</p>
-                </div>
+                    <p id="movie-description" class="card_description">@Model.Description</p>
+                </div> 
 
 
             </article>
@@ -39,49 +47,87 @@
                             İzledim
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="movie-status-dropdown"> @*Giriş yapılmadan tıklandığında giriş yapın sweetalert veya herhangi bir şekilde ekrana gelebilir*@
-                            <li><a class="dropdown-item" href="#">İzlemedim</a></li>
-                            <li><a class="dropdown-item active" href="#">İzledim</a></li>
-                            <li><a class="dropdown-item" href="#">İzlemek İstiyorum</a></li>
+                            <li><button class="dropdown-item" href="#">İzlemedim</button></li>
+                            <li><button class="dropdown-item active" href="#">İzledim</button></li>
+                            <li><button class="dropdown-item" href="#">İzlemek İstiyorum</button></li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>@*BURASI SONRA*@
         
 
         <div class="col-md-6">
             <div class="row align-items-center">
                 <div class="col-md-10 d-flex align-items-center">
-                    <h1 class="mb-0">Yüzüklerin Efendisi</h1>
+                    <h2 class="mb-0">@Model.Title</h2>
                     <div class="con-like m-2">
-                        <input title="like" type="checkbox" class="like">
-                        <div class="checkmark">
-                            <svg viewBox="0 0 24 24" class="outline" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z"></path>
-                            </svg>
-                            <svg viewBox="0 0 24 24" class="filled" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z"></path>
-                            </svg>
-                            <svg class="celebrate" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-                                <polygon points="10,10 20,20" class="poly"></polygon>
-                                <polygon points="10,50 20,50" class="poly"></polygon>
-                                <polygon points="20,80 30,70" class="poly"></polygon>
-                                <polygon points="90,10 80,20" class="poly"></polygon>
-                                <polygon points="90,50 80,50" class="poly"></polygon>
-                                <polygon points="80,80 70,70" class="poly"></polygon>
-                            </svg>
-                        </div>
+                        @if(false)// Likelistte bu film varsa
+                        {
+                            
+                        }
+                        else{
+                            <input title="like" type="checkbox" class="like">
+                            <div class="checkmark">
+                                <svg viewBox="0 0 24 24" class="outline" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z"></path>
+                                </svg>
+                                <svg viewBox="0 0 24 24" class="filled" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z"></path>
+                                </svg>
+                                <svg class="celebrate" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+                                    <polygon points="10,10 20,20" class="poly"></polygon>
+                                    <polygon points="10,50 20,50" class="poly"></polygon>
+                                    <polygon points="20,80 30,70" class="poly"></polygon>
+                                    <polygon points="90,10 80,20" class="poly"></polygon>
+                                    <polygon points="90,50 80,50" class="poly"></polygon>
+                                    <polygon points="80,80 70,70" class="poly"></polygon>
+                                </svg>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
            <div class="row">
                <div class="col-lg-12 mt-4">
-                    <p><strong>Yönetmen:</strong> Yönetmen</p>
-                    <p><strong>Tür:</strong> Bilim-Kurgu, Aksiyon, Macera</p>
-                    <p><strong>Filmin Süresi:</strong> 93 Dakika</p>
-                    <p><strong>Filmin Şirketi:</strong> Ipsum Şirketi</p>
-                    <p><strong>Filmin Çıktığı Yıl:</strong> 2001</p>
-                    <p><strong>Filmin Orjinal Dili:</strong> İngilizce</p>
+                    <p>
+                        <strong>Yönetmen:</strong> @if (Model.Directors != null && Model.Directors.Any())
+                        {
+                            @foreach (var director in Model.Directors)
+                            {
+
+                                @if (director != Model.Directors.Last())
+                                {
+                                <p> @director.Name,</p>
+                                }
+                                else
+                                {
+                                <p>@director.Name</p>
+                                }
+                            }
+                        }
+                    </p>
+                    <p>
+                        <strong>Tür:</strong> @if (Model.Genres != null && Model.Genres.Any())
+                        {
+                            @foreach (var genre in Model.Genres)
+                            {
+                            
+                                @if (genre != Model.Genres.Last())
+                                {
+                                    <p> @genre.Name,</p>
+                                }
+                                else
+                                {
+                                    <p>@genre.Name</p>
+                                }
+                            }
+                        }
+                   </p>
+                    <p><strong>Filmin Süresi:</strong> @Model.MovieMinutes</p>
+                    <p><strong>Filmin Şirketi:</strong> @Model.CompanyName</p>
+                    <p><strong>Filmin Çıktığı Yıl:</strong> @Model.ReleaseDate</p>
+                    <p><strong>Filmin Orjinal Dili:</strong> @Model.Language</p>
                </div>
            </div>
                 
@@ -89,33 +135,68 @@
             
             <div class="mb-4">
                 <label for="cast-members" class="form-label">Oyuncular:</label>
-                <p id="cast-members">Cast Member 1, Cast Member 2, Cast Member 3, Cast Member 4</p>
+                @if (Model.CastMembers != null && Model.CastMembers.Any())
+                {
+                    @foreach (var castMember in Model.CastMembers)
+                    {
+
+                        @if (castMember != Model.CastMembers.Last())
+                        {
+                            <p> @castMember.Name,</p>
+                        }
+                        else
+                        {
+                            <p>@castMember.Name</p>
+                        }
+                    }
+                }
             </div>
             <div class="mb-4">
                 <label for="movie-trailer" class="form-label">Trailer:</label>
                 <div class="ratio ratio-16x9">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Movie Trailer" allowfullscreen></iframe>
+                    <iframe src="" id="trailerEmbed" title="Movie Trailer" allowfullscreen></iframe>
                 </div>
             </div>
             <div class="mb-4">
                 <div class="cont">
                     @if (@User.IsInRole("User") || @User.IsInRole("Productor"))
                     {
-                        <div class="stars">
-                            <form action="">
-                                <input class="star star-5" id="star-5" type="radio" name="star" />
-                                <label class="star star-5" for="star-5"></label>
-                                <input class="star star-4" id="star-4" type="radio" name="star" />
-                                <label class="star star-4" for="star-4"></label>
-                                <input class="star star-3" id="star-3" type="radio" name="star" />
-                                <label class="star star-3" for="star-3"></label>
-                                <input class="star star-2" id="star-2" type="radio" name="star" />
-                                <label class="star star-2" for="star-2"></label>
-                                <input class="star star-1" id="star-1" type="radio" name="star" />
-                                <label class="star star-1" for="star-1"></label>
-                            </form>
-                        </div>
+                        if (isRatedBefore) //Eğer user bu film'e zaten oy atmışsa önceden
+                        {
+                            <div class="stars">
+                                <form action="">
+                                    <input class="star star-5" id="star-5" type="radio" name="star" @(Rate == 5 ? "checked" : "") />
+                                    <label class="star star-5" for="star-5"></label>
+                                    <input class="star star-4" id="star-4" type="radio" name="star" @(Rate == 4 ? "checked" : "") />
+                                    <label class="star star-4" for="star-4"></label>
+                                    <input class="star star-3" id="star-3" type="radio" name="star" @(Rate == 3 ? "checked" : "") />
+                                    <label class="star star-3" for="star-3"></label>
+                                    <input class="star star-2" id="star-2" type="radio" name="star" @(Rate == 2 ? "checked" : "") />
+                                    <label class="star star-2" for="star-2"></label>
+                                    <input class="star star-1" id="star-1" type="radio" name="star" @(Rate == 1 ? "checked" : "") />
+                                    <label class="star star-1" for="star-1"></label>
+                                </form>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="stars">
+                                <form action="">
+                                    <input class="star star-5" id="star-5" type="radio" name="star" />
+                                    <label class="star star-5" for="star-5"></label>
+                                    <input class="star star-4" id="star-4" type="radio" name="star" />
+                                    <label class="star star-4" for="star-4"></label>
+                                    <input class="star star-3" id="star-3" type="radio" name="star" />
+                                    <label class="star star-3" for="star-3"></label>
+                                    <input class="star star-2" id="star-2" type="radio" name="star" />
+                                    <label class="star star-2" for="star-2"></label>
+                                    <input class="star star-1" id="star-1" type="radio" name="star" />
+                                    <label class="star star-1" for="star-1"></label>
+                                </form>
+                            </div>
+                        }
                     }
+
                 </div>
             </div>
         </div>
@@ -127,14 +208,17 @@
             <form>
                 <div class="row mt-3">
                     <div class="col-md-4">
-                        <h4 class="fw-bold">@User.Identity.Name</h4>
-                        <div class="commentProfileImage">
-                            <img src="/images/Cinemagnesia/defaultUserPicture.png" />
+                        <div class="text-center">
+                                <p class="fw-bold">@UserManager.GetUserAsync(User).Result.FirstName </p>
+                                <div class="profileImageDiv m-auto">
+                                    <img src="@UserManager.GetUserAsync(User).Result.ProfilePicture" />
+                                </div>
+                               
                         </div>
                     </div>
                     <div class="col-md-8">
                         <h4 class="fw-bold">Yorum Yaz</h4>
-                        <textarea id="yorumTextArea" class="form-control" rows="5" cols="50"></textarea>
+                            <textarea id="yorumTextArea" class="form-control yorum-TextArea" rows="5" cols="50"></textarea>
                         <button type="submit" class="btn btn-danger m-2">Gönder</button>
                     </div>
                 </div>
@@ -146,37 +230,63 @@
                 <div class="row mt-3">
                     <div class="col-md-12">
                         <h4 class="fw-bold">Yorum Yazabilmek için lütfen giriş yapınız.</h4>
-                        <textarea class="form-control yorum-TextArea" rows="5" cols="50" disabled></textarea>
+                        <textarea id="yorumTextArea" class="form-control yorum-TextArea" rows="5" cols="50" disabled></textarea>
                     </div>
                 </div>
             }
             
         </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-5">
         <div class="col-md-12">
             <h3>Yorumlar:</h3>
             <ul class="list-unstyled">
-                <li>
+                @if(Model.MovieComments.Count > 0)
+                {
+                    @foreach (var Comment in Model.MovieComments)
+                    {
+                        if (Comment.Status == Domain.Entities.Constants.ApprovalStatus.Approved)
+                        {
+                            <li>
+                                <div class="d-flex">
+                                    <div class="me-3 profileImageDiv">
+                                        <img src="@UserManager.FindByIdAsync(Comment.ApplicationUserId).Result.ProfilePicture" alt="Profil Fotoğrafı" width="50" height="50" class="rounded-circle">
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <p>
+                                            <strong>@UserManager.FindByIdAsync(Comment.ApplicationUserId).Result.FirstName:</strong>
+                                            @if (Comment.HasSpoiler)
+                                            {
+                                                <button class="btn btn-outline-primary" id="spoilerBtn" onclick="$(this).hide(); $('#spoilerText').show();">Spoilerı görmek için dokun</button>
+                                                <span id="spoilerText" style="display:none">@Comment.CommentText</span>
+                                            }
+                                            else
+                                            {
+                                                @Comment.CommentText
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    }
+                }
+                else
+                {
                     <div class="d-flex">
-                        <div class="me-3 commentProfileImage">
-                            <img src="profil_foto_url" alt="Profil Fotoğrafı" width="50" height="50" class="rounded-circle">
+                        <div class="me-3 profileImageDiv">
+                            <img src="@UserManager.GetUserAsync(User).Result.ProfilePicture alt="Profil Fotoğrafı" width="50" height="50" class="rounded-circle">
                         </div>
                         <div class="flex-grow-1">
-                            <p><strong>Kullanıcı 1:</strong> Bu film harika! Çok sevdim.</p>
+                            <p>
+                                <strong>@UserManager.GetUserAsync(User).Result.FirstName:</strong>
+                                İlk Yorumu Siz Yapın...
+                            </p>
                         </div>
                     </div>
-                </li>
-                <li>
-                    <div class="d-flex">
-                        <div class="me-3 commentProfileImage">
-                            <img src="profil_foto_url" alt="Profil Fotoğrafı" width="50" height="50" class="rounded-circle">
-                        </div>
-                        <div class="flex-grow-1">
-                            <p><strong>Kullanıcı 2:</strong> Bu film bana göre değildi, pek beğenmedim.</p>
-                        </div>
-                    </div>
-                </li>
+                }
+
+
             </ul>
         </div>
     </div>
@@ -187,25 +297,38 @@
 @section Scripts {
     <script>
         tinymce.init({
-            selector: 'textarea',
-            menubar: false,
-            toolbar: false,
-            content_css: '/css/movieDetails.css'
-            plugins: 'autoresize link emoticons',
-            height: 200,
-            autoresize_bottom_margin: 15,
-            formats: {
-                underline: { inline: 'u', exact: true }
-            },
-            style_formats: [
-                { title: 'Plain Text', format: 'plain_text' }
-            ],
-            setup: function (editor) {
-                editor.on('init', function () {
-                    editor.formatter.remove('italic');
-                });
-            }
-        });
+                selector: 'textarea',
+                menubar: false,
+                toolbar: false,
+                content_css: '/css/movieDetails.css',
+                plugins: 'autoresize link emoticons',
+                height: 300,
+                autoresize_bottom_margin: 15,
+                formats: {
+                    underline: { inline: 'u', exact: true }
+                },
+                style_formats: [
+                    { title: 'Plain Text', format: 'plain_text' }
+                ],
+                setup: function (editor) {
+                    editor.on('init', function () {
+                        editor.formatter.remove('italic');
+                    });
+                }
+            });
 
-</script>
+        $(document).ready(function () {
+            
+
+            var youtubeUrl = "https://www.youtube.com/embed/" + "@Model.TrailerUrl";
+            $("#trailerEmbed").attr("src", youtubeUrl);
+
+            
+                });
+
+        
+
+    </script>
+    <script src="~/js/movieDetails.js"></script>
 }
+

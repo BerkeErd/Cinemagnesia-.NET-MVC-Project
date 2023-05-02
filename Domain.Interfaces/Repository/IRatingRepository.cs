@@ -10,5 +10,7 @@ namespace Domain.Interfaces.Repository
 {
     public interface IRatingRepository : IRepository<Rating>
     {
+         public int GetRateoftheUser(string userId, string movieId);
     }
+    
 }

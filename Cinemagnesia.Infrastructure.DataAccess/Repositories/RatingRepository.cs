@@ -15,5 +15,15 @@ namespace Infrastructure.DataAccess.Repositories
         {
 
         }
+        public int GetRateoftheUser(string userId, string movieId)
+        {
+            var rating = GetAllAsync()
+                .Result
+                .FirstOrDefault(r => r.ApplicationUserId == userId && r.MovieId == movieId);
+
+            return Convert.ToInt32(rating?.Score ?? 0);
+        }
     }
+
+    
 }

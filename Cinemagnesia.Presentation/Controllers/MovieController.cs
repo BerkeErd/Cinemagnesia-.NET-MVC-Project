@@ -10,6 +10,10 @@ using Newtonsoft.Json;
 using AutoMapper;
 using Infrastructure.DataAccess.Migrations;
 using Application.Interfaces.AppInterfaces;
+using Cinemagnesia.Domain.Domain.Entities.Concrete;
+using Domain.Entities.Constants;
+using Microsoft.AspNetCore.Identity;
+using Application.Services;
 
 namespace Cinemagnesia.Presentation.Controllers
 {
@@ -20,12 +24,17 @@ namespace Cinemagnesia.Presentation.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _env;
         private readonly IMovieService _movieService;
-        public MovieController(IHttpClientFactory httpClientFactory, IMapper mapper, IWebHostEnvironment env, IMovieService movieService)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IRatingService _ratingService;
+
+        public MovieController(IHttpClientFactory httpClientFactory, IMapper mapper, IWebHostEnvironment env, IMovieService movieService, UserManager<ApplicationUser> usermanager, IRatingService ratingService)
         {
+            _userManager = usermanager;
             _movieService = movieService;
             _mapper = mapper;
             _httpClient = httpClientFactory.CreateClient("rapidapi");
             _env = env;
+            _ratingService = ratingService;
         }
 
         [HttpGet]
@@ -102,10 +111,49 @@ namespace Cinemagnesia.Presentation.Controllers
           
 
         }
-
-        public IActionResult MoviePage()
+        public IActionResult MoviePage(MovieDetailViewModel movieDetailViewModel)
         {
-            return View();
+            //MovieDetailViewModel movieDetailViewModel = new MovieDetailViewModel()
+            // {
+            //     Id = "12345",
+            //     CompanyId = "67890",
+            //     CompanyName = "Acme Productions",
+            //     Title = "The Greatest Movie Ever",
+            //     Description = "A thrilling adventure through space and time",
+            //     PosterPath = "/images/Cinemagnesia/DefaultMoviePicture.png",
+            //     ReleaseDate = DateTime.Now,
+            //     ImdbRating = 8.5f,
+            //     CinemagAvgScore = 4.2f,
+            //     Status = ApprovalStatus.Approved,
+            //     TrailerUrl = "dQw4w9WgXcQ",
+            //     Directors = new List<Director>(),
+            //     Genres = new List<Genre>(),
+            //     CastMembers = new List<CastMember>(),
+            //     MovieComments = new List<MovieComment>(),
+            //     UserLikes = new List<ApplicationUser>(),
+            //     MovieMinutes = 120,
+            //     Language = "English",
+            //     CreatedAt = DateTime.Now,
+            //     UpdatedAt = null
+            // };
+
+            bool isRatedBefore = false;
+            int Rate = 0;
+
+            foreach (var Movie in _userManager.GetUserAsync(User).Result.RatedMovies) //Film daha önce oylanmış mı?
+            {
+                if (Movie.Id == movieDetailViewModel.Id)
+                {
+                    isRatedBefore = true;
+                    Rate = _ratingService.GetRateoftheUser(_userManager.GetUserAsync(User).Result.Id, Movie.Id); // set the Rate to the user's previous rating
+                    break;
+                }
+            }
+
+            ViewData["isRatedBefore"] = isRatedBefore;
+            ViewData["Rate"] = Rate;
+
+            return View(movieDetailViewModel);
         }
 
         public int GetNumOfMovies()

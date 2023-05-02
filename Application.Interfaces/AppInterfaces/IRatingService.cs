@@ -14,6 +14,8 @@ namespace Application.Interfaces.AppInterfaces
         void RemoveRating(string id);
         void UpdateRating(string id, Rating rating);
         Rating GetById(string id);
+
+        int GetRateoftheUser(string userId,string movieId);
     }
 }
 
