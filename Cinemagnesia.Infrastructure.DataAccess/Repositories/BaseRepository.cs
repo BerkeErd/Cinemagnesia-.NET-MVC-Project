@@ -57,18 +57,21 @@ namespace Infrastructure.DataAccess.Repositories
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<TEntity> UpdateAsync(string id, TEntity entity)
+        public string Update(string id, TEntity entity)
         {
-            var existingEntity = await _dbContext.Set<TEntity>().FindAsync(id);
-
+            var existingEntity = _dbSet.Find(id);
             if (existingEntity != null)
             {
                 _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
-                await _dbContext.SaveChangesAsync();
-            }
+                _dbContext.SaveChanges();
 
-            return existingEntity;
+            }
+            return "başarılı";
         }
+
+
+
+
 
     }
 }

@@ -48,7 +48,7 @@ namespace Application.Services
 
         public void UpdateCompany(string id, Company company)
         {
-            _companyRepository.UpdateAsync(id, company).Wait();
+            _companyRepository.Update(id, company);
         }
 
         public int GetNumOfCompanies()

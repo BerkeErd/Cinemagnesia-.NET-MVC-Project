@@ -50,7 +50,7 @@ namespace Application.Services
             {
                 throw new InvalidOperationException("Bu isimde bir kategori mevcut.");
             }
-            _genreRepository.UpdateAsync(id, genre).Wait();
+            _genreRepository.Update(id, genre);
         }
 
         public List<GenreStatisticDto> GetGenresWithMovies()

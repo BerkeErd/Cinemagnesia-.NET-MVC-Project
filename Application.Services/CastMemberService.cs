@@ -39,7 +39,7 @@ namespace Application.Services
 
         public void UpdateCastMember(string id, CastMember castMember)
         {
-            _castMemberRepository.UpdateAsync(id, castMember).Wait();
+            _castMemberRepository.Update(id, castMember);
         }
     }
 }

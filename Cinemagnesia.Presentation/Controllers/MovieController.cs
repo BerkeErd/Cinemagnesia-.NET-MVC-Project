@@ -49,48 +49,57 @@ namespace Cinemagnesia.Presentation.Controllers
         [HttpPost]
         public IActionResult AddMovie(IFormFile poster, string companyId, string title, string description, string releaseDate, string imdbRating, string trailerUrl, string directors, string genres, string castMembers, string movieMinute, string language)
         {
-            List<AddGenreToMovieViewModel> genreNames = JsonConvert.DeserializeObject<List<AddGenreToMovieViewModel>>(genres);
-            List<AddCastMemberViewModel> castmemberNames = JsonConvert.DeserializeObject<List<AddCastMemberViewModel>>(castMembers);
-            List<AddDirectorViewModel> directorNames = JsonConvert.DeserializeObject<List<AddDirectorViewModel>>(directors);
-
-            string fileName;
-
-            if(poster == null)
+            try
             {
-                 fileName = "DefaultMoviePicture.png";
-            }
-            else
-            {
-                 fileName = $"{Guid.NewGuid().ToString()}_{poster.FileName}";
-                 string filePath = Path.Combine(_env.WebRootPath, "images", "Cinemagnesia", fileName);
+                List<AddGenreToMovieViewModel> genreNames = JsonConvert.DeserializeObject<List<AddGenreToMovieViewModel>>(genres);
+                List<AddCastMemberViewModel> castmemberNames = JsonConvert.DeserializeObject<List<AddCastMemberViewModel>>(castMembers);
+                List<AddDirectorViewModel> directorNames = JsonConvert.DeserializeObject<List<AddDirectorViewModel>>(directors);
+
+                string fileName;
+
+                if (poster == null)
+                {
+                    fileName = "DefaultMoviePicture.png";
+                }
+                else
+                {
+                    fileName = $"{Guid.NewGuid().ToString()}_{poster.FileName}";
+                    string filePath = Path.Combine(_env.WebRootPath, "images", "Cinemagnesia", fileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         poster.CopyToAsync(stream);
                     }
+                }
+
+
+
+                AddMovieViewModel addMovieViewModel = new AddMovieViewModel()
+                {
+                    Title = title,
+                    Description = description,
+                    CompanyId = companyId,
+                    ReleaseDate = DateTime.Parse(releaseDate),
+                    ImdbRating = float.Parse(imdbRating),
+                    TrailerUrl = trailerUrl,
+                    MovieMinute = Convert.ToInt32(movieMinute),
+                    Language = language,
+                    Directors = directorNames,
+                    Genres = genreNames,
+                    CastMembers = castmemberNames,
+                    PosterPath = fileName
+
+                };
+
+                AddMovieDto addMovieDto = _mapper.Map<AddMovieDto>(addMovieViewModel);
+                _movieService.AddMovie(addMovieDto);
+                return Ok(addMovieDto);
             }
-            
-            
-
-            AddMovieViewModel addMovieViewModel = new AddMovieViewModel()
+            catch (Exception ex)
             {
-                Title = title,
-                Description = description,
-                CompanyId = companyId,
-                ReleaseDate = DateTime.Parse(releaseDate),
-                ImdbRating = float.Parse(imdbRating),
-                TrailerUrl = trailerUrl,
-                MovieMinute = Convert.ToInt32(movieMinute),
-                Language = language,
-                Directors = directorNames,
-                Genres = genreNames,
-                CastMembers = castmemberNames,
-                PosterPath = fileName
 
-            };
-
-            AddMovieDto addMovieDto = _mapper.Map<AddMovieDto>(addMovieViewModel);
-            _movieService.AddMovie(addMovieDto);
-            return Ok(addMovieDto);
+                return BadRequest(ex.Message);
+            }
+          
 
         }
 

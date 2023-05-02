@@ -3,8 +3,10 @@ using Application.Interfaces.AppInterfaces;
 using AutoMapper;
 using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
+using Domain.Entities.Constants;
 using Domain.Interfaces.Repository;
 using Infrastructure.DataAccess.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -70,10 +72,19 @@ namespace Application.Services
             _movieRepository.CreateAsync(movie).Wait();
         }
 
-        public List<Movie> GetAllMovies()
+        public List<MovieDto> GetAllWaitingMovies()
         {
-            var movies = _movieRepository.GetAll().ToList();
-            return movies;
+            var movies = _movieRepository.GetAllWaitingMovies().ToList();
+            var movieDtos = _mapper.Map<List<MovieDto>>(movies);
+
+            foreach (var movieDto in movieDtos)
+            {
+                var companyId = movies.Where(m => m.Id==movieDto.Id).Select(m => m.CompanyId).FirstOrDefault();
+                var companyName = _dbContext.Companies.Where(c => c.Id == companyId).Select(c => c.Name).FirstOrDefault();
+                movieDto.CompanyName = companyName;
+            }
+
+            return movieDtos;
         }
 
         public Movie GetMovieById(string id)
@@ -86,10 +97,60 @@ namespace Application.Services
             _movieRepository.DeleteAsync(id).Wait();
         }
 
-        public void UpdateMovie(string id, Movie movie)
+        public  string ComfirmMovie(string id)
         {
-            _movieRepository.UpdateAsync(id, movie).Wait();
+            var movies = _movieRepository.GetAllWaitingMovies();
+            Movie dbMovie = movies.SingleOrDefault(x=>x.Id==id); // belirtilen id'ye sahip filmi bul
+
+            if (dbMovie != null) // film veritabanında varsa güncelleme yap
+            {
+                dbMovie.Status = ApprovalStatus.Approved;
+                dbMovie.UpdatedAt = DateTime.Now;
+
+                 var updatedMovie =  _movieRepository.Update(id,dbMovie);
+
+                if (updatedMovie != null)
+                {
+                    return "Başarılı";
+                }
+                else
+                {
+                    return "Güncelleme başarısız";
+                }
+            }
+            else // belirtilen id'ye sahip bir film bulunamazsa hata fırlat
+            {
+                return "Invalid movie id";
+            }
         }
+
+        public string RejectMovie(string id)
+        {
+            var movies = _movieRepository.GetAllWaitingMovies();
+            Movie dbMovie = movies.SingleOrDefault(x => x.Id == id); // belirtilen id'ye sahip filmi bul
+
+            if (dbMovie != null) // film veritabanında varsa güncelleme yap
+            {
+                dbMovie.Status = ApprovalStatus.Rejected;
+                dbMovie.UpdatedAt = DateTime.Now;
+
+                var updatedMovie = _movieRepository.Update(id, dbMovie);
+
+                if (updatedMovie != null)
+                {
+                    return "Başarılı";
+                }
+                else
+                {
+                    return "Güncelleme başarısız";
+                }
+            }
+            else // belirtilen id'ye sahip bir film bulunamazsa hata fırlat
+            {
+                return "Invalid movie id";
+            }
+        }
+
 
         public int GetNumOfMovies()
         {

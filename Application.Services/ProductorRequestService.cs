@@ -61,7 +61,7 @@ namespace Application.Services
 
             var productorRequest = _mapper.Map<ProductorRequest>(productorRequestDto);
 
-            _productorRequestRepository.UpdateAsync(id, productorRequest).Wait();
+            _productorRequestRepository.Update(id, productorRequest);
         }
 
         public List<ProductorRequestDto> GetNumOfApprovedProductorRequests()

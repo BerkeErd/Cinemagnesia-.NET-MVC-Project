@@ -40,7 +40,7 @@ namespace Application.Services
 
         public void UpdateWatchList(string id, WatchList watchList)
         {
-            _watchListRepository.UpdateAsync(id, watchList).Wait();
+            _watchListRepository.Update(id, watchList);
         }
 
     }

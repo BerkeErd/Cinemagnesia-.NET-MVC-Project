@@ -38,7 +38,7 @@ namespace Application.Services
 
         public void UpdateRating(string id, Rating rating)
         {
-            _ratingRepository.UpdateAsync(id, rating).Wait();
+            _ratingRepository.Update(id, rating);
         }
 
     }

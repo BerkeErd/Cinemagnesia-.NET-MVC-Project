@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Domain.Entities.Concrete;
+using Domain.Entities.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,11 @@ namespace Application.Interfaces.AppInterfaces
     public interface IMovieService
     {
         Movie GetMovieById(string id);
-        List<Movie> GetAllMovies();
+        List<MovieDto> GetAllWaitingMovies();
         void AddMovie(AddMovieDto movie);
         void RemoveMovie(string id);
-        void UpdateMovie(string id, Movie movie);
+        string ComfirmMovie(string id);
+        string RejectMovie(string id);
         int GetNumOfMovies();
     }
 }

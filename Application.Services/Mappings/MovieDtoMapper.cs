@@ -22,6 +22,11 @@ namespace Application.Services.Mappings
 
             CreateMap<MovieDto, Movie>();
 
+            CreateMap<Movie, UpdateMovieDto>();
+
+            CreateMap<UpdateMovieDto, Movie>();
+
+
 
         }
         

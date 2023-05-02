@@ -17,7 +17,7 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            var movies = _movieService.GetAllMovies();
+           // var movies = _movieService.GetAllMovies();
             var directors = _directorService.GetAllDirectors();
             ExportViewModel model = new ExportViewModel();
             ViewBag.model = model;

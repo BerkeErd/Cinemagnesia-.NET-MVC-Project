@@ -31,7 +31,7 @@ namespace Application.Services
 
         public void UpdateMovieComment(string movieCommentId, MovieComment movieComment)
         {
-            _movieCommentRepository.UpdateAsync(movieCommentId, movieComment).Wait();
+            _movieCommentRepository.Update(movieCommentId, movieComment);
         }
 
         public int GetNumOfMovieComments()

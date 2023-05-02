@@ -39,7 +39,7 @@ namespace Application.Services
 
         public void UpdateDirector(string id, Director director)
         {
-            _directorRepository.UpdateAsync(id, director).Wait();
+            _directorRepository.Update(id, director);
         }
 
         public int GetNumOfDirectors()

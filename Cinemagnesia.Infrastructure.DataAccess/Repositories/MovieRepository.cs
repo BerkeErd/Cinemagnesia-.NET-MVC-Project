@@ -1,5 +1,6 @@
 ﻿using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
+using Domain.Entities.Constants;
 using Domain.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,14 +19,15 @@ namespace Infrastructure.DataAccess.Repositories
             
         }
 
-        public IQueryable<Movie> GetAll()
+        public IQueryable<Movie> GetAllWaitingMovies()
         {
-            
+
             return _dbContext.Movies
            .Include(m => m.Directors)
            .Include(m => m.Genres)
            .Include(m => m.CastMembers)
-           .Include(m => m.MovieComments);
+           .Include(m => m.MovieComments)
+           .Where(m => m.Status == ApprovalStatus.Waiting);
         }
 
         public int GetNumOfMovies()

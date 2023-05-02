@@ -10,7 +10,7 @@ namespace Domain.Interfaces.Repository
 {
     public interface IMovieRepository : IRepository<Movie>
     {
-        IQueryable<Movie> GetAll();
+        IQueryable<Movie> GetAllWaitingMovies();
         int GetNumOfMovies();
     }
 }

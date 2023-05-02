@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Interfaces.AppInterfaces;
 using AutoMapper;
+using Domain.Entities.Constants;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
@@ -22,11 +23,29 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllMovies()
+        public IActionResult GetAllWaitingMovies()
         {
-            var movies = _movieService.GetAllMovies();
+            var movies = _movieService.GetAllWaitingMovies();
            // var movieDtos = _mapper.Map<List<MovieDto>>(movies); BUGLI
             return Ok(movies);
+        }
+        [HttpPost]
+        public IActionResult ComfirmMovie(string id)
+        {
+              _movieService.ComfirmMovie(id);
+                return Ok("Başarılı");
+            
+
+            
+        }
+        [HttpPost]
+        public IActionResult RejectMovie(string id)
+        {
+            _movieService.RejectMovie(id);
+            return Ok("Başarılı");
+            
+
+
         }
     }
 }
