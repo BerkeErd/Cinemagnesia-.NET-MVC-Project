@@ -115,7 +115,7 @@ namespace Cinemagnesia.Presentation.Controllers
         {
             var id = Request.Query["id"];
             return Ok(id);
-
+            var movie = _movieService.GetMovieById(id);
             MovieDetailViewModel movieDetailViewModel = new MovieDetailViewModel()
             {
                 Id = "12345",
