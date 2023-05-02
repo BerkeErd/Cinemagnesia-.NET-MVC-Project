@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Film Detayları";
     bool isRatedBefore = (bool)ViewData["isRatedBefore"];
+    bool isLikedBefore = (bool)ViewData["isLikedBefore"];
     int Rate = (int)ViewData["Rate"];
 }
 @using Cinemagnesia.Domain.Domain.Entities.Concrete;
@@ -64,13 +65,29 @@
                             <li class="list-group-item d-flex justify-content-between">
                                 <h1>@Model.Title</h1> 
                                 <div class="con-like m-2">
-                                    @if (false)// Likelistte bu film varsa
+                                    @if (isLikedBefore)// Likelistte bu film varsa
                                     {
-
+                                        <input title="like" type="checkbox" class="like" checked>
+                                        <div class="checkmark">
+                                            <svg viewBox="0 0 24 24" class="outline" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z"></path>
+                                            </svg>
+                                            <svg viewBox="0 0 24 24" class="filled" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z"></path>
+                                            </svg>
+                                            <svg class="celebrate" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+                                                <polygon points="10,10 20,20" class="poly"></polygon>
+                                                <polygon points="10,50 20,50" class="poly"></polygon>
+                                                <polygon points="20,80 30,70" class="poly"></polygon>
+                                                <polygon points="90,10 80,20" class="poly"></polygon>
+                                                <polygon points="90,50 80,50" class="poly"></polygon>
+                                                <polygon points="80,80 70,70" class="poly"></polygon>
+                                            </svg>
+                                        </div>
                                     }
                                     else
                                     {
-                                        <input title="like" type="checkbox" class="like">
+                                        <input id="title" title="like" type="checkbox" class="like">
                                         <div class="checkmark">
                                             <svg viewBox="0 0 24 24" class="outline" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z"></path>
@@ -128,7 +145,7 @@
                             </li>
                         </ul>
 
-    </div>
+            </div>
                 </div>
                 <div class="mb-12">
                     <div class="cont">
@@ -138,15 +155,15 @@
                             {
                                 <div class="stars">
                                     <form action="">
-                                        <input class="star star-5" id="star-5" type="radio" name="star" @(Rate == 5 ? "checked" : "") />
+                                        <input class="star star-5" value="5" id="star-5" type="radio" name="star" @(Rate == 5 ? "checked" : "") />
                                         <label class="star star-5" for="star-5"></label>
-                                        <input class="star star-4" id="star-4" type="radio" name="star" @(Rate == 4 ? "checked" : "") />
+                                        <input class="star star-4" value="4" id="star-4" type="radio" name="star" @(Rate == 4 ? "checked" : "") />
                                         <label class="star star-4" for="star-4"></label>
-                                        <input class="star star-3" id="star-3" type="radio" name="star" @(Rate == 3 ? "checked" : "") />
+                                        <input class="star star-3" value="3" id="star-3" type="radio" name="star" @(Rate == 3 ? "checked" : "") />
                                         <label class="star star-3" for="star-3"></label>
-                                        <input class="star star-2" id="star-2" type="radio" name="star" @(Rate == 2 ? "checked" : "") />
+                                        <input class="star star-2" value="2" id="star-2" type="radio" name="star" @(Rate == 2 ? "checked" : "") />
                                         <label class="star star-2" for="star-2"></label>
-                                        <input class="star star-1" id="star-1" type="radio" name="star" @(Rate == 1 ? "checked" : "") />
+                                        <input class="star star-1" value="1" id="star-1" type="radio" name="star" @(Rate == 1 ? "checked" : "") />
                                         <label class="star star-1" for="star-1"></label>
                                     </form>
                                 </div>
@@ -155,15 +172,15 @@
                             {
                                 <div class="stars">
                                     <form action="">
-                                        <input class="star star-5" id="star-5" type="radio" name="star" />
+                                        <input class="star star-5" value="5" id="star-5" type="radio" name="star" />
                                         <label class="star star-5" for="star-5"></label>
-                                        <input class="star star-4" id="star-4" type="radio" name="star" />
+                                        <input class="star star-4" value="4" id="star-4" type="radio" name="star" />
                                         <label class="star star-4" for="star-4"></label>
-                                        <input class="star star-3" id="star-3" type="radio" name="star" />
+                                        <input class="star star-3" value="3" id="star-3" type="radio" name="star" />
                                         <label class="star star-3" for="star-3"></label>
-                                        <input class="star star-2" id="star-2" type="radio" name="star" />
+                                        <input class="star star-2" value="2" id="star-2" type="radio" name="star" />
                                         <label class="star star-2" for="star-2"></label>
-                                        <input class="star star-1" id="star-1" type="radio" name="star" />
+                                        <input class="star star-1" value="1" id="star-1" type="radio" name="star" />
                                         <label class="star star-1" for="star-1"></label>
                                     </form>
                                 </div>
@@ -297,7 +314,50 @@
                     });
                 }
             });
+
+
+            
+            
+            
+
+            //Send Like start
+            $("#like").click(function () {
+
+
+            });
+            //Send Like end
+
         });
+
+        //Send Rate start
+        $(document).on("click", ".star", function () {
+            alert("deneme");
+            var rating = {
+                MovieId: '@Model.Id',
+                Score: $(this).val(),
+                ApplicationUserId: '@UserManager.GetUserId(User)'
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Movie/AddRating",
+                data: rating,
+                success: function (response) {
+                    console.log(response);
+                    // Do something with the response if needed
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+                //Send Rate end
+       
+
+
+
+
+
     </script>
 
 

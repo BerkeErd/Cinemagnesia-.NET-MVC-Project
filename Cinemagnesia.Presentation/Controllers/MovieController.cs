@@ -122,6 +122,7 @@ namespace Cinemagnesia.Presentation.Controllers
             MovieDetailViewModel movieDetailViewModel = _mapper.Map<MovieDetailViewModel>(movieDto);
 
             bool isRatedBefore = false;
+            bool isLikedBefore = false;
             int Rate = 0;
 
             if(User.Identity.IsAuthenticated)
@@ -142,7 +143,26 @@ namespace Cinemagnesia.Presentation.Controllers
                 
             }
 
+           
+                var activeMovies = _movieService.GetAllMovieswithLikes();
+
+                if (activeMovies != null)
+                {
+                    foreach (var movie in activeMovies) // Film daha önce oylanmış mı?
+                    {
+
+                        if (movie.UserLikes == movieDetailViewModel.UserLikes)
+                        {
+                            isLikedBefore = true;
+                            break;
+                        }
+                    }
+                }
+
+            
+
             ViewData["isRatedBefore"] = isRatedBefore;
+            ViewData["isLikedBefore"] = isLikedBefore;
             ViewData["Rate"] = Rate;
 
 
@@ -161,6 +181,14 @@ namespace Cinemagnesia.Presentation.Controllers
         {
             var data = _movieService.GetAllHomeMovies();
             return Ok(data);
+        }
+
+        [HttpPost]
+        public IActionResult AddRating(Rating rating)
+        {
+            _ratingService.AddRating(rating);
+            _movieService.AddToRatedUsersList(rating.ApplicationUserId, rating.MovieId);
+            return Ok("oldu herhalde");
         }
     }
 }

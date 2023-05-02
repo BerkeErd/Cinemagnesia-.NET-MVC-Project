@@ -87,6 +87,13 @@ namespace Application.Services
             return movieDtos;
         }
 
+        public List<MovieDto> GetAllMovieswithLikes()
+        {
+            var movies = _movieRepository.GetAllMovieswithLikes().ToList();
+            var movieDto = _mapper.Map<List<MovieDto>>(movies);
+            return movieDto;
+        }
+
         public MovieDto GetMovieDtoById(string id)
         {
             var movie = _movieRepository.GetMovieById(id);
@@ -164,7 +171,10 @@ namespace Application.Services
             }
         }
 
-
+        public void AddToRatedUsersList(string userId, string movieId)
+        {
+            _movieRepository.AddToRatedUsersList(userId, movieId);
+        }
         public int GetNumOfMovies()
         {
             return _movieRepository.GetNumOfMovies();

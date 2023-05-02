@@ -1,4 +1,5 @@
-﻿using Cinemagnesia.Infrastructure.DataAccess.DbContext;
+﻿using Cinemagnesia.Domain.Domain.Entities.Concrete;
+using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
 using Domain.Entities.Constants;
 using Domain.Interfaces.Repository;
@@ -39,6 +40,15 @@ namespace Infrastructure.DataAccess.Repositories
            .Where(m => m.Status == ApprovalStatus.Waiting);
         }
 
+        public void AddToRatedUsersList(string userId, string movieId)
+        {
+            var users = _dbContext.Users.Include(m => m.RatedMovies);
+            var movie = _dbContext.Movies.Find(movieId);
+
+            users.FirstOrDefault(x => x.Id == userId).RatedMovies.Add(movie);
+
+            _dbContext.SaveChanges();
+        }
 
         public IQueryable<Movie> GetAllHomeMovies()
         {
@@ -47,11 +57,27 @@ namespace Infrastructure.DataAccess.Repositories
            .Include(m => m.Genres)
            .Where(m => m.Status == ApprovalStatus.Approved);
         }
+        
+        public IQueryable<Movie> GetAllMovieswithLikes()
+        {
+
+            return _dbContext.Movies           
+           .Include(m => m.LikedUsers)
+           .Where(m => m.Status == ApprovalStatus.Approved);
+        }
 
 
         public int GetNumOfMovies()
         {
             return _dbContext.Movies.Count();
+        }
+
+        public void AddRatingToMovie(Movie movie, ApplicationUser user)
+        {
+            Movie Movie = _dbContext.Movies.FirstOrDefault(movie);
+            movie.LikedUsers.Add(user);
+            _dbContext.SaveChanges();
+
         }
     }
 }

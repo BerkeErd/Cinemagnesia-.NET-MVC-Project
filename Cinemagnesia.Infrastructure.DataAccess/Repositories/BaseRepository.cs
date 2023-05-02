@@ -60,12 +60,13 @@ namespace Infrastructure.DataAccess.Repositories
         public string Update(string id, TEntity entity)
         {
             var existingEntity = _dbSet.Find(id);
-            if (existingEntity != null)
+            if (existingEntity == null)
             {
-                _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
-                _dbContext.SaveChanges();
-
+                throw new InvalidOperationException("Entity not found");
             }
+            _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
+            _dbContext.SaveChanges();
+            return "başarılı";
             return "başarılı";
         }
 
