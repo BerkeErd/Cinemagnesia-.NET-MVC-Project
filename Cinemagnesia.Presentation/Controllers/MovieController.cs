@@ -14,6 +14,7 @@ using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using Domain.Entities.Constants;
 using Microsoft.AspNetCore.Identity;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cinemagnesia.Presentation.Controllers
 {
@@ -111,50 +112,41 @@ namespace Cinemagnesia.Presentation.Controllers
           
 
         }
+
+        [Authorize]
         public IActionResult MoviePage()
         {
-            var id = Request.Query["id"];
-            return Ok(id);
-            var movie = _movieService.GetMovieById(id);
-            MovieDetailViewModel movieDetailViewModel = new MovieDetailViewModel()
-            {
-                Id = "12345",
-                CompanyId = "67890",
-                CompanyName = "Acme Productions",
-                Title = "The Greatest Movie Ever",
-                Description = "A thrilling adventure through space and time",
-                PosterPath = "/images/Cinemagnesia/DefaultMoviePicture.png",
-                ReleaseDate = DateTime.Now,
-                ImdbRating = 8.5f,
-                CinemagAvgScore = 4.2f,
-                Status = ApprovalStatus.Approved,
-                TrailerUrl = "dQw4w9WgXcQ",
-                Directors = new List<Director>(),
-                Genres = new List<Genre>(),
-                CastMembers = new List<CastMember>(),
-                MovieComments = new List<MovieComment>(),
-                UserLikes = new List<ApplicationUser>(),
-                MovieMinutes = 120,
-                Language = "English",
-                CreatedAt = DateTime.Now,
-                UpdatedAt = null
-            };
+            var id = Request.Query["id"].ToString();
+            MovieDto movieDto = _movieService.GetMovieDtoById(id);
+            
+            MovieDetailViewModel movieDetailViewModel = _mapper.Map<MovieDetailViewModel>(movieDto);
 
             bool isRatedBefore = false;
             int Rate = 0;
 
-            foreach (var Movie in _userManager.GetUserAsync(User).Result.RatedMovies) //Film daha önce oylanmış mı?
+            if(User.Identity.IsAuthenticated)
             {
-                if (Movie.Id == movieDetailViewModel.Id)
+                var ratedMovies = _userManager.GetUserAsync(User).Result.RatedMovies;
+                if (ratedMovies != null)
                 {
-                    isRatedBefore = true;
-                    Rate = _ratingService.GetRateoftheUser(_userManager.GetUserAsync(User).Result.Id, Movie.Id); // set the Rate to the user's previous rating
-                    break;
+                    foreach (var movie in ratedMovies) // Film daha önce oylanmış mı?
+                    {
+                        if (movie.Id == movieDetailViewModel.Id)
+                        {
+                            isRatedBefore = true;
+                            Rate = _ratingService.GetRateoftheUser(_userManager.GetUserAsync(User).Result.Id, movie.Id); // set the Rate to the user's previous rating
+                            break;
+                        }
+                    }
                 }
+                
             }
 
             ViewData["isRatedBefore"] = isRatedBefore;
             ViewData["Rate"] = Rate;
+
+
+
 
             return View(movieDetailViewModel);
         }

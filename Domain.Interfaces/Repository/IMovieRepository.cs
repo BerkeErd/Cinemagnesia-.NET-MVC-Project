@@ -13,5 +13,6 @@ namespace Domain.Interfaces.Repository
         IQueryable<Movie> GetAllWaitingMovies();
         IQueryable<Movie> GetAllHomeMovies();
         int GetNumOfMovies();
+        Movie GetMovieById(string id);
     }
 }

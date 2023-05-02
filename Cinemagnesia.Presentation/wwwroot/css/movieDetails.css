@@ -1,12 +1,30 @@
 ﻿
+.movieDetailList{
+    list-style: none;
+    text-decoration: none;
+    display: flex;
+}   
+
+.commaDetailList li:not(:last-child)::after {
+    content: ", ";
+    margin-right: 5px;
+}
+
+.movieDetailList li {
+    color: #E8E8E8;
+}
 
 
+.moviePoster{
+    width: 100%;
+    object-fit: cover;
+}
 
-.profileImageDiv{
-    width:100px;
-    height:100px;
+.profileImageDiv {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    background-color:white;
+    background-color: white;
     border: 1px solid red;
     padding: 2px;
 }
@@ -24,6 +42,7 @@
         background-color: #646464 !important;
         color: #E8E8E8 !important;
     }
+
 
 .card {
   position: relative;
@@ -102,12 +121,14 @@
 }
 
 h1 {
-    color: #E8E8E8;
+    color: #F89012;
+    text-align: center;
     margin-bottom: 1rem; /* veya istediğiniz boşluk değeri */
 }
 h2 {
     color: #E8E8E8;
     margin-bottom: 1rem; /* veya istediğiniz boşluk değeri */
+    background-color: #282828;
 }
 
 label {
@@ -320,7 +341,6 @@ li strong {
     text-align: center;
     color: #Fd4;
 }
-
 
 
 

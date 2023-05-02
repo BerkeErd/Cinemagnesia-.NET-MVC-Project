@@ -5,6 +5,7 @@ using Domain.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,15 @@ namespace Infrastructure.DataAccess.Repositories
         {
             
         }
-        
+        public Movie GetMovieById(string id)
+        {
+            return _dbContext.Movies
+                .Include(m => m.Directors)
+                .Include(m => m.Genres)
+                .Include(m => m.CastMembers)
+                .Include(m => m.MovieComments)
+                .FirstOrDefault(m => m.Id == id && m.Status == ApprovalStatus.Approved);
+        }
         public IQueryable<Movie> GetAllWaitingMovies()
         {
 
@@ -29,6 +38,7 @@ namespace Infrastructure.DataAccess.Repositories
            .Include(m => m.MovieComments)
            .Where(m => m.Status == ApprovalStatus.Waiting);
         }
+
 
         public IQueryable<Movie> GetAllHomeMovies()
         {

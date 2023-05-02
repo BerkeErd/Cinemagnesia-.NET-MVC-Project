@@ -34,6 +34,9 @@ namespace Cinemagnesia.Presentation.Mappings
 
             CreateMap<ProductorRequestDto, AdminProductorRequestViewModel>();
             CreateMap<AdminProductorRequestViewModel, ProductorRequestDto>();
+
+            CreateMap<MovieDetailViewModel, MovieDto>();
+            CreateMap<MovieDto, MovieDetailViewModel>();
         }
     }
 

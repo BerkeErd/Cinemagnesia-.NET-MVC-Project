@@ -12,6 +12,7 @@ namespace Application.Interfaces.AppInterfaces
     public interface IMovieService
     {
         Movie GetMovieById(string id);
+        MovieDto GetMovieDtoById(string id);
         List<MovieDto> GetAllWaitingMovies();
         List<HomeMovieDto> GetAllHomeMovies();
         void AddMovie(AddMovieDto movie);
