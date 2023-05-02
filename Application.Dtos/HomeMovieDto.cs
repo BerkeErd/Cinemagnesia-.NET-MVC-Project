@@ -1,9 +1,13 @@
 ﻿using Domain.Entities.Concrete;
-using System.Collections.Specialized;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Cinemagnesia.Presentation.Models
+namespace Application.Dtos
 {
-    public class HomeMovieViewModel
+    public class HomeMovieDto
     {
         public string Id { get; set; }
         public string Title { get; set; }
@@ -12,6 +16,5 @@ namespace Cinemagnesia.Presentation.Models
         public string Language { get; set; }
         public DateTime ReleaseDate { get; set; }
         public ICollection<Genre> Genres { get; set; }
-
     }
 }

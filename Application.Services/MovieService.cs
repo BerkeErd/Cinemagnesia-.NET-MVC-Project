@@ -87,6 +87,14 @@ namespace Application.Services
             return movieDtos;
         }
 
+
+        public List<HomeMovieDto> GetAllHomeMovies()
+        {
+            var movies = _movieRepository.GetAllHomeMovies().ToList();
+            var movieDtos = _mapper.Map<List<HomeMovieDto>>(movies);
+
+            return movieDtos;
+        }
         public Movie GetMovieById(string id)
         {
             return _movieRepository.GetByIdAsync(id).Result;
