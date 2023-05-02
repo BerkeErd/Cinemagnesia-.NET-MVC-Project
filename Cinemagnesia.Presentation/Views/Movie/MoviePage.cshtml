@@ -1,9 +1,10 @@
 ﻿@model MovieViewModel
 @{
-    ViewBag.Title = "Movie Details";
+    ViewBag.Title = "Film @ Detayları";
 }
 <script src="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <link href="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/skins/ui/oxide/skin.min.css" rel="stylesheet" />
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400'>
 <link rel="stylesheet" href="~/css/movieDetails.css" />
 
 <div class="container">
@@ -21,12 +22,12 @@
                         </div>
                         <div class="text-end m-auto p-4">
                             <span class="text-muted">Cinemagnesia </span>
-                            <span class="fs-4">7 <i class="fa-sharp fa-solid fa-star" style="color: #ffd500;"></i></span>
+                            <span class="fs-4">4.3 / 5 <i class="fa-sharp fa-solid fa-star" style="color: #ffd500;"></i></span>
                         </div>
                     </div>
 
-                    <span class="card_subtitle">Alt başlık :D.</span>
-                    <p id="movie-description" class="card_description">Lorem ipsum dolor, sit amet  expedita exercitationsaem recusandae aut dolor tempora aperiam itaque possimus at, cupiditate earum, quae repudiandae aspernatur? Labore minus soluta consequatur placeat.</p>
+                    <span class="card_subtitle">Yüzük Kardeşliği, dünyanın kaderini değişterecek olan yüzükten kurtulmak için verilen mücadeleyi konu ediyor.</span>
+                    <p id="movie-description" class="card_description">Yıllar önce üretilen ve Orta Dünya topraklarına kandan başka hiçbir şey getirmeyen yüzüklerin sonuncusu, üretiminden yüz yıllar sonra ortaya çıkar.</p>
                 </div>
 
 
@@ -35,11 +36,12 @@
                 <div class="col-md-12">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="movie-status-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            None
+                            İzledim
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="movie-status-dropdown">
-                            <li><a class="dropdown-item" href="#">Watched</a></li>
-                            <li><a class="dropdown-item" href="#">Want to Watch</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="movie-status-dropdown"> @*Giriş yapılmadan tıklandığında giriş yapın sweetalert veya herhangi bir şekilde ekrana gelebilir*@
+                            <li><a class="dropdown-item" href="#">İzlemedim</a></li>
+                            <li><a class="dropdown-item active" href="#">İzledim</a></li>
+                            <li><a class="dropdown-item" href="#">İzlemek İstiyorum</a></li>
                         </ul>
                     </div>
                 </div>
@@ -93,35 +95,58 @@
             </div>
             <div class="mb-4">
                 <div class="cont">
-                    <div class="stars">
-                        <form action="">
-                            <input class="star star-5" id="star-5" type="radio" name="star" />
-                            <label class="star star-5" for="star-5"></label>
-                            <input class="star star-4" id="star-4" type="radio" name="star" />
-                            <label class="star star-4" for="star-4"></label>
-                            <input class="star star-3" id="star-3" type="radio" name="star" />
-                            <label class="star star-3" for="star-3"></label>
-                            <input class="star star-2" id="star-2" type="radio" name="star" />
-                            <label class="star star-2" for="star-2"></label>
-                            <input class="star star-1" id="star-1" type="radio" name="star" />
-                            <label class="star star-1" for="star-1"></label>
-                        </form>
-                    </div>
+                    @if (@User.IsInRole("User") || @User.IsInRole("Productor"))
+                    {
+                        <div class="stars">
+                            <form action="">
+                                <input class="star star-5" id="star-5" type="radio" name="star" />
+                                <label class="star star-5" for="star-5"></label>
+                                <input class="star star-4" id="star-4" type="radio" name="star" />
+                                <label class="star star-4" for="star-4"></label>
+                                <input class="star star-3" id="star-3" type="radio" name="star" />
+                                <label class="star star-3" for="star-3"></label>
+                                <input class="star star-2" id="star-2" type="radio" name="star" />
+                                <label class="star star-2" for="star-2"></label>
+                                <input class="star star-1" id="star-1" type="radio" name="star" />
+                                <label class="star star-1" for="star-1"></label>
+                            </form>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col">
+            @if(@User.IsInRole("User") || @User.IsInRole("Productor"))
+            {
             <form>
                 <div class="row mt-3">
-                    <div class="col-md-12">
+                    <div class="col-md-4">
+                        <h4 class="fw-bold">@User.Identity.Name</h4>
+                        <div class="commentProfileImage">
+                            <img src="/images/Cinemagnesia/defaultUserPicture.png" />
+                        </div>
+                    </div>
+                    <div class="col-md-8">
                         <h4 class="fw-bold">Yorum Yaz</h4>
-                        <textarea class="form-control" rows="5" cols="50"></textarea>
+                        <textarea id="yorumTextArea" class="form-control" rows="5" cols="50"></textarea>
+                        <button type="submit" class="btn btn-danger m-2">Gönder</button>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success m-2">Gönder</button>
+
             </form>
+            }
+            else
+            {
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <h4 class="fw-bold">Yorum Yazabilmek için lütfen giriş yapınız.</h4>
+                        <textarea class="form-control yorum-TextArea" rows="5" cols="50" disabled></textarea>
+                    </div>
+                </div>
+            }
+            
         </div>
     </div>
     <div class="row mt-3">
@@ -130,7 +155,7 @@
             <ul class="list-unstyled">
                 <li>
                     <div class="d-flex">
-                        <div class="me-3">
+                        <div class="me-3 commentProfileImage">
                             <img src="profil_foto_url" alt="Profil Fotoğrafı" width="50" height="50" class="rounded-circle">
                         </div>
                         <div class="flex-grow-1">
@@ -140,7 +165,7 @@
                 </li>
                 <li>
                     <div class="d-flex">
-                        <div class="me-3">
+                        <div class="me-3 commentProfileImage">
                             <img src="profil_foto_url" alt="Profil Fotoğrafı" width="50" height="50" class="rounded-circle">
                         </div>
                         <div class="flex-grow-1">
@@ -161,6 +186,7 @@
             selector: 'textarea',
             menubar: false,
             toolbar: false,
+            content_css: '/css/movieDetails.css'
             plugins: 'autoresize link emoticons',
             height: 200,
             autoresize_bottom_margin: 15,

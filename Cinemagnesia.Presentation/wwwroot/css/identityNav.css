@@ -1,0 +1,24 @@
+﻿.btn-primary {
+    background-color: #E8E8E8 !important;
+    border-color: #282828 !important;
+    color: #646464 !important;
+}
+
+h1 {
+    color: #E8E8E8 !important;
+}
+
+h2 {
+    color: #E8E8E8 !important;
+}
+.active {
+    background-color: #F5141F !important;
+}
+
+label {
+    color: #E8E8E8 !important;
+}
+
+a:hover {
+    color: #F5141F !important;
+}

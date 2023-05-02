@@ -9,20 +9,25 @@
     }
 }
 
-<h1>Manage your account</h1>
-
-<div>
-    <h2>Change your account settings</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
+<div class="m-4">
+    <h1>Hesabınızı Yönetin</h1>
+    <div>
+        <h2>Hesap ayarlarınızı değiştirin</h2>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_ManageNav" />
+            </div>
+            <div class="col-md-6 offset-md-3">
+                @RenderBody()
+            </div>
         </div>
     </div>
 </div>
+
+
+
+
 
 @section Scripts {
     @RenderSection("Scripts", required: false)

@@ -1,4 +1,17 @@
-﻿.card {
+﻿
+.commentProfileImage {
+    height: 150px !important;
+    width: 150px !important;
+}
+
+    .commentProfileImage img {
+        height: 100% !important;
+        object-fit: contain !important;
+        width: 100% !important;
+    }
+
+
+.card {
   position: relative;
   width: 450px;
   height: 600px;
@@ -93,8 +106,12 @@ p strong {
         color: #F89012;
     }
 
+:root {
+    --red: #ee427b;
+}
+
 .con-like {
-  --red: #ee427b;
+  color: var(--red);
   position: relative;
   width: 35px;
   height: 35px;
@@ -177,8 +194,6 @@ p strong {
 
 }
 
-
-@import url(https://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400);
 
 * {
     margin: 0;
@@ -285,8 +300,10 @@ input.star:checked ~ .rev-box {
     overflow: visible;
 }
 
-
-
+.yorum-TextArea {
+    background-color: #646464 !important;
+    color: #E8E8E8 !important;
+}
 
 
 
