@@ -21,7 +21,7 @@ namespace Domain.Entities.Concrete
         public DateTime ReleaseDate { get; set; }
         [Range(0, 10f)]
         public float ImdbRating { get; set; }
-        [Range(0, 10f)]
+        [Range(0, 5f)]
         public float CinemagAvgScore { get; set; }
         public ApprovalStatus Status { get; set; } = ApprovalStatus.Waiting;
         public string TrailerUrl { get; set; }
@@ -29,7 +29,7 @@ namespace Domain.Entities.Concrete
         public ICollection<Genre> Genres { get; set; }
         public ICollection<CastMember> CastMembers { get; set; }
         public ICollection<MovieComment> MovieComments { get; set; }
-        public ICollection<ApplicationUser> UserLikes { get; set; }
+        public ICollection<ApplicationUser> LikedUsers { get; set; }
         public int MovieMinutes { get; set; }
         public string Language { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;

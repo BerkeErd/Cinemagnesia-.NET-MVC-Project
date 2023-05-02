@@ -111,31 +111,34 @@ namespace Cinemagnesia.Presentation.Controllers
           
 
         }
-        public IActionResult MoviePage(MovieDetailViewModel movieDetailViewModel)
+        public IActionResult MoviePage()
         {
-            //MovieDetailViewModel movieDetailViewModel = new MovieDetailViewModel()
-            // {
-            //     Id = "12345",
-            //     CompanyId = "67890",
-            //     CompanyName = "Acme Productions",
-            //     Title = "The Greatest Movie Ever",
-            //     Description = "A thrilling adventure through space and time",
-            //     PosterPath = "/images/Cinemagnesia/DefaultMoviePicture.png",
-            //     ReleaseDate = DateTime.Now,
-            //     ImdbRating = 8.5f,
-            //     CinemagAvgScore = 4.2f,
-            //     Status = ApprovalStatus.Approved,
-            //     TrailerUrl = "dQw4w9WgXcQ",
-            //     Directors = new List<Director>(),
-            //     Genres = new List<Genre>(),
-            //     CastMembers = new List<CastMember>(),
-            //     MovieComments = new List<MovieComment>(),
-            //     UserLikes = new List<ApplicationUser>(),
-            //     MovieMinutes = 120,
-            //     Language = "English",
-            //     CreatedAt = DateTime.Now,
-            //     UpdatedAt = null
-            // };
+            var id = Request.Query["id"];
+            return Ok(id);
+
+            MovieDetailViewModel movieDetailViewModel = new MovieDetailViewModel()
+            {
+                Id = "12345",
+                CompanyId = "67890",
+                CompanyName = "Acme Productions",
+                Title = "The Greatest Movie Ever",
+                Description = "A thrilling adventure through space and time",
+                PosterPath = "/images/Cinemagnesia/DefaultMoviePicture.png",
+                ReleaseDate = DateTime.Now,
+                ImdbRating = 8.5f,
+                CinemagAvgScore = 4.2f,
+                Status = ApprovalStatus.Approved,
+                TrailerUrl = "dQw4w9WgXcQ",
+                Directors = new List<Director>(),
+                Genres = new List<Genre>(),
+                CastMembers = new List<CastMember>(),
+                MovieComments = new List<MovieComment>(),
+                UserLikes = new List<ApplicationUser>(),
+                MovieMinutes = 120,
+                Language = "English",
+                CreatedAt = DateTime.Now,
+                UpdatedAt = null
+            };
 
             bool isRatedBefore = false;
             int Rate = 0;

@@ -21,7 +21,6 @@ public class ApplicationUser : IdentityUser
     public DateTime AccountCreationDate { get; set; }
     public string ProfilePicture { get; set; }
     public ICollection<Movie> RatedMovies { get; set; }
-    public ICollection<Movie> LikedMovies { get; set; }
     public ICollection<MovieComment> MovieComments { get; set; }
     public string? CompanyId { get; set; }
     public Company? Company { get; set; }

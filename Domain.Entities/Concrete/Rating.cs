@@ -17,7 +17,7 @@ namespace Domain.Entities.Concrete
         public Movie Movie { get; set; }
         [Required]
 
-        [Range(0,10f)]
-        public float Score { get; set; }
+        [Range(0,6)]
+        public int Score { get; set; }
     }
 }
