@@ -11,6 +11,7 @@ namespace Domain.Interfaces.Repository
     public interface IMovieRepository : IRepository<Movie>
     {
         IQueryable<Movie> GetAllWaitingMovies();
+        IQueryable<Movie> GetAllHomeMovies();
         int GetNumOfMovies();
     }
 }
