@@ -13,6 +13,7 @@ namespace Application.Interfaces.AppInterfaces
     {
         Movie GetMovieById(string id);
         List<MovieDto> GetAllWaitingMovies();
+        List<HomeMovieDto> GetAllHomeMovies();
         void AddMovie(AddMovieDto movie);
         void RemoveMovie(string id);
         string ComfirmMovie(string id);

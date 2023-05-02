@@ -30,6 +30,15 @@ namespace Infrastructure.DataAccess.Repositories
            .Where(m => m.Status == ApprovalStatus.Waiting);
         }
 
+        public IQueryable<Movie> GetAllHomeMovies()
+        {
+
+            return _dbContext.Movies           
+           .Include(m => m.Genres)
+           .Where(m => m.Status == ApprovalStatus.Approved);
+        }
+
+
         public int GetNumOfMovies()
         {
             return _dbContext.Movies.Count();
