@@ -96,7 +96,7 @@ namespace Cinemagnesia.Presentation.Controllers
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
                 return BadRequest(ex.Message);
             }
           
