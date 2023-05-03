@@ -155,15 +155,15 @@
                             {
                                 <div class="stars">
                                     <form action="">
-                                        <input class="star star-5" value="5" id="star-5" type="radio" name="star" @(Rate == 5 ? "checked" : "") />
+                                        <input class="star star-5 starButton" value="5" id="star-5" type="radio" name="star" @(Rate == 5 ? "checked" : "") />
                                         <label class="star star-5" for="star-5"></label>
-                                        <input class="star star-4" value="4" id="star-4" type="radio" name="star" @(Rate == 4 ? "checked" : "") />
+                                        <input class="star star-4 starButton" value="4" id="star-4" type="radio" name="star" @(Rate == 4 ? "checked" : "") />
                                         <label class="star star-4" for="star-4"></label>
-                                        <input class="star star-3" value="3" id="star-3" type="radio" name="star" @(Rate == 3 ? "checked" : "") />
+                                        <input class="star star-3 starButton" value="3" id="star-3" type="radio" name="star" @(Rate == 3 ? "checked" : "") />
                                         <label class="star star-3" for="star-3"></label>
-                                        <input class="star star-2" value="2" id="star-2" type="radio" name="star" @(Rate == 2 ? "checked" : "") />
+                                        <input class="star star-2 starButton" value="2" id="star-2" type="radio" name="star" @(Rate == 2 ? "checked" : "") />
                                         <label class="star star-2" for="star-2"></label>
-                                        <input class="star star-1" value="1" id="star-1" type="radio" name="star" @(Rate == 1 ? "checked" : "") />
+                                        <input class="star star-1 starButton" value="1" id="star-1" type="radio" name="star" @(Rate == 1 ? "checked" : "") />
                                         <label class="star star-1" for="star-1"></label>
                                     </form>
                                 </div>
@@ -172,15 +172,15 @@
                             {
                                 <div class="stars">
                                     <form action="">
-                                        <input class="star star-5" value="5" id="star-5" type="radio" name="star" />
+                                        <input class="star star-5 starButton" value="5" id="star-5" type="radio" name="star" />
                                         <label class="star star-5" for="star-5"></label>
-                                        <input class="star star-4" value="4" id="star-4" type="radio" name="star" />
+                                        <input class="star star-4 starButton" value="4" id="star-4" type="radio" name="star" />
                                         <label class="star star-4" for="star-4"></label>
-                                        <input class="star star-3" value="3" id="star-3" type="radio" name="star" />
+                                        <input class="star star-3 starButton" value="3" id="star-3" type="radio" name="star" />
                                         <label class="star star-3" for="star-3"></label>
-                                        <input class="star star-2" value="2" id="star-2" type="radio" name="star" />
+                                        <input class="star star-2 starButton" value="2" id="star-2" type="radio" name="star" />
                                         <label class="star star-2" for="star-2"></label>
-                                        <input class="star star-1" value="1" id="star-1" type="radio" name="star" />
+                                        <input class="star star-1 starButton" value="1" id="star-1" type="radio" name="star" />
                                         <label class="star star-1" for="star-1"></label>
                                     </form>
                                 </div>
@@ -330,7 +330,7 @@
         });
 
         //Send Rate start
-        $(document).on("click", ".star", function () {
+        $(document).on("click", ".starButton", function () {
             alert("deneme");
             var rating = {
                 MovieId: '@Model.Id',

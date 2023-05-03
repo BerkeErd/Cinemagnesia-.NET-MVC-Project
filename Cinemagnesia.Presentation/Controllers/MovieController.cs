@@ -127,7 +127,8 @@ namespace Cinemagnesia.Presentation.Controllers
 
             if(User.Identity.IsAuthenticated)
             {
-                var ratedMovies = _userManager.GetUserAsync(User).Result.RatedMovies;
+                var user = _userManager.GetUserAsync(User).Result;
+                var ratedMovies = user.RatedMovies;
                 if (ratedMovies != null)
                 {
                     foreach (var movie in ratedMovies) // Film daha önce oylanmış mı?
