@@ -29,9 +29,12 @@ namespace Cinemagnesia.Presentation.Controllers
         [HttpPost]
         public IActionResult SendComment(SendCommentViewModel sendCommentViewModel)
         {
+            
+
             if (ModelState.IsValid)
             {
-                return Ok(sendCommentViewModel);
+                var sendMovieCommentDto = _mapper.Map<SendMovieCommentDto>(sendCommentViewModel);
+;                return Ok(sendCommentViewModel);
             }
             else
             {

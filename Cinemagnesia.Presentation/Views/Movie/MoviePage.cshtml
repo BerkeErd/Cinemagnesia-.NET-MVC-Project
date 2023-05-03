@@ -319,13 +319,14 @@
                     // ajax start
 
                     $.ajax({
-                        url: 'MovieComment/SendComment',
+                        url: '/MovieComment/SendComment',
                         data:comment,
+                        type:'post',
                         success:function (response){
                             console.log(response)
                         },
                         error: function(xhr,status,error){
-                            console.log(xhr + ' ' + status)
+                            console.log(error + ' ' + xhr.status)
                         }
                     })
 
