@@ -298,11 +298,150 @@
         });
 
         console.log(list);
-        
 
+        
 
         Highcharts.chart('container-donut', {
             colors: ['#01BAF2', '#71BF45', '#FAA74B', '#B37CD2'],
+            chart: {
+                type: 'pie'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            credits: false,
+            title: {
+                text: 'Film Dilleri',
+                align: 'left'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}: {y} %'
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Registrations',
+                colorByPoint: true,
+                innerSize: '75%',
+                data: [{
+                    name: 'EV',
+                    y: 68.1
+                }, {
+                    name: 'Hybrids',
+                    y: 11.0
+                }, {
+                    name: 'Diesel',
+                    y: 11.2
+                }, {
+                    name: 'Petrol',
+                    y: 9.7
+                }]
+            }]
+        });
+
+        Highcharts.chart('test1', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                align: 'left',
+                text: 'En Yüksek Oy Alan Film'
+            },
+            subtitle: {
+                align: 'left',
+                text: 'Cinemagnesia verilerine göre düzenlenmiştir.'
+            },
+            accessibility: {
+                announceNewData: {
+                    enabled: true
+                }
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                title: {
+                    text: 'Aldığı Yıldız'
+                }
+
+            },
+            legend: {
+                enabled: false
+            },
+            credits: false,
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y:.1f}<i class="fa-sharp fa-solid fa-star" style="color: #ffae00;></i>"'
+                    }
+                }
+            },
+
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> yıldıza sahip<br/>'
+            },
+
+            series: [
+                {
+                    name: 'Filmler',
+                    colorByPoint: true,
+                    data: [
+                        {
+                            name: 'Inception',
+                            y: 4.55,
+                            drilldown: 'Inception'
+                        },
+                        {
+                            name: 'Yüzüklerin Efendisi',
+                            y: 4.42,
+                            drilldown: 'Yüzüklerin Efendisi'
+                        },
+                        {
+                            name: 'Alacakaranlık',
+                            y: 4.3,
+                            drilldown: 'Alacakaranlık'
+                        },
+                        {
+                            name: 'Yıldız Savaşları',
+                            y: 4.12,
+                            drilldown: 'Yıldız Savaşları'
+                        },
+                        {
+                            name: 'Black Panther',
+                            y: 3.68,
+                            drilldown: 'Black Panther'
+                        },
+                        {
+                            name: 'Çığlık',
+                            y: 3.62,
+                            drilldown: 'Çığlık'
+                        },
+                        {
+                            name: 'Son Durak',
+                            y: 3.24,
+                            drilldown: null
+                        }
+                    ]
+                }
+            ]
+        });
+
+        Highcharts.chart('test2', {
+            colors: ['#0151F2', '#791345', '#F5274B', '#6373D2'],
             chart: {
                 type: 'pie'
             },
