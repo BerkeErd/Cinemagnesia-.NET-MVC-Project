@@ -191,6 +191,11 @@ namespace Cinemagnesia.Presentation.Controllers
             _movieService.AddToRatedUsersList(rating.ApplicationUserId, rating.MovieId);
             return Ok("oldu herhalde");
         }
+
+
+      
+
+
     }
 }
 
