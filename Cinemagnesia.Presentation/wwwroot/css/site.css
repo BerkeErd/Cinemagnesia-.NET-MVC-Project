@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 * {
     font-family: 'Montserrat', sans-serif;
 }
@@ -91,7 +92,7 @@ p {
     color: white;
 }
 
-.addmovie-form label{
+.addmovie-form label {
     color: white;
 }
 
@@ -134,30 +135,29 @@ body {
     border-radius: 30px;
     box-shadow: 0 0 10px #282828;
 }
+
 .crsImg img {
     border-radius: 30px;
 }
 
 .sidebar .list-group-item {
-
     transition: all 0.1s ease-in-out;
- 
 }
 
-.sidecheck{
+.sidecheck {
     color: rgb(129,129,129);
-    font-size:18px;
-    margin-left:20px;
+    font-size: 18px;
+    margin-left: 20px;
 }
-.sidecheck .form-check{
-    margin-bottom:8px !important;
-   
-}
+
+    .sidecheck .form-check {
+        margin-bottom: 8px !important;
+    }
 
 .sidebar h5 {
     padding: 10px;
     margin-bottom: 0;
-    font-size:20px;
+    font-size: 20px;
     border-bottom: 1px solid #2f2f2f;
 }
 
@@ -179,33 +179,36 @@ body {
 .sidebar ul .list-group-item:hover {
     background-color: #282828 !important;
     cursor: pointer;
-
 }
 
 .sidebar ul .list-group-item a {
     color: rgb(129, 129, 129);
     text-decoration: none;
 }
-.sidebar ul .list-group-item a:hover {
-    color: rgb(129,129,129);
-    text-decoration: none;
-}
+
+    .sidebar ul .list-group-item a:hover {
+        color: rgb(129,129,129);
+        text-decoration: none;
+    }
 
 
 .homecards .card {
-    background-color:#212121 !important;
+    background-color: #212121 !important;
     color: rgb(119,119,119);
-    border-radius:8px;
+    border-radius: 8px;
 }
+
 .card-text {
     color: rgb(119,119,119) !important;
 }
-.homeMovieHeader{
-    color:white;
-    font-size:20px;
-    border-bottom:1px solid rgb(45,45,45);
-    padding-bottom:5px;
+
+.homeMovieHeader {
+    color: white;
+    font-size: 20px;
+    border-bottom: 1px solid rgb(45,45,45);
+    padding-bottom: 5px;
 }
+
 .btn-filter {
     width: 50%;
     margin: auto;
@@ -246,7 +249,7 @@ body {
         border-radius: 8px;
     }
 
-.navbar ul li a:hover {
+        .navbar ul li a:hover {
             background-color: #E50914;
         }
 
@@ -299,3 +302,40 @@ body {
     max-width: 600px;
     margin: 0 auto;
 }
+
+.bootstrap-tagsinput {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 5px;
+    background-color: #fff;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+    .bootstrap-tagsinput .tag {
+        margin-right: 2px;
+        color: #fff;
+        background-color: #e50914;
+        border: none;
+        border-radius: 4px;
+        padding: 5px 10px;
+    }
+
+        .bootstrap-tagsinput .tag:hover {
+            background-color: #c70e1f;
+            cursor: pointer;
+        }
+
+/* Input stil özellikleri */
+.tagsinput {
+    margin-bottom: 10px;
+}
+
+    .tagsinput .form-control {
+        border: none;
+        border-bottom: 1px solid #ced4da;
+        box-shadow: none;
+        border-radius: 0;
+    }
