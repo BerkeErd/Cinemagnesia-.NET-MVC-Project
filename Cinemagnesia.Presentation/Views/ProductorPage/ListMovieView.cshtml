@@ -1,35 +1,81 @@
-﻿@{
+﻿@model List<MovieViewModel>
+
+@{
     Layout = "~/Views/ProductorPage/_ProductorLayout.cshtml";
 }
 
-<table id="movies-table" class="table">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Poster</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody>
 
-        <tr>
-            <td>movie.Title</td>
-            <td><img src="movie.PosterPath" alt="Movie poster" style="max-height: 100px" /></td>
-            <td><a href="/ProductorPage/EditMovie/movie.Id" class="btn btn-primary">Edit</a></td>
-            <td><a href="/ProductorPage/DeleteMovie/movie.Id" class="btn btn-danger">Delete</a></td>
-        </tr>
-    </tbody>
-</table>
 
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('#movies-table').DataTable({
-                "paging": true,
-                "ordering": true,
-                "info": true
-            });
-        });
-    </script>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Filmlerinizin Listesi</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#" class="dropdown-item">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <div class="accordion-container">
+                                @foreach (var movie in Model)
+                                {
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a class="collapsed" data-toggle="collapse" href="#collapse@(movie.Id)" aria-expanded="false">
+                                                <h5 class="mb-0">@movie.Title Durumu: @movie.Status</h5>
+                                            </a>
+                                        </div>
+                                        <div id="collapse@(movie.Id)" class="collapse" data-parent=".accordion-container">
+                                            <div class="card-body">
+                                                <p>@movie.Description</p>
+                                                <p>@movie.ReleaseDate.ToShortDateString()</p>
+                                                <p>IMDb Rating: @movie.ImdbRating</p>
+                                                <p>Cinemag Avg Score: @movie.CinemagAvgScore</p>
+                                                <p>Directors: @string.Join(", ", movie.Directors.Select(d => d.Name))</p>
+                                                <p>Genres: @string.Join(", ", movie.Genres.Select(g => g.Name))</p>
+                                                <p>Cast Members: @string.Join(", ", movie.CastMembers.Select(c => c.Name))</p>
+                                                <p>Number of Comments: @movie.MovieComments.Count()</p>
+                                                <p>Number of Favorites: @movie.LikedUsers.Count()</p>
+                                                <p>Movie Minutes: @movie.MovieMinutes</p>
+                                                <p>Language: @movie.Language</p>
+                                                <p>Created At: @movie.CreatedAt.ToShortDateString()</p>
+                                                @if (movie.UpdatedAt != null)
+                                                {
+                                                    <p>Updated At: @movie.UpdatedAt.Value.ToShortDateString()</p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/productorMovieList.css"/>
 }
+    

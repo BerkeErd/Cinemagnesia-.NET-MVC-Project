@@ -51,11 +51,26 @@ namespace Infrastructure.DataAccess.Repositories
         {
             return await _dbSet.ToListAsync();
         }
-
-        public async Task<TEntity> GetByIdAsync(string id)
+        public async Task<TEntity> GetByIdAsync(string id, bool includeMovies = false)
         {
-            return await _dbSet.FindAsync(id);
+            
+            if (includeMovies)
+            {
+                var query = _dbSet.AsQueryable();
+                query = query.Include("Movies");
+                query = query.Include("Movies.LikedUsers");
+                query = query.Include("Movies.Genres");
+                query = query.Include("Movies.Directors");
+                query = query.Include("Movies.CastMembers");
+                return await query.FirstOrDefaultAsync(e => e.Id == id);
+            }
+           else
+            {
+                return await _dbSet.FindAsync(id);
+            }
+
         }
+       
 
         public string Update(string id, TEntity entity)
         {

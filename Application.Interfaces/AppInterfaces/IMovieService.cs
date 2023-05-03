@@ -16,6 +16,7 @@ namespace Application.Interfaces.AppInterfaces
         List<MovieDto> GetAllWaitingMovies();
         List<HomeMovieDto> GetAllHomeMovies();
         List<MovieDto> GetAllMovieswithLikes();
+        List<MovieDto> GetMoviesByCompanyId(string companyId, bool includeMovies = false);
         void AddMovie(AddMovieDto movie);
         void RemoveMovie(string id);
         string ComfirmMovie(string id);

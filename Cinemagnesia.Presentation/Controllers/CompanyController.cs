@@ -19,5 +19,6 @@ namespace Cinemagnesia.Presentation.Controllers
         {
             return _companyService.GetNumOfCompanies();
         }
+
     }
 }

@@ -144,7 +144,7 @@ namespace Cinemagnesia.Presentation.Controllers
                     foreach (var movie in activeMovies) // Film daha önce oylanmış mı?
                     {
 
-                        if (movie.UserLikes == movieDetailViewModel.UserLikes)
+                        if (movie.LikedUsers == movieDetailViewModel.LikedUsers)
                         {
                             isLikedBefore = true;
                             break;

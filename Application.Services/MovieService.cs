@@ -8,6 +8,7 @@ using Domain.Interfaces.Repository;
 using Infrastructure.DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Errors.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,14 @@ namespace Application.Services
     {
         private readonly IMapper _mapper;
         private readonly IMovieRepository _movieRepository;
+        private readonly ICompanyRepository _companyRepository;
         private readonly ApplicationDbContext _dbContext;
-        public MovieService(IMovieRepository movieRepository, IMapper mapper, ApplicationDbContext dbContext)
+        public MovieService(IMovieRepository movieRepository, IMapper mapper, ApplicationDbContext dbContext, ICompanyRepository companyRepository)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _movieRepository = movieRepository;
+            _companyRepository = companyRepository;
         }
         public void AddMovie(AddMovieDto movieDto)
         {
@@ -93,7 +96,19 @@ namespace Application.Services
             var movieDto = _mapper.Map<List<MovieDto>>(movies);
             return movieDto;
         }
+        public List<MovieDto> GetMoviesByCompanyId(string companyId, bool includeMovies = false)
+        {
+            var company = _companyRepository.GetByIdAsync(companyId, includeMovies).Result;
 
+            if (company == null)
+            {
+                throw new NotFoundException($"Company with ID {companyId} not found");
+            }
+
+            var movies = company.Movies;
+
+            return _mapper.Map<List<MovieDto>>(movies);
+        }
         public MovieDto GetMovieDtoById(string id)
         {
             var movie = _movieRepository.GetMovieById(id);
