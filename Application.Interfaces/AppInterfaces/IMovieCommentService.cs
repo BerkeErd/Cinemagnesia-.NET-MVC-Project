@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Concrete;
+﻿using Application.Dtos;
+using Domain.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Application.Interfaces.AppInterfaces
     public interface IMovieCommentService
     {
         MovieComment GetMovieCommentById(string id);
-        void AddMovieComment(MovieComment movieComment);
+        MovieCommentDto AddMovieComment(SendMovieCommentDto sendMovieComment);
         void DeleteMovieComment(string id);
         void UpdateMovieComment(string movieCommentId, MovieComment movieComment);
         int GetNumOfMovieComments();

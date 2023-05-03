@@ -1,4 +1,6 @@
-﻿using Application.Interfaces.AppInterfaces;
+﻿using Application.Dtos;
+using Application.Interfaces.AppInterfaces;
+using AutoMapper;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
 using System;
@@ -12,17 +14,25 @@ namespace Application.Services
     public class MovieCommentService : IMovieCommentService
     {
         private readonly IMovieCommentRepository _movieCommentRepository;
-        public MovieCommentService(IMovieCommentRepository movieCommentRepository)
+        private readonly IMapper _mapper;
+        public MovieCommentService(IMovieCommentRepository movieCommentRepository, IMapper mapper)
         {
             _movieCommentRepository = movieCommentRepository;
+            _mapper = mapper;
         }
         public MovieComment GetMovieCommentById(string id)
         {
             return _movieCommentRepository.GetByIdAsync(id).Result;
         }
-        public void AddMovieComment(MovieComment movieComment)
+        public MovieCommentDto AddMovieComment(SendMovieCommentDto sendMovieComment)
         {
-            _movieCommentRepository.CreateAsync(movieComment).Wait();
+            var movieComment = _mapper.Map<MovieComment>(sendMovieComment);
+
+            var response = _movieCommentRepository.CreateAsync(movieComment).Result;
+
+            var movieCommentDto = _mapper.Map<MovieCommentDto>(response);
+
+            return movieCommentDto;
         }
         public void DeleteMovieComment(string id)
         {

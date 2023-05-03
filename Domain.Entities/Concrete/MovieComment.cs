@@ -24,6 +24,8 @@ namespace Domain.Entities.Concrete
 
         public ApprovalStatus Status { get; set; } = ApprovalStatus.Approved;
         public int LikeCount { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime? UpdatedAt { get; set; }
 
     }
 }

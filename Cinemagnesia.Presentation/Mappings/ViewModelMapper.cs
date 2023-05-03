@@ -40,6 +40,9 @@ namespace Cinemagnesia.Presentation.Mappings
 
             CreateMap<MovieDto, MovieViewModel>();
             CreateMap<MovieViewModel, MovieDto>();
+
+            CreateMap<SendCommentViewModel, SendMovieCommentDto>();
+            CreateMap<SendMovieCommentDto, SendCommentViewModel>();
         }
     }
 

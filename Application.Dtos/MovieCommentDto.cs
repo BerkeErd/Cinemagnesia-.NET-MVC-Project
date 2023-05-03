@@ -10,15 +10,16 @@ using System.Threading.Tasks;
 
 namespace Application.Dtos
 {
-    public class SendMovieCommentDto
+    public class MovieCommentDto
     {
+        public string Id { get; set; }
         public string ApplicationUserId { get; set; }
         public ApplicationUser User { get; set; }
         public string MovieId { get; set; }
         public Movie Movie { get; set; }
         public string CommentText { get; set; }
-        public bool HasSpoiler { get; set; } = false;
+        public bool HasSpoiler { get; set; }
         public ApprovalStatus Status { get; set; } = ApprovalStatus.Approved;
-        public int LikeCount { get; set; } = 0;
+        public int LikeCount { get; set; }
     }
 }

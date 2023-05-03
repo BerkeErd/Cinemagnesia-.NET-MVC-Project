@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.AppInterfaces;
+﻿using Application.Dtos;
+using Application.Interfaces.AppInterfaces;
 using Application.Services;
 using AutoMapper;
 using Cinemagnesia.Presentation.Models;
@@ -34,7 +35,8 @@ namespace Cinemagnesia.Presentation.Controllers
             if (ModelState.IsValid)
             {
                 var sendMovieCommentDto = _mapper.Map<SendMovieCommentDto>(sendCommentViewModel);
-;                return Ok(sendCommentViewModel);
+                var response = _movieCommentService.AddMovieComment(sendMovieCommentDto);
+;               return Ok(response);
             }
             else
             {
