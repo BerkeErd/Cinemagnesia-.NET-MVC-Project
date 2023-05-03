@@ -164,12 +164,11 @@ namespace Cinemagnesia.Presentation.Controllers
             return _movieService.GetNumOfMovies();
         }
 
-        [HttpGet]
-        public IActionResult GetHomeMovies()
-        {
-            var data = _movieService.GetAllHomeMovies();
-            return Ok(data);
-        }
+
+
+      
+
+
     }
 }
 
