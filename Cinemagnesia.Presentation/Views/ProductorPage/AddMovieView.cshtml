@@ -9,94 +9,94 @@
 @model List<GenreViewModel>
 
 <div class="container addmovie-form">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="Title">Film Adı:</label>
-                <input id="movieTitle" type="text" class="form-control" name="Title">
-            </div>
-            <div class="form-group">
-                <label>Film Açıklaması:</label>
-                <textarea id="movieDescription" class="form-control" rows="5" name="Description"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Filmin Çıkış Tarihi:</label>
-                <input id="movieReleaseDate" type="date" class="form-control" name="ReleaseDate">
-            </div>
-            <div class="form-group">
-                <label>IMDB Puanı:</label>
-                <input id="movieImdbRating" type="number" class="form-control" name="ImdbRating" step="0.1">
-            </div>
-            <div class="form-group">
-                <label>Fragman URL:</label>
-                <input id="movieTrailerUrl" type="url" class="form-control" name="TrailerUrl">
-            </div>
+    <form id="addmovieform">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Title">Film Adı:</label>
+                    <input id="movieTitle" type="text" class="form-control" name="Title">
+                </div>
+                <div class="form-group">
+                    <label>Film Açıklaması:</label>
+                    <textarea id="movieDescription" class="form-control" rows="5" name="Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Filmin Çıkış Tarihi:</label>
+                    <input id="movieReleaseDate" type="date" class="form-control" name="ReleaseDate">
+                </div>
+                <div class="form-group">
+                    <label>IMDB Puanı:</label>
+                    <input id="movieImdbRating" type="number" class="form-control" name="ImdbRating" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label>Fragman URL:</label>
+                    <input id="movieTrailerUrl" type="url" class="form-control" name="TrailerUrl">
+                </div>
 
-            <div class="form-group">
-                <label>Yönetmen ekle:</label> <br />
-                <input type="text" class="tagsinput form-control" name="Directors" id="tags-input" placeholder="Yönetmen Adı Girin">
-            </div>
+                <div class="form-group">
+                    <label>Yönetmen ekle:</label> <br />
+                    <input type="text" class="tagsinput form-control" name="Directors" id="tags-input" placeholder="Yönetmen Adı Girin">
+                </div>
 
-            <div class="form-group">
+                <div class="form-group">
+                    <label class="font-normal">Kategori Seçin</label>
+                    <div>
+                        <select name="Genres" data-placeholder="Kategori seçin" class="chosen-select" multiple tabindex="4">
+                            @foreach (var genre in Model)
+                            {
+                                <option value="@genre.Id">@genre.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <small id="errorSelect"></small>
+                </div>
 
+                <div class="form-group">
+                    <label>Oyuncu ekle:</label> <br />
+                    <input type="text" class="tagsinput form-control" name="CastMembers" id="addCastMemberInput" placeholder="Oyuncu ekle">
+                </div>
 
-                <label class="font-normal">Kategori Seçin</label>
-                <div>
-                    <select name="Genres" data-placeholder="Kategori seçin" class="chosen-select" multiple tabindex="4">
-                        @foreach (var genre in Model)
-                        {
-                            <option value="@genre.Id">@genre.Name</option>
-                        }
+                <div class="form-group">
+                    <label>Film Süresi:</label>
+                    <input id="movieMinutes" type="number" class="form-control" name="MovieMinutes">
+                </div>
+                <div class="form-group">
+                    <label>Filmin Orjinal Dili:</label>
+                    <select id="movieLanguage" class="form-control" name="Language">
+                        <option class="form-control" value="Türkçe">Türkçe</option>
+                        <option class="form-control" value="İngilizce">İngilizce</option>
+                        <option class="form-control" value="Almanca">Almanca</option>
+                        <option class="form-control" value="İspanyolca">İspanyolca</option>
+                        <option class="form-control" value="Hintçe">Hintçe</option>
+                        <option class="form-control" value="Rusça">Rusça</option>
                     </select>
                 </div>
-                <small id="errorSelect"></small>
+                <div class="form-group">
+                    <label>Film Kapağının PathURL:</label>
+                    <form id="form1" runat="server">
+                        <input type='file' id="file-input" />
+                        <div id='img_contain'>
+                            <img id="image-preview" width="75px" height="75px" align='middle' src="https://picsum.photos/id/237/200/300" alt="your image" title='' />
+                        </div>
+                    </form>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" id="companyId" name="companyId" value="@UserManager.GetUserAsync(User).Result.CompanyId" />
+
+                </div>
+
+                <button id="addMovieBtn" type="submit" class="btn btn-primary">Film Ekle</button>
+            </div>
+            @* <div class="col-md-6">
+            <div class="form-group">
+            <label>IMDB Movie ID:</label>
+            <input type="text" class="form-control" id="imdb-movie-id">
             </div>
 
-            <div class="form-group">
-                <label>Oyuncu ekle:</label> <br />
-                <input type="text" class="tagsinput form-control" name="CastMembers" id="addCastMemberInput" placeholder="Oyuncu ekle">
-            </div>
-
-            <div class="form-group">
-                <label>Film Süresi:</label>
-                <input id="movieMinutes" type="number" class="form-control" name="MovieMinutes">
-            </div>
-            <div class="form-group">
-                <label>Filmin Orjinal Dili:</label>
-                <select id="movieLanguage" class="form-control" name="Language">
-                    <option class="form-control" value="Türkçe">Türkçe</option>
-                    <option class="form-control" value="İngilizce">İngilizce</option>
-                    <option class="form-control" value="Almanca">Almanca</option>
-                    <option class="form-control" value="İspanyolca">İspanyolca</option>
-                    <option class="form-control" value="Hintçe">Hintçe</option>
-                    <option class="form-control" value="Rusça">Rusça</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Film Kapağının PathURL:</label>
-                <form id="form1" runat="server">
-                    <input type='file' id="file-input" />
-                    <div id='img_contain'>
-                        <img id="image-preview" width="75px" height="75px" align='middle' src="https://picsum.photos/id/237/200/300" alt="your image" title='' />
-                    </div>
-                </form>
-            </div>
-            <div class="form-group">
-                <input type="hidden" id="companyId" name="companyId" value="@UserManager.GetUserAsync(User).Result.CompanyId" />
-
-            </div>
-
-            <button id="addMovieBtn" type="submit" class="btn btn-primary">Film Ekle</button>
+            <button class="btn btn-primary" id="fetch-movie-btn">Film Bilgilerini Çek</button>
+            </div>*@
         </div>
-        @* <div class="col-md-6">
-        <div class="form-group">
-        <label>IMDB Movie ID:</label>
-        <input type="text" class="form-control" id="imdb-movie-id">
-        </div>
-
-        <button class="btn btn-primary" id="fetch-movie-btn">Film Bilgilerini Çek</button>
-        </div>*@
-    </div>
+    </form>
 </div>
 
 @section Scripts {
@@ -105,14 +105,14 @@
         $(document).ready(function () {
             $('#tags-input').tagsinput({
                 tagClass: 'label label-primary',
-                confirmKeys: [13, 32, 44],  // Enter, Space, Comma
+                confirmKeys: [13, 44],  // Enter, Comma
                 trimValue: true,
                 freeInput: true
             });
 
             $('#addCastMemberInput').tagsinput({
                 tagClass: 'label label-primary',
-                confirmKeys: [13, 44],  // Enter, Space, Comma
+                confirmKeys: [13, 44],  // Enter, Comma
                 trimValue: true,
                 freeInput: true
             });
@@ -147,90 +147,255 @@
             });
 
 
-            $("#addMovieBtn").click(function () {
-                console.log();
-                var movieTitle = $("#movieTitle").val();
-                var movieDescription = $("#movieDescription").val();
-                var movieReleaseDate = $("#movieReleaseDate").val();
-                var movieImdbRating = $("#movieImdbRating").val();
-                var movieTrailerUrl = $("#movieTrailerUrl").val();
-                var movieMinutes = $("#movieMinutes").val();
-                var movieLanguage = $("#movieLanguage").val();
-                var companyId = $("#companyId").val();
-
-                $.each($("#tags-input").val().split(","), function (index, value) {
-                    var director = { name: value, index: index };
-                    addDirectorList.push(director);
-                });
-
-                $.each($("#addCastMemberInput").val().split(","), function (index, value) {
-                    var castMember = { name: value, index: index };
-                    addCastMemberList.push(castMember);
-                });
-
-
-
-                $.each(Array.from(document.querySelectorAll('select[name="Genres"] option:checked')), function (index, option) {
-                    var genre = {
-                        id: option.value, // ID değeri olarak option.value kullanabilirsiniz.
-                        name: option.textContent // İçerik değeri olarak option.textContent kullanabilirsiniz.
-                    };
-                    selectedGenres.push(genre);
-                });
-
-                var movie = {
-                    companyId: companyId,
-                    title: movieTitle,
-                    description: movieDescription,
-                    posterPath: poster,
-                    releaseDate: movieReleaseDate,
-                    imdbRating: movieImdbRating,
-                    trailerUrl: movieTrailerUrl,
-                    directors: addDirectorList,
-                    genres: selectedGenres,
-                    castMembers: addCastMemberList,
-                    movieMinute: movieMinutes,
-                    language: movieLanguage,
-                };
-                console.log(movie);
-                // post movie
-                var formData = new FormData();
-                formData.append("poster", movie.posterPath);
-                formData.append("companyId", movie.companyId);
-                formData.append("title", movie.title);
-                formData.append("description", movie.description);
-                formData.append("releaseDate", movie.releaseDate);
-                formData.append("imdbRating", movie.imdbRating);
-                formData.append("trailerUrl", movie.trailerUrl);
-                formData.append("directors", JSON.stringify(movie.directors));
-                formData.append("genres", JSON.stringify(movie.genres));
-                formData.append("castMembers", JSON.stringify(movie.castMembers));
-                formData.append("movieMinute", movie.movieMinute);
-                formData.append("language", movie.language);
-
-                $.ajax({
-                    url: '/Movie/AddMovie',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        console.log(response);
+            $("#addmovieform").validate({
+                errorClass: "text-danger",
+                errorElement: "small",
+                rules: {
+                    "Title": {
+                        required: true,
                     },
-                    error: function (xhr, status, error) {
-                        console.log('Bir hata oluştu. Hata kodu: ' + xhr.status);
-                        console.log(xhr);
-                        console.log(error);
+                    "Description": {
+                        required: true,
 
-
+                    },
+                    "ReleaseDate": {
+                        required: true,
+                    },
+                    "ImdbRating": {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 10,
+                        digits: true
+                    },
+                    "TrailerUrl": {
+                        required: true,
+                    },
+                    "Directors": {
+                        required: true,
+                    },
+                    "Genres": {
+                        required: true,
+                    },
+                    "Directors": {
+                        required: true,
+                    },
+                    "CastMembers": {
+                        required: true,
+                    },
+                    "MovieMinutes": {
+                        required: true,
+                        digits: true
+                    },
+                    "Language": {
+                        required: true,
                     }
-                });
+                },
+                messages: {
+                    "Title": {
+                        required: "Bu alan zorunludur.",
+                    },
+                    "Description": {
+                        required: "Bu alan zorunludur.",
 
-                // post movie end
+                    },
+                    "ReleaseDate": {
+                        required: "Bu alan zorunludur.",
+                    },
+                    "ImdbRating": {
+                        required: "Bu alan zorunludur.",
+                        minlength: "IMDB puanı en az 1 olabilir.",
+                        maxlength: "IMDB puanı en fazla 10 olabilir.",
+                        digits: "Bu alan sadece sayısal veri içerebilir."
+                    },
+                    "TrailerUrl": {
+                        required: "Bu alan zorunludur.",
+                    },
+                    "Directors": {
+                        required: "Bu alan zorunludur.",
+                    },
+                    "Genres": {
+                        required: "Bu alan zorunludur.",
+                    },
+                    "Directors": {
+                        required: "Bu alan zorunludur.",
+                    },
+                    "CastMembers": {
+                        required: "Bu alan zorunludur.",
+                    },
+                    "MovieMinutes": {
+                        required: "Bu alan zorunludur.",
+                        digits: "Bu alan sadece sayısal veri içerebilir."
+                    },
+                    "Language": {
+                        required: "Bu alan zorunludur.",
+                    }
+                }, submitHandler: function (form) {
+                    var movieTitle = $("#movieTitle").val();
+                    var movieDescription = $("#movieDescription").val();
+                    var movieReleaseDate = $("#movieReleaseDate").val();
+                    var movieImdbRating = $("#movieImdbRating").val();
+                    var movieTrailerUrl = $("#movieTrailerUrl").val();
+                    var movieMinutes = $("#movieMinutes").val();
+                    var movieLanguage = $("#movieLanguage").val();
+                    var companyId = $("#companyId").val();
+
+                    $.each($("#tags-input").val().split(","), function (index, value) {
+                        var director = { name: value, index: index };
+                        addDirectorList.push(director);
+                    });
+
+                    $.each($("#addCastMemberInput").val().split(","), function (index, value) {
+                        var castMember = { name: value, index: index };
+                        addCastMemberList.push(castMember);
+                    });
+
+
+
+                    $.each(Array.from(document.querySelectorAll('select[name="Genres"] option:checked')), function (index, option) {
+                        var genre = {
+                            id: option.value, // ID değeri olarak option.value kullanabilirsiniz.
+                            name: option.textContent // İçerik değeri olarak option.textContent kullanabilirsiniz.
+                        };
+                        selectedGenres.push(genre);
+                    });
+
+                    var movie = {
+                        companyId: companyId,
+                        title: movieTitle,
+                        description: movieDescription,
+                        posterPath: poster,
+                        releaseDate: movieReleaseDate,
+                        imdbRating: movieImdbRating,
+                        trailerUrl: movieTrailerUrl,
+                        directors: addDirectorList,
+                        genres: selectedGenres,
+                        castMembers: addCastMemberList,
+                        movieMinute: movieMinutes,
+                        language: movieLanguage,
+                    };
+                    console.log(movie);
+                    // post movie
+                    var formData = new FormData();
+                    formData.append("poster", movie.posterPath);
+                    formData.append("companyId", movie.companyId);
+                    formData.append("title", movie.title);
+                    formData.append("description", movie.description);
+                    formData.append("releaseDate", movie.releaseDate);
+                    formData.append("imdbRating", movie.imdbRating);
+                    formData.append("trailerUrl", movie.trailerUrl);
+                    formData.append("directors", JSON.stringify(movie.directors));
+                    formData.append("genres", JSON.stringify(movie.genres));
+                    formData.append("castMembers", JSON.stringify(movie.castMembers));
+                    formData.append("movieMinute", movie.movieMinute);
+                    formData.append("language", movie.language);
+
+                    $.ajax({
+                        url: '/Movie/AddMovie',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.log('Bir hata oluştu. Hata kodu: ' + xhr.status);
+                            console.log(xhr);
+                            console.log(error);
+                        }
+                    });
+
+
+
+
+                }
             })
+
+            //$("#addMovieBtn").click(function () {
+            //    console.log();
+            //    var movieTitle = $("#movieTitle").val();
+            //    var movieDescription = $("#movieDescription").val();
+            //    var movieReleaseDate = $("#movieReleaseDate").val();
+            //    var movieImdbRating = $("#movieImdbRating").val();
+            //    var movieTrailerUrl = $("#movieTrailerUrl").val();
+            //    var movieMinutes = $("#movieMinutes").val();
+            //    var movieLanguage = $("#movieLanguage").val();
+            //    var companyId = $("#companyId").val();
+
+            //    $.each($("#tags-input").val().split(","), function (index, value) {
+            //        var director = { name: value, index: index };
+            //        addDirectorList.push(director);
+            //    });
+
+            //    $.each($("#addCastMemberInput").val().split(","), function (index, value) {
+            //        var castMember = { name: value, index: index };
+            //        addCastMemberList.push(castMember);
+            //    });
+
+
+
+            //    $.each(Array.from(document.querySelectorAll('select[name="Genres"] option:checked')), function (index, option) {
+            //        var genre = {
+            //            id: option.value, // ID değeri olarak option.value kullanabilirsiniz.
+            //            name: option.textContent // İçerik değeri olarak option.textContent kullanabilirsiniz.
+            //        };
+            //        selectedGenres.push(genre);
+            //    });
+
+            //    var movie = {
+            //        companyId: companyId,
+            //        title: movieTitle,
+            //        description: movieDescription,
+            //        posterPath: poster,
+            //        releaseDate: movieReleaseDate,
+            //        imdbRating: movieImdbRating,
+            //        trailerUrl: movieTrailerUrl,
+            //        directors: addDirectorList,
+            //        genres: selectedGenres,
+            //        castMembers: addCastMemberList,
+            //        movieMinute: movieMinutes,
+            //        language: movieLanguage,
+            //    };
+            //    console.log(movie);
+            //    // post movie
+            //    var formData = new FormData();
+            //    formData.append("poster", movie.posterPath);
+            //    formData.append("companyId", movie.companyId);
+            //    formData.append("title", movie.title);
+            //    formData.append("description", movie.description);
+            //    formData.append("releaseDate", movie.releaseDate);
+            //    formData.append("imdbRating", movie.imdbRating);
+            //    formData.append("trailerUrl", movie.trailerUrl);
+            //    formData.append("directors", JSON.stringify(movie.directors));
+            //    formData.append("genres", JSON.stringify(movie.genres));
+            //    formData.append("castMembers", JSON.stringify(movie.castMembers));
+            //    formData.append("movieMinute", movie.movieMinute);
+            //    formData.append("language", movie.language);
+
+            //    $.ajax({
+            //        url: '/Movie/AddMovie',
+            //        type: 'POST',
+            //        data: formData,
+            //        processData: false,
+            //        contentType: false,
+            //        success: function (response) {
+            //            console.log(response);
+            //        },
+            //        error: function (xhr, status, error) {
+            //            console.log('Bir hata oluştu. Hata kodu: ' + xhr.status);
+            //            console.log(xhr);
+            //            console.log(error);
+
+
+            //        }
+            //    });
+
+            //    // post movie end
+            //})
 
             //film ekleme end
         })
+
     </script>
 }
 
