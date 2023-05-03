@@ -12,6 +12,9 @@ namespace Domain.Interfaces.Repository
     {
         IQueryable<Movie> GetAllWaitingMovies();
         IQueryable<Movie> GetAllHomeMovies();
+        IQueryable<Movie> GetAllMovieswithLikes();
+        void AddToRatedUsersList(string userId, string movieId);
         int GetNumOfMovies();
+        Movie GetMovieById(string id);
     }
 }

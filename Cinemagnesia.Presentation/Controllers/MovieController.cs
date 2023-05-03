@@ -14,6 +14,7 @@ using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using Domain.Entities.Constants;
 using Microsoft.AspNetCore.Identity;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cinemagnesia.Presentation.Controllers
 {
@@ -111,50 +112,61 @@ namespace Cinemagnesia.Presentation.Controllers
           
 
         }
+
+        [Authorize]
         public IActionResult MoviePage()
         {
-            var id = Request.Query["id"];
-            return Ok(id);
-
-            MovieDetailViewModel movieDetailViewModel = new MovieDetailViewModel()
-            {
-                Id = "12345",
-                CompanyId = "67890",
-                CompanyName = "Acme Productions",
-                Title = "The Greatest Movie Ever",
-                Description = "A thrilling adventure through space and time",
-                PosterPath = "/images/Cinemagnesia/DefaultMoviePicture.png",
-                ReleaseDate = DateTime.Now,
-                ImdbRating = 8.5f,
-                CinemagAvgScore = 4.2f,
-                Status = ApprovalStatus.Approved,
-                TrailerUrl = "dQw4w9WgXcQ",
-                Directors = new List<Director>(),
-                Genres = new List<Genre>(),
-                CastMembers = new List<CastMember>(),
-                MovieComments = new List<MovieComment>(),
-                UserLikes = new List<ApplicationUser>(),
-                MovieMinutes = 120,
-                Language = "English",
-                CreatedAt = DateTime.Now,
-                UpdatedAt = null
-            };
+            var id = Request.Query["id"].ToString();
+            MovieDto movieDto = _movieService.GetMovieDtoById(id);
+            
+            MovieDetailViewModel movieDetailViewModel = _mapper.Map<MovieDetailViewModel>(movieDto);
 
             bool isRatedBefore = false;
+            bool isLikedBefore = false;
             int Rate = 0;
 
-            foreach (var Movie in _userManager.GetUserAsync(User).Result.RatedMovies) //Film daha önce oylanmış mı?
+            if(User.Identity.IsAuthenticated)
             {
-                if (Movie.Id == movieDetailViewModel.Id)
+                var ratedMovies = _userManager.GetUserAsync(User).Result.RatedMovies;
+                if (ratedMovies != null)
                 {
-                    isRatedBefore = true;
-                    Rate = _ratingService.GetRateoftheUser(_userManager.GetUserAsync(User).Result.Id, Movie.Id); // set the Rate to the user's previous rating
-                    break;
+                    foreach (var movie in ratedMovies) // Film daha önce oylanmış mı?
+                    {
+                        if (movie.Id == movieDetailViewModel.Id)
+                        {
+                            isRatedBefore = true;
+                            Rate = _ratingService.GetRateoftheUser(_userManager.GetUserAsync(User).Result.Id, movie.Id); // set the Rate to the user's previous rating
+                            break;
+                        }
+                    }
                 }
+                
             }
 
+           
+                var activeMovies = _movieService.GetAllMovieswithLikes();
+
+                if (activeMovies != null)
+                {
+                    foreach (var movie in activeMovies) // Film daha önce oylanmış mı?
+                    {
+
+                        if (movie.UserLikes == movieDetailViewModel.UserLikes)
+                        {
+                            isLikedBefore = true;
+                            break;
+                        }
+                    }
+                }
+
+            
+
             ViewData["isRatedBefore"] = isRatedBefore;
+            ViewData["isLikedBefore"] = isLikedBefore;
             ViewData["Rate"] = Rate;
+
+
+
 
             return View(movieDetailViewModel);
         }
@@ -164,6 +176,20 @@ namespace Cinemagnesia.Presentation.Controllers
             return _movieService.GetNumOfMovies();
         }
 
+        [HttpGet]
+        public IActionResult GetHomeMovies()
+        {
+            var data = _movieService.GetAllHomeMovies();
+            return Ok(data);
+        }
+
+        [HttpPost]
+        public IActionResult AddRating(Rating rating)
+        {
+            _ratingService.AddRating(rating);
+            _movieService.AddToRatedUsersList(rating.ApplicationUserId, rating.MovieId);
+            return Ok("oldu herhalde");
+        }
 
 
       
