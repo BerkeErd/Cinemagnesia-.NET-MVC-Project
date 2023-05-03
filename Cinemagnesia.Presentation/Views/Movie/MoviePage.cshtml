@@ -46,7 +46,7 @@
                     <div class="col-12 movieCard">
                         <ul class="list-group movieDetailList">
                             <li class="list-group-item d-flex justify-content-between">
-                                <h1>@Model.Title</h1> 
+                                <h1 value="@Model.Id" id="movieId">@Model.Title</h1>
                                 <div class="con-like m-2">
                                     @if (isLikedBefore)// Likelistte bu film varsa
                                     {
@@ -193,32 +193,41 @@
             <div class="col">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <form>
-                        <div class="row mt-3">
+                    
+                        <div class="row mt-3 addCommentRow">
                             <div class="col-md-4">
-                                <div class="text-center">
-                                    <p class="fw-bold">@UserManager.GetUserAsync(User).Result.FirstName </p>
-                                    <div class="profileImageDiv m-auto">
-                                        <img src="@UserManager.GetUserAsync(User).Result.ProfilePicture" />
+                                <div class="text-center mt-2">
+                                    <p class="fw-bold my-0" value="@UserManager.GetUserAsync(User).Result.Id" id="userId">@UserManager.GetUserAsync(User).Result.FirstName </p>
+                                <div class="profileImageDiv m-auto" >
+                                        <img src="@UserManager.GetUserAsync(User).Result.ProfilePicture"  />
                                     </div>
 
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <h4 class="fw-bold">Yorum Yaz</h4>
-                                <textarea class="form-control yorum-TextArea" rows="5" cols="50"></textarea>
-                                <button type="submit" class="btn btn-danger m-2">Gönder</button>
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <textarea id="commentTxt" class="form-control" rows="2" placeholder="aklından neler geçiyor?"></textarea>
+                                        <div class="mar-top clearfix mt-3 d-flex justify-content-end">
+                                            <a class="btn btn-trans btn-icon fa fa-video-camera add-tooltip" href="#"></a>
+                                            <a class="btn btn-trans btn-icon fa fa-camera add-tooltip" href="#"></a>
+                                            <a class="btn btn-trans btn-icon fa fa-file add-tooltip" href="#"></a>
+                                           
+                                            <button class="btn btn-sm btn-primary pull-right" type="button" id="addComment-btn"><i class="fa-solid fa-paper-plane"></i> Gönder</button>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                    </form>
+                    
                 }
                 else
                 {
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <h4 class="fw-bold">Yorum Yazabilmek için lütfen giriş yapınız.</h4>
-                            <textarea class="form-control yorum-TextArea" rows="5" cols="50" disabled></textarea>
                         </div>
                     </div>
                 }
@@ -227,7 +236,7 @@
         </div>
         <div class="row mt-5">
             <div class="col-md-12">
-                <h3>Yorumlar:</h3>
+                
                 <ul class="list-unstyled">
                     @if (Model.MovieComments.Count > 0)
                     {
@@ -261,15 +270,9 @@
                     }
                     else
                     {
-                        <div class="d-flex">
-                            <div class="me-3 profileImageDiv">
-                                <img src="@UserManager.GetUserAsync(User).Result.ProfilePicture alt="Profil Fotoğrafı" width="50" height="50" class="rounded-circle">
-                            </div>
-                            <div class="flex-grow-1">
-                                <p>
-                                    <strong>@UserManager.GetUserAsync(User).Result.FirstName:</strong>
-                                    İlk Yorumu Siz Yapın...
-                                </p>
+                        <div class="row notAddCommentRow">
+                            <div class="col-lg-12 text-center p-3">
+                                 <h5>Henüz hiç yorum eklenmemiş.</h5>
                             </div>
                         </div>
                     }
@@ -293,27 +296,48 @@
         var trailerHeight = 400; // Set the height value here
 
         $(document).ready(function () {
-            tinymce.init({
-                selector: 'textarea',
-                menubar: false,
-                toolbar: false,
-                content_css: '/css/tinycloud.css',
-                plugins: 'link emoticons',
-                min_height: trailerHeight, // Use the variable here
-                formats: {
-                    underline: { inline: 'u', exact: true }
-                },
-                style_formats: [
-                    { title: 'Plain Text', format: 'plain_text' }
-                ],
-                setup: function (editor) {
-                    editor.on('init', function () {
-                        editor.formatter.remove('italic');
-                    });
+
+
+            // send comment start
+
+            $("#addComment-btn").click(function () {
+                var commentText = $("#commentTxt").val();
+                if (commentText.trim() === "") {
+                    $(".panel-body").append("<div class='alert alert-warning mt-2 comment-error' >Yorum alanı boş olamaz</div>");
+                    setTimeout(function () {
+                        $(".comment-error").fadeOut("slow", function () {
+                            $(this).remove();
+                        });
+                    }, 1000);
+                } else {
+                    var comment = {
+                        applicationUserId: "@UserManager.GetUserAsync(User).Result.Id",
+                        movieId: "@Model.Id",
+                        commentText: commentText
+                    };
+                    
+                    // ajax start
+
+                    $.ajax({
+                        url: 'MovieComment/SendComment',
+                        data:comment,
+                        success:function (response){
+                            console.log(response)
+                        },
+                        error: function(xhr,status,error){
+                            console.log(xhr + ' ' + status)
+                        }
+                    })
+
+                    // ajax end
+
                 }
+               
             });
 
+            // send comment end
 
+            
             
             
             

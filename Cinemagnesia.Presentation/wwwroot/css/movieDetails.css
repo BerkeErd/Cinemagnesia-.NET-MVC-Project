@@ -21,8 +21,8 @@
 }
 
 .profileImageDiv {
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background-color: white;
     border: 1px solid red;
@@ -57,7 +57,6 @@
 .temporary_text {
   font-weight: bold;
   font-size: 24px;
-  padding: 6px 12px;
   color: #f8f8f8;
 }
 
@@ -339,14 +338,53 @@ li strong {
     color: #Fd4;
 }
 
+.panel {
+    box-shadow: 0 2px 0 rgba(0,0,0,0.075);
+    border-radius: 0;
+    border: 0;
 
+}
 
+    .panel .panel-footer, .panel > :last-child {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
 
+    .panel .panel-heading, .panel > :first-child {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
 
+.panel-body {
+    padding: 25px 20px;
+}
+.panel a {
+    color: #909090 !important;
+}
+.panel button {
+    background-color: #e50914;
+    outline-color: #e50914;
+    border-color: #e50914;
+}
+.panel button {
+    background-color: #d50b14 !important
+}
+/*
+yorum ekleme
+*/
 
+.addCommentRow{
+    background-color: rgb(25,25,25);
+    border-radius:5px;
+}
 
+.notAddCommentRow h5{
+    background-color:none;
+    color: rgb(220,220,220);
+    margin:0 ;
+}
 
-
-
-
-
+.notAddCommentRow {
+    background-color: rgb(25,25,25);
+    border-radius: 5px;
+}
