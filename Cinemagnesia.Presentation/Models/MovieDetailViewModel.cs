@@ -21,7 +21,9 @@ namespace Cinemagnesia.Presentation.Models
         public ICollection<Genre> Genres { get; set; }
         public ICollection<CastMember> CastMembers { get; set; }
         public ICollection<MovieComment> MovieComments { get; set; }
-        public ICollection<ApplicationUser> UserLikes { get; set; }
+        public ICollection<ApplicationUser> FavoritedUsers { get; set; }
+
+        public ICollection<ApplicationUser> RatedUsers { get; set; }
         public int MovieMinutes { get; set; }
         public string Language { get; set; }
         public DateTime CreatedAt { get; set; } 

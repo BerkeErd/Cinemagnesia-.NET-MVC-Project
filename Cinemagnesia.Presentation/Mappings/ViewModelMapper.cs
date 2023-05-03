@@ -37,6 +37,9 @@ namespace Cinemagnesia.Presentation.Mappings
 
             CreateMap<MovieDetailViewModel, MovieDto>();
             CreateMap<MovieDto, MovieDetailViewModel>();
+
+            CreateMap<MovieDto, MovieViewModel>();
+            CreateMap<MovieViewModel, MovieDto>();
         }
     }
 

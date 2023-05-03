@@ -12,6 +12,7 @@ namespace Domain.Entities.Concrete
     public class Movie : BaseEntity
     {
         public string CompanyId { get; set; }
+        public Company Company { get; set; }
         [Required]
         [MaxLength(100)]
         public string Title { get; set; }
@@ -29,7 +30,8 @@ namespace Domain.Entities.Concrete
         public ICollection<Genre> Genres { get; set; }
         public ICollection<CastMember> CastMembers { get; set; }
         public ICollection<MovieComment> MovieComments { get; set; }
-        public ICollection<ApplicationUser> LikedUsers { get; set; }
+        public ICollection<ApplicationUser> RatedUsers { get; set; }
+        public ICollection<ApplicationUser> FavoritedUsers { get; set; }
         public int MovieMinutes { get; set; }
         public string Language { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;

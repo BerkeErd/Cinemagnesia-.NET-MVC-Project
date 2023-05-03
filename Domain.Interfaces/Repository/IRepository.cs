@@ -12,7 +12,7 @@ namespace Domain.Interfaces.Repository
         Task<TEntity> CreateAsync(TEntity entity);
         string Update(string id,TEntity entity);
         Task<TEntity> DeleteAsync(string id);
-        Task<TEntity> GetByIdAsync(string id);
+        Task<TEntity> GetByIdAsync(string id, bool includeMovies = false);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
     }

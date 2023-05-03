@@ -10,6 +10,7 @@
 	<PackageReference Include="AutoMapper" Version="12.0.1" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
 	<PackageReference Include="QRCoder" Version="1.4.3" />
+	<PackageReference Include="SendGrid" Version="9.28.1" />
     <ProjectReference Include="..\Application.Interfaces\Application.Interfaces.csproj" />
     <ProjectReference Include="..\Cinemagnesia.Infrastructure.DataAccess\Infrastructure.DataAccess.csproj" />
     <ProjectReference Include="..\Domain.Interfaces\Domain.Interfaces.csproj" />
