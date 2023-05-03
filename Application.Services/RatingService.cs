@@ -32,9 +32,9 @@ namespace Application.Services
         {
             string ratingId;
             bool isRatingExist;
-            if (_ratingRepository.isExist(rating.MovieId, rating.ApplicationUserId, out ratingId, out isRatingExist))
+            if (_ratingRepository.isExist(rating.MovieId, rating.ApplicationUserId, out Rating oldRating, out isRatingExist))
             {
-                UpdateRating(ratingId, rating);
+                UpdateRating(oldRating, rating);
             }
             else
             {
@@ -60,9 +60,9 @@ namespace Application.Services
             _ratingRepository.DeleteAsync(id).Wait();
         }
 
-        public void UpdateRating(string id, Rating rating)
+        public void UpdateRating(Rating oldRating, Rating newRating)
         {
-            _ratingRepository.UpdateRating(id, rating);
+            _ratingRepository.UpdateRating(oldRating, newRating);
         }
 
         public int GetRateoftheUser(string userId,string movieId)

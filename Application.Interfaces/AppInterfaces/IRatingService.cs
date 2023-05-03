@@ -12,7 +12,7 @@ namespace Application.Interfaces.AppInterfaces
         IEnumerable<Rating> GetAllRating();
         void AddRating(Rating rating);
         void RemoveRating(string id);
-        void UpdateRating(string id, Rating rating);
+        void UpdateRating(Rating oldRating, Rating newRating);
         Rating GetById(string id);
 
         int GetRateoftheUser(string userId,string movieId);

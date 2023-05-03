@@ -12,8 +12,8 @@ namespace Domain.Interfaces.Repository
     {
          public int GetRateoftheUser(string userId, string movieId);
 
-         bool isExist(string movieId, string userId, out string ratingId, out bool isRatingExist);
-        void UpdateRating(string id, Rating entity);
+         bool isExist(string movieId, string userId, out Rating oldRating, out bool isRatingExist);
+        void UpdateRating(Rating oldRating, Rating newRating);
     }
     
 }
