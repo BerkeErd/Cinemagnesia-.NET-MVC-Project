@@ -2,8 +2,10 @@
 using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
+using Infrastructure.DataAccess.Migrations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
@@ -17,10 +19,12 @@ namespace Application.Services
     {
         private readonly IRatingRepository _ratingRepository;
         private readonly IMovieRepository _movieRepository;
-        public RatingService(IRatingRepository ratingRepository, IMovieRepository movieRepository)
+        private readonly UserManager<ApplicationUser> _usermanager;
+        public RatingService(IRatingRepository ratingRepository, IMovieRepository movieRepository, UserManager<ApplicationUser> usermanager)
         {
             _movieRepository = movieRepository;
             _ratingRepository = ratingRepository;
+            _usermanager = usermanager;
         }
 
        
@@ -63,9 +67,23 @@ namespace Application.Services
 
         public int GetRateoftheUser(string userId,string movieId)
         {
-            
+            var user = _usermanager.Users.Include(u => u.RatedMovies).FirstOrDefault(u => u.Id == userId);
+
+            var ratedMovies = user.RatedMovies;
+            if (ratedMovies != null)
+            {
+                foreach (var movie in ratedMovies) // Film daha önce oylanmış mı?
+                {
+                    if (movie.Id == movieId)
+                    {
+                        return _ratingRepository.GetRateoftheUser(userId, movie.Id); // set the Rate to the user's previous rating
+                    }
+                }
+            }
             return _ratingRepository.GetRateoftheUser(userId, movieId);
         }
+
+       
 
     }
 }

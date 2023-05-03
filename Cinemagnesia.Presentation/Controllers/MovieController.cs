@@ -127,21 +127,13 @@ namespace Cinemagnesia.Presentation.Controllers
 
             if(User.Identity.IsAuthenticated)
             {
-                var user = _userManager.GetUserAsync(User).Result;
-                var ratedMovies = user.RatedMovies;
-                if (ratedMovies != null)
+                Rate = _ratingService.GetRateoftheUser(_userManager.GetUserAsync(User).Result.Id, movieDetailViewModel.Id);
+             
+                if(Rate > 0) 
                 {
-                    foreach (var movie in ratedMovies) // Film daha önce oylanmış mı?
-                    {
-                        if (movie.Id == movieDetailViewModel.Id)
-                        {
-                            isRatedBefore = true;
-                            Rate = _ratingService.GetRateoftheUser(_userManager.GetUserAsync(User).Result.Id, movie.Id); // set the Rate to the user's previous rating
-                            break;
-                        }
-                    }
+                    isRatedBefore = true;
                 }
-                
+                   
             }
 
            
