@@ -141,10 +141,10 @@ namespace Cinemagnesia.Presentation.Controllers
 
                 if (activeMovies != null)
                 {
-                    foreach (var movie in activeMovies) // Film daha önce oylanmış mı?
+                    foreach (var movie in activeMovies) // Film daha önce favorilenmiş mi?
                     {
 
-                        if (movie.LikedUsers == movieDetailViewModel.LikedUsers)
+                        if (movie.FavoritedUsers == movieDetailViewModel.FavoritedUsers)
                         {
                             isLikedBefore = true;
                             break;

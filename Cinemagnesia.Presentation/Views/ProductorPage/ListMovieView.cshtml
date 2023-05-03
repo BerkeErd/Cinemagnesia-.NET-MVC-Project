@@ -54,7 +54,8 @@
                                                 <p>Genres: @string.Join(", ", movie.Genres.Select(g => g.Name))</p>
                                                 <p>Cast Members: @string.Join(", ", movie.CastMembers.Select(c => c.Name))</p>
                                                 <p>Number of Comments: @movie.MovieComments.Count()</p>
-                                                <p>Number of Favorites: @movie.LikedUsers.Count()</p>
+                                                <p>Number of Favorites: @movie.FavoritedUsers.Count()</p>
+                                                <p>Number of Rates: @movie.RatedUsers.Count()</p>
                                                 <p>Movie Minutes: @movie.MovieMinutes</p>
                                                 <p>Language: @movie.Language</p>
                                                 <p>Created At: @movie.CreatedAt.ToShortDateString()</p>

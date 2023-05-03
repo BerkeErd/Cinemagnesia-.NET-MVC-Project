@@ -62,7 +62,7 @@ namespace Infrastructure.DataAccess.Repositories
         {
 
             return _dbContext.Movies           
-           .Include(m => m.LikedUsers)
+           .Include(m => m.FavoritedUsers)
            .Where(m => m.Status == ApprovalStatus.Approved);
         }
 
@@ -75,7 +75,7 @@ namespace Infrastructure.DataAccess.Repositories
         public void AddRatingToMovie(Movie movie, ApplicationUser user)
         {
             Movie Movie = _dbContext.Movies.FirstOrDefault(movie);
-            movie.LikedUsers.Add(user);
+            movie.FavoritedUsers.Add(user);
             _dbContext.SaveChanges();
 
         }

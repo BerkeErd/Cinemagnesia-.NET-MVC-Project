@@ -18,7 +18,8 @@ namespace Domain.Entities.Concrete
         public DateTime? BannedStartDate;
         public DateTime? BannedEndDate;
 
-        public string UserId;
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser User;
 
     }
 }

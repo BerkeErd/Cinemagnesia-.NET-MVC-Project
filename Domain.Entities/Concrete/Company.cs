@@ -18,5 +18,6 @@ namespace Domain.Entities.Concrete
         public string TaxNumber { get; set; }
         public DateTime FoundDate { get; set; }
         public ICollection<Movie> Movies { get; set; }
+        public ICollection<ApplicationUser> Workers { get; set; }
     }
 }
