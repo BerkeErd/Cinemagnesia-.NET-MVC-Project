@@ -135,6 +135,10 @@ namespace Cinemagnesia.Presentation.Controllers
         public IActionResult MoviePage()
         {
             var id = Request.Query["id"].ToString();
+            if (string.IsNullOrEmpty(id))
+            {
+                return Content("");
+            }
             MovieDto movieDto = _movieService.GetMovieDtoById(id);
 
             MovieDetailViewModel movieDetailViewModel = _mapper.Map<MovieDetailViewModel>(movieDto);
@@ -145,6 +149,12 @@ namespace Cinemagnesia.Presentation.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
+                var user =  _userManager.GetUserAsync(User).Result;
+                if (user != null)
+                {
+                    movieDetailViewModel.UserId = user.Id;
+                }
+
                 Rate = _ratingService.GetRateoftheUser(_userManager.GetUserAsync(User).Result.Id, movieDetailViewModel.Id);
 
                 if (Rate > 0)
@@ -157,18 +167,18 @@ namespace Cinemagnesia.Presentation.Controllers
 
             var activeMovies = _movieService.GetAllMovieswithLikes();
 
-                if (activeMovies != null)
+            if (activeMovies != null)
+            {
+                foreach (var movie in activeMovies) // Film daha önce favorilenmiş mi?
                 {
-                    foreach (var movie in activeMovies) // Film daha önce favorilenmiş mi?
-                    {
 
-                        if (movie.FavoritedUsers == movieDetailViewModel.FavoritedUsers)
-                        {
-                            isLikedBefore = true;
-                            break;
-                        }
+                    if (movie.FavoritedUsers == movieDetailViewModel.FavoritedUsers)
+                    {
+                        isLikedBefore = true;
+                        break;
                     }
                 }
+            }
 
 
 

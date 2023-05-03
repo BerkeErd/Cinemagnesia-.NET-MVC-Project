@@ -1,16 +1,19 @@
 ﻿@model MovieDetailViewModel
+@inject UserManager<ApplicationUser> UserManager
+
 @{
     ViewBag.Title = "Film Detayları";
     bool isRatedBefore = (bool)ViewData["isRatedBefore"];
     bool isLikedBefore = (bool)ViewData["isLikedBefore"];
     int Rate = (int)ViewData["Rate"];
+    var user = UserManager.GetUserAsync(User);
+    var userProfilePicture = user.Result.ProfilePicture;
 }
 @using Cinemagnesia.Domain.Domain.Entities.Concrete;
 @using Microsoft.AspNetCore.Identity
 
-@inject UserManager<ApplicationUser> UserManager
 
-<script src="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
 <link href="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/skins/ui/oxide/skin.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="~/css/movieDetails.css" />
 
@@ -193,13 +196,12 @@
             <div class="col">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    
                         <div class="row mt-3 addCommentRow">
                             <div class="col-md-4">
                                 <div class="text-center mt-2">
-                                    <p class="fw-bold my-0" value="@UserManager.GetUserAsync(User).Result.Id" id="userId">@UserManager.GetUserAsync(User).Result.FirstName </p>
+                                    <p class="fw-bold my-0" value="@Model.UserId" id="userId">User.FirstName </p>
                                 <div class="profileImageDiv m-auto" >
-                                        <img src="@UserManager.GetUserAsync(User).Result.ProfilePicture"  />
+                                    <img src="userProfilePicture"/>
                                     </div>
 
                                 </div>
@@ -207,7 +209,7 @@
                             <div class="col-md-6">
                                 <div class="panel">
                                     <div class="panel-body">
-                                        <textarea id="commentTxt" class="form-control" rows="2" placeholder="aklından neler geçiyor?"></textarea>
+                                        <textarea id="commentTxt" class="form-control" rows="2" placeholder="Aklından neler geçiyor?"></textarea>
                                         <div class="mar-top clearfix mt-3 d-flex justify-content-end">
                                             <a class="btn btn-trans btn-icon fa fa-video-camera add-tooltip" href="#"></a>
                                             <a class="btn btn-trans btn-icon fa fa-camera add-tooltip" href="#"></a>
@@ -236,7 +238,6 @@
         </div>
         <div class="row mt-5">
             <div class="col-md-12">
-                
                 <ul class="list-unstyled">
                     @if (Model.MovieComments.Count > 0)
                     {
@@ -294,7 +295,7 @@
         $("#trailerEmbed").attr("src", youtubeUrl);
 
         var trailerHeight = 400; // Set the height value here
-
+        
         $(document).ready(function () {
 
 
@@ -311,7 +312,7 @@
                     }, 1000);
                 } else {
                     var comment = {
-                        applicationUserId: "@UserManager.GetUserAsync(User).Result.Id",
+                        applicationUserId: "@user.Result.Id",
                         movieId: "@Model.Id",
                         commentText: commentText
                     };
@@ -382,7 +383,7 @@
 
     </script>
 
-
+    <script src="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="~/js/movieDetails.js"></script>
 }
 
