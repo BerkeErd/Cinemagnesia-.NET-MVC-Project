@@ -15,6 +15,8 @@ using Domain.Entities.Constants;
 using Microsoft.AspNetCore.Identity;
 using Application.Services;
 using Microsoft.AspNetCore.Authorization;
+using FluentValidation.Results;
+using FluentValidation;
 
 namespace Cinemagnesia.Presentation.Controllers
 {
@@ -27,8 +29,9 @@ namespace Cinemagnesia.Presentation.Controllers
         private readonly IMovieService _movieService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRatingService _ratingService;
+        private readonly IValidator<AddMovieViewModel> _validator;
 
-        public MovieController(IHttpClientFactory httpClientFactory, IMapper mapper, IWebHostEnvironment env, IMovieService movieService, UserManager<ApplicationUser> usermanager, IRatingService ratingService)
+        public MovieController(IHttpClientFactory httpClientFactory, IMapper mapper, IWebHostEnvironment env, IMovieService movieService, UserManager<ApplicationUser> usermanager, IRatingService ratingService, IValidator<AddMovieViewModel> validator)
         {
             _userManager = usermanager;
             _movieService = movieService;
@@ -36,6 +39,7 @@ namespace Cinemagnesia.Presentation.Controllers
             _httpClient = httpClientFactory.CreateClient("rapidapi");
             _env = env;
             _ratingService = ratingService;
+            _validator = validator;
         }
 
         [HttpGet]
@@ -57,7 +61,7 @@ namespace Cinemagnesia.Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddMovie(IFormFile poster, string companyId, string title, string description, string releaseDate, string imdbRating, string trailerUrl, string directors, string genres, string castMembers, string movieMinute, string language)
+        public async Task<IActionResult> AddMovie(IFormFile poster, string companyId, string title, string description, string releaseDate, string imdbRating, string trailerUrl, string directors, string genres, string castMembers, string movieMinute, string language)
         {
             try
             {
@@ -81,8 +85,6 @@ namespace Cinemagnesia.Presentation.Controllers
                     }
                 }
 
-
-
                 AddMovieViewModel addMovieViewModel = new AddMovieViewModel()
                 {
                     Title = title,
@@ -100,16 +102,32 @@ namespace Cinemagnesia.Presentation.Controllers
 
                 };
 
+                ValidationResult result = await _validator.ValidateAsync(addMovieViewModel);
+                if (!result.IsValid)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        Console.WriteLine(error.ErrorMessage);
+                        Console.WriteLine(error.PropertyName);
+                        // error.ErrorMessage contains the error message
+                        // error.PropertyName contains the name of the property that caused the error
+                    }
+
+                    return BadRequest("Uygun olmayan formatta veri girişi saptandı.");
+                }
+
+
+
+
                 AddMovieDto addMovieDto = _mapper.Map<AddMovieDto>(addMovieViewModel);
                 _movieService.AddMovie(addMovieDto);
                 return Ok(addMovieDto);
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
                 return BadRequest(ex.Message);
             }
-          
 
         }
 
@@ -118,26 +136,26 @@ namespace Cinemagnesia.Presentation.Controllers
         {
             var id = Request.Query["id"].ToString();
             MovieDto movieDto = _movieService.GetMovieDtoById(id);
-            
+
             MovieDetailViewModel movieDetailViewModel = _mapper.Map<MovieDetailViewModel>(movieDto);
 
             bool isRatedBefore = false;
             bool isLikedBefore = false;
             int Rate = 0;
 
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 Rate = _ratingService.GetRateoftheUser(_userManager.GetUserAsync(User).Result.Id, movieDetailViewModel.Id);
-             
-                if(Rate > 0) 
+
+                if (Rate > 0)
                 {
                     isRatedBefore = true;
                 }
-                   
+
             }
 
-           
-                var activeMovies = _movieService.GetAllMovieswithLikes();
+
+            var activeMovies = _movieService.GetAllMovieswithLikes();
 
                 if (activeMovies != null)
                 {
@@ -152,7 +170,7 @@ namespace Cinemagnesia.Presentation.Controllers
                     }
                 }
 
-            
+
 
             ViewData["isRatedBefore"] = isRatedBefore;
             ViewData["isLikedBefore"] = isLikedBefore;
@@ -185,7 +203,7 @@ namespace Cinemagnesia.Presentation.Controllers
         }
 
 
-      
+
 
 
     }
