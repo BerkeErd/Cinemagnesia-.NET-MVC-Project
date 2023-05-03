@@ -67,9 +67,9 @@ html {
             color: #E50914 !important;
         }
 
-/*.navbar-nav li a, button {
-    color: white !important; Burasý diðer sayfalarý etkiliyor deðiþtirilmeli !
-}*/
+.navbar-nav li a,.navbar-nav button {
+    color: white !important; 
+}
 
 .nav-link {
     color: white;

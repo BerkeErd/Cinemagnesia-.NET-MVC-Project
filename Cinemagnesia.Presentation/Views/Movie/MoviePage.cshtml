@@ -19,7 +19,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <article class="card">
+                <article class="card mx-auto">
                     <div class="temporary_text">
                         <img src="/images/Cinemagnesia/@Model.PosterPath" class="img-fluid moviePoster" alt="Movie Cover Picture">
                     </div>
@@ -37,24 +37,7 @@
 
                         <p id="movie-description" class="card_description">@Model.Description</p>
                     </div>
-
-
                 </article>
-                <div class="row m-3">
-                    <div class="col-md-12">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="movie-status-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                İzledim
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="movie-status-dropdown">
-                                @*Giriş yapılmadan tıklandığında giriş yapın sweetalert veya herhangi bir şekilde ekrana gelebilir*@
-                                <li><button class="dropdown-item" href="#">İzlemedim</button></li>
-                                <li><button class="dropdown-item active" href="#">İzledim</button></li>
-                                <li><button class="dropdown-item" href="#">İzlemek İstiyorum</button></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>@*BURASI SONRA*@
 
 
@@ -105,9 +88,25 @@
                                             </svg>
                                         </div>
                                     }
+                                   
                                 </div>
                             </li>
-                            <li class="list-group-item"><strong>Çıkış Tarihi:</strong> @Model.ReleaseDate.ToString("yyyy-MM-dd")</li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div>
+                                    <strong>Çıkış Tarihi:</strong> @Model.ReleaseDate.ToString("yyyy-MM-dd")
+                                </div>
+                                <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="movie-status-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                İzledim
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="movie-status-dropdown">
+                                                @*Giriş yapılmadan tıklandığında giriş yapın sweetalert veya herhangi bir şekilde ekrana gelebilir*@
+                                                <li><button class="dropdown-item" href="#">İzlemedim</button></li>
+                                                <li><button class="dropdown-item active" href="#">İzledim</button></li>
+                                                <li><button class="dropdown-item" href="#">İzlemek İstiyorum</button></li>
+                                            </ul>
+                                   </div>
+                            </li>
                             <li class="list-group-item"><strong>Film Süresi:</strong> @Model.MovieMinutes Dakika</li>
                             <li class="list-group-item"><strong>Filmin Dili:</strong> @Model.Language</li>
                             <li class="list-group-item">
@@ -145,10 +144,12 @@
                             </li>
                         </ul>
 
-            </div>
+                   </div>
                 </div>
-                <div class="mb-12">
-                    <div class="cont">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt-4 text-center">
                         @if (@User.IsInRole("User") || @User.IsInRole("Productor"))
                         {
                             if (isRatedBefore)
@@ -186,9 +187,6 @@
                                 </div>
                             }
                         }
-
-                    </div>
-                </div>
             </div>
         </div>
         <div class="row">

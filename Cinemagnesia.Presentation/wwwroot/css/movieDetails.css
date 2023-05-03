@@ -47,7 +47,7 @@
 .card {
   position: relative;
   width: 450px;
-  height: 600px;
+  height: 625px;
   color: #2e2d31;
   background: #131313;
   overflow: hidden;
@@ -73,9 +73,10 @@
     /* edit the width to fit card */
     width: 100%;
     padding: 20px;
-    opacity: 0.6;
-    background: #282828;
+    opacity: 0.85;
+    background: black;
     border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     /* edit here to change the height of the content box */
     transform: translateY(120px);
     transition: transform .25s;
@@ -112,7 +113,7 @@
 
 .card:hover .card_content {
     transform: translateY(0);
-    opacity: 0.9;
+    opacity: 0.85;
 }
 
 .card:hover .card_description {
@@ -235,10 +236,7 @@ p strong {
 * {
     margin: 0;
     padding: 0;
-    font-family: roboto;
 }
-
-
 
 .cont {
     width: 93%;
@@ -264,7 +262,6 @@ h1 span {
 }
 
 div.stars {
-    width: 250px;
     display: inline-block;
 }
 
