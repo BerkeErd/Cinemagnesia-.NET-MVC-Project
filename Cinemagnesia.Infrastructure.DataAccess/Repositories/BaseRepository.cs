@@ -58,7 +58,8 @@ namespace Infrastructure.DataAccess.Repositories
             {
                 var query = _dbSet.AsQueryable();
                 query = query.Include("Movies");
-                query = query.Include("Movies.LikedUsers");
+                query = query.Include("Movies.FavoritedUsers");
+                query = query.Include("Movies.RatedUsers");
                 query = query.Include("Movies.Genres");
                 query = query.Include("Movies.Directors");
                 query = query.Include("Movies.CastMembers");

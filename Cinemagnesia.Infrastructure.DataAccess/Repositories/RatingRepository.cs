@@ -1,6 +1,7 @@
 ﻿using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
+using Infrastructure.DataAccess.Migrations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,7 +21,7 @@ namespace Infrastructure.DataAccess.Repositories
            
         }
 
-        public bool isExist(string movieId, string userId, out string ratingId, out bool isExist)
+        public bool isExist(string movieId, string userId, out Rating oldRating, out bool isExist)
         {
             var user = _dbContext.Users.Include(m => m.RatedMovies).FirstOrDefault(x=> x.Id == userId);
 
@@ -32,20 +33,19 @@ namespace Infrastructure.DataAccess.Repositories
                     {
                         movie.Id = movieId;
                         var rating = _dbContext.Ratings.FirstOrDefault(r => r.MovieId == movie.Id && r.User.Id == user.Id);
-                        string ratingsid = rating.Id;
-                        ratingId = ratingsid;
+                        oldRating = rating;
                         isExist = true;
                         return true;
                     }
-                    ratingId = "";
+                    oldRating = null;
                     isExist = false;
                     return false;
                 }
-                ratingId = "";
+                oldRating = null;
                 isExist = false;
                 return false;
             }
-            ratingId = "";
+            oldRating = null;
             isExist = false;
             return false;
 
@@ -60,18 +60,17 @@ namespace Infrastructure.DataAccess.Repositories
             return Convert.ToInt32(rating?.Score ?? 0);
         }
 
-        public void UpdateRating(string id, Rating entity)
+        public void UpdateRating(Rating oldRating, Rating newRating)
         {
-            var existingEntity = _dbContext.Ratings.Find(id);
+            var existingRating = _dbContext.Ratings.Find(new object[] { oldRating.ApplicationUserId, oldRating.MovieId});
 
-            if (existingEntity != null)
+
+            if (existingRating != null)
             {
-                // Update the properties of the existing entity
-                existingEntity.Score = entity.Score;
-                existingEntity.ApplicationUserId = entity.ApplicationUserId;
-                existingEntity.MovieId = entity.MovieId;
+                existingRating.Score = newRating.Score;
+                existingRating.ApplicationUserId = newRating.ApplicationUserId;
+                existingRating.MovieId = newRating.MovieId;
 
-                // Save the changes to the database
                 _dbContext.SaveChanges();
             }
         }
