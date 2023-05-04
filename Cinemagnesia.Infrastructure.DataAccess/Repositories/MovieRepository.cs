@@ -16,10 +16,10 @@ namespace Infrastructure.DataAccess.Repositories
 {
     public class MovieRepository : BaseRepository<Movie>, IMovieRepository
     {
-        
+
         public MovieRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
-            
+
         }
         public Movie GetMovieById(string id)
         {
@@ -59,25 +59,25 @@ namespace Infrastructure.DataAccess.Repositories
             var user = users.FirstOrDefault(x => x.Id == userId);
             var movie = _dbContext.Movies.Find(movieId);
 
-            if(movie != null && user != null)
+            if (movie != null && user != null)
             {
-                 user.RatedMovies.Add(movie);
+                user.RatedMovies.Add(movie);
                 _dbContext.SaveChanges();
             }
-            
+
         }
 
         public IQueryable<Movie> GetAllHomeMovies()
         {
-            return _dbContext.Movies           
+            return _dbContext.Movies
            .Include(m => m.Genres)
            .Where(m => m.Status == ApprovalStatus.Approved);
         }
-        
+
         public IQueryable<Movie> GetAllMovieswithLikes()
         {
 
-            return _dbContext.Movies           
+            return _dbContext.Movies
            .Include(m => m.FavoritedUsers)
            .Where(m => m.Status == ApprovalStatus.Approved);
         }
@@ -90,9 +90,9 @@ namespace Infrastructure.DataAccess.Repositories
 
         public void UpdateAverageScore(string movieId, float rating)
         {
-            var movie = _dbContext.Movies.FirstOrDefault(m=> m.Id == movieId);
+            var movie = _dbContext.Movies.FirstOrDefault(m => m.Id == movieId);
 
-            if(movie != null)
+            if (movie != null)
             {
                 movie.CinemagAvgScore = rating;
             }
@@ -100,7 +100,7 @@ namespace Infrastructure.DataAccess.Repositories
         public void AddRatingToMovie(Movie movie, ApplicationUser user)
         {
             Movie Movie = _dbContext.Movies.FirstOrDefault(movie);
-            if(movie != null)
+            if (movie != null)
             {
                 movie.FavoritedUsers.Add(user);
                 _dbContext.SaveChanges();
@@ -118,5 +118,18 @@ namespace Infrastructure.DataAccess.Repositories
             }).OrderByDescending(m => m.CinemagnesiaAvgScore).ToList();
         }
 
+        public async Task<List<LanguageStatisticDto>> GetLanguageStatistics()
+        {
+            var result = await _dbContext.Movies
+                .GroupBy(m => m.Language)
+                .Select(g => new LanguageStatisticDto
+                {
+                    Name = g.Key,
+                    MovieCount = g.Count()
+                })
+                .ToListAsync();
+
+            return result;
+        }
     }
 }

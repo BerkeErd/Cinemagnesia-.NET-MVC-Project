@@ -32,7 +32,7 @@ namespace Application.Services
         }
         public void AddMovie(AddMovieDto movieDto)
         {
-            if(movieDto != null)
+            if (movieDto != null)
             {
                 var directors = new List<Director>();
                 foreach (var director in movieDto.Directors)
@@ -76,13 +76,13 @@ namespace Application.Services
 
                 _movieRepository.CreateAsync(movie).Wait();
             }
-            
+
         }
 
         public List<MovieDto> GetAllWaitingMovies()
         {
             var movies = _movieRepository.GetAllWaitingMovies().ToList();
-            if(movies != null )
+            if (movies != null)
             {
                 var movieDtos = _mapper.Map<List<MovieDto>>(movies);
 
@@ -104,7 +104,7 @@ namespace Application.Services
         public List<MovieDto> GetAllMovieswithLikes()
         {
             var movies = _movieRepository.GetAllMovieswithLikes().ToList();
-            if( movies != null )
+            if (movies != null)
             {
                 var movieDto = _mapper.Map<List<MovieDto>>(movies);
                 return movieDto;
@@ -113,7 +113,7 @@ namespace Application.Services
         }
         public List<MovieDto> GetMoviesByCompanyId(string companyId, bool includeMovies = false)
         {
-            if(companyId != null)
+            if (companyId != null)
             {
                 var company = _companyRepository.GetByIdAsync(companyId, includeMovies).Result;
 
@@ -130,21 +130,21 @@ namespace Application.Services
         }
         public MovieDto GetMovieDtoById(string id)
         {
-            if(id != null)
+            if (id != null)
             {
                 var movie = _movieRepository.GetMovieById(id);
                 var movieDto = _mapper.Map<MovieDto>(movie);
                 return movieDto;
             }
             else
-            { 
-                return new MovieDto(); 
+            {
+                return new MovieDto();
             }
         }
         public List<HomeMovieDto> GetAllHomeMovies()
         {
             var movies = _movieRepository.GetAllHomeMovies().ToList();
-            if(movies != null)
+            if (movies != null)
             {
                 var movieDtos = _mapper.Map<List<HomeMovieDto>>(movies);
 
@@ -154,7 +154,7 @@ namespace Application.Services
             {
                 return new List<HomeMovieDto>();
             }
-            
+
         }
         public Movie GetMovieById(string id)
         {
@@ -162,28 +162,28 @@ namespace Application.Services
             {
                 return _movieRepository.GetByIdAsync(id).Result;
             }
-            else 
-            { 
+            else
+            {
                 return new Movie();
             }
-               
+
         }
 
         public void RemoveMovie(string id)
         {
-            if(id != null)
+            if (id != null)
             {
                 _movieRepository.DeleteAsync(id).Wait();
             }
-            
+
         }
 
-        public  string ComfirmMovie(string id)
+        public string ComfirmMovie(string id)
         {
-            if(id != null)
+            if (id != null)
             {
                 var movies = _movieRepository.GetAllWaitingMovies();
-                if(movies != null )
+                if (movies != null)
                 {
                     Movie dbMovie = movies.SingleOrDefault(x => x.Id == id); // belirtilen id'ye sahip filmi bul
 
@@ -208,21 +208,21 @@ namespace Application.Services
                         return "Invalid movie id";
                     }
                 }
-                return"" ;
+                return "";
             }
-            else 
+            else
             {
                 return "";
             }
-           
+
         }
 
         public string RejectMovie(string id)
         {
-            if(id!=null)
+            if (id != null)
             {
                 var movies = _movieRepository.GetAllWaitingMovies();
-                if(movies != null )
+                if (movies != null)
                 {
                     Movie dbMovie = movies.SingleOrDefault(x => x.Id == id); // belirtilen id'ye sahip filmi bul
 
@@ -253,16 +253,16 @@ namespace Application.Services
             {
                 return "";
             }
-            
+
         }
 
         public void AddToRatedUsersList(string userId, string movieId)
         {
-            if(userId!=null && movieId != null)
+            if (userId != null && movieId != null)
             {
                 _movieRepository.AddToRatedUsersList(userId, movieId);
             }
-            
+
         }
         public int GetNumOfActiveMovies()
         {
@@ -271,6 +271,11 @@ namespace Application.Services
         public List<MovieRankingDto> GetMovieRankings()
         {
             return _movieRepository.GetMovieRankings();
+        }
+
+        public async Task<List<LanguageStatisticDto>> GetLanguageStatistics()
+        {
+            return await _movieRepository.GetLanguageStatistics();
         }
     }
 }

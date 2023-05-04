@@ -50,7 +50,7 @@ namespace ASPNET_Core_2_1.Controllers
             var MovieCount = _movieService.GetNumOfActiveMovies();
             var MovieCountDec = Convert.ToDecimal(MovieCount);
             List<GenreStatisticViewModel> statistic = new List<GenreStatisticViewModel>();
-            foreach (var genre in GenreWithCount) 
+            foreach (var genre in GenreWithCount)
             {
                 GenreStatisticViewModel genreStatisticViewModel = new GenreStatisticViewModel();
                 genreStatisticViewModel.Name = genre.Name;
@@ -58,8 +58,24 @@ namespace ASPNET_Core_2_1.Controllers
                 statistic.Add(genreStatisticViewModel);
             }
             return statistic;
-
         }
 
+        [HttpGet]
+        public async Task<List<GetMovieLanguagesViewModel>> GetLanguageStatistics()
+        {
+            List<LanguageStatisticDto> languageWithCount = await _movieService.GetLanguageStatistics();
+            var movieCount = _movieService.GetNumOfActiveMovies();
+            var MovieCountDec = Convert.ToDecimal(movieCount);
+
+            List<GetMovieLanguagesViewModel> statistic = new List<GetMovieLanguagesViewModel>();
+            foreach (var language in languageWithCount)
+            {
+                GetMovieLanguagesViewModel languageStatisticsViewModel = new GetMovieLanguagesViewModel();
+                languageStatisticsViewModel.Name = language.Name;
+                languageStatisticsViewModel.Percentage = decimal.Round((language.MovieCount / MovieCountDec) / 100, 2);
+                statistic.Add(languageStatisticsViewModel);
+            }
+            return statistic;
+        }
     }
 }

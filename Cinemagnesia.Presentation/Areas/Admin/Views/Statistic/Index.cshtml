@@ -121,7 +121,6 @@
         <div class="col-lg-6 offset-lg-3">
             <figure class="highcharts-figure">
                 <div id="asdasd">
-
                 </div>
                 <p class="highcharts-description">
                     Bu grafik en beğenilen filmleri göstermektedir.
@@ -214,34 +213,25 @@
     <script>
         var list = [];
         $(document).ready(function () {
-            //$.get("/Genre/ListGenres", function (data) {
-            //    $.each(data, function (index, genre) {
-            //        list.push(genre.name);
-            //    })
-            //});
             $.ajax({
                 url: '/Movie/MovieRankings',
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    // Parse the JSON data
-                    // Create an empty array to hold the series data
                     var seriesData = [];
 
-                    // Loop through the movies and add them to the series data
                     for (var i = 0; i < data.length; i++) {
                         var movie = data[i];
                         var name = movie.title;
                         var score = parseFloat(movie.cinemagnesiaAvgScore);
-                         
-                        // Add the movie to the series data
+
                         seriesData.push({
                             name: name,
                             y: score,
-                            drilldown: null // You can set the drilldown property to the movie ID, if you have more details about the movie to show in the drilldown view.
+                            drilldown: null
                         });
                     }
-                    
+
                     // Render the chart
                     Highcharts.chart('asdasd', {
                         chart: {
@@ -319,11 +309,11 @@
 
             $.get("/Admin/Statistic/GetStatisticOfGenre", function (data) {
                 $.each(data, function (index, genre) {
-                    if(genre.percentage != 0){
+                    if (genre.percentage != 0) {
                         let dataItem = { name: genre.name, y: genre.percentage }
                         list.push(dataItem);
                     }
-                     
+
                 })
                 Highcharts.chart('container', {
                     chart: {
@@ -362,8 +352,18 @@
                     }]
                 });
 
+
+            });
+
+            var languageList = [];
+            $.get("Admin/Statistic/GetLanguageStatistics", function (data) {
+                $.each(data, function (index, language) {
+                    if (language.percentage != 0) {
+                        let dataItem = { name: language.name, y: language.percentage }
+                        languageList.push(dataItem);
+                    }
+                })
                 Highcharts.chart('container-donut', {
-                    colors: ['#01BAF2', '#71BF45', '#FAA74B', '#B37CD2'],
                     chart: {
                         type: 'pie'
                     },
@@ -378,7 +378,7 @@
                         align: 'left'
                     },
                     tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
                     },
                     plotOptions: {
                         pie: {
@@ -395,29 +395,18 @@
                         name: 'Registrations',
                         colorByPoint: true,
                         innerSize: '75%',
-                        data: [{
-                            name: 'EV',
-                            y: 68.1
-                        }, {
-                            name: 'Hybrids',
-                            y: 11.0
-                        }, {
-                            name: 'Diesel',
-                            y: 11.2
-                        }, {
-                            name: 'Petrol',
-                            y: 9.7
-                        }]
+                        data: languageList
                     }]
                 });
             });
+
         });
 
         console.log(list);
 
-        
 
-       
+
+
 
         $('.footable').footable();
 

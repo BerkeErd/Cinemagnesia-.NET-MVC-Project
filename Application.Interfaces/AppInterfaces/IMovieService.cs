@@ -23,7 +23,7 @@ namespace Application.Interfaces.AppInterfaces
         string RejectMovie(string id);
         void AddToRatedUsersList(string userId, string movieId);
         int GetNumOfActiveMovies();
-
         List<MovieRankingDto> GetMovieRankings();
+        Task<List<LanguageStatisticDto>> GetLanguageStatistics();
     }
 }

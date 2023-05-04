@@ -19,5 +19,6 @@ namespace Domain.Interfaces.Repository
         void UpdateAverageScore(string movieId, float rating);
         Movie GetMovieById(string id);
         List<MovieRankingDto> GetMovieRankings();
+        Task<List<LanguageStatisticDto>> GetLanguageStatistics();
     }
 }
