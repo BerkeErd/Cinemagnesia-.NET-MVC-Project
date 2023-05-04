@@ -66,7 +66,6 @@ namespace Infrastructure.DataAccess.Repositories
 
         public IQueryable<Movie> GetAllHomeMovies()
         {
-
             return _dbContext.Movies           
            .Include(m => m.Genres)
            .Where(m => m.Status == ApprovalStatus.Approved);

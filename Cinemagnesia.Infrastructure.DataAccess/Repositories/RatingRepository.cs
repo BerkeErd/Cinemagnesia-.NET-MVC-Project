@@ -75,6 +75,11 @@ namespace Infrastructure.DataAccess.Repositories
             }
         }
 
+        public float CalculateAvgScore()
+        {
+            return 0f;
+        }
+
     }
 
 

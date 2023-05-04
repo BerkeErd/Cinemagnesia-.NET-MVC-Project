@@ -192,9 +192,9 @@ namespace Cinemagnesia.Presentation.Controllers
             return View(movieDetailViewModel);
         }
 
-        public int GetNumOfMovies()
+        public int GetNumOfActiveMovies()
         {
-            return _movieService.GetNumOfMovies();
+            return _movieService.GetNumOfActiveMovies();
         }
 
         [HttpGet]

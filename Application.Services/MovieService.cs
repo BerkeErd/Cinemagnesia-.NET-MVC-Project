@@ -190,9 +190,9 @@ namespace Application.Services
         {
             _movieRepository.AddToRatedUsersList(userId, movieId);
         }
-        public int GetNumOfMovies()
+        public int GetNumOfActiveMovies()
         {
-            return _movieRepository.GetNumOfMovies();
+            return _movieRepository.GetNumOfActiveMovies();
         }
     }
 }
