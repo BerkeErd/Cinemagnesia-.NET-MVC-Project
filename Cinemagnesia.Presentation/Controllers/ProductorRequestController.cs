@@ -67,7 +67,7 @@ namespace Cinemagnesia.Presentation.Controllers
                         errors.Add(error.ErrorMessage);
                     }
                 }
-                return Ok(errors);
+                return BadRequest(errors);
             }
             else
             {

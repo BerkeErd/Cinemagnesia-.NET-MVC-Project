@@ -1,21 +1,27 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Cinemagnesia.Domain.Domain.Entities.Concrete;
 @inject UserManager<ApplicationUser> UserManager
+
+    <link rel="stylesheet" href="~/css/movieDetails.css" />
+
 <div class="container">
     <div class="row">
         <div class="col-lg-8 offset-lg-2">
             <form method="post" asp-action="CreateProductorRequest" asp-controller="ProductorRequest" class="form" onsubmit="sendProductorRequestButton.disabled = true; sendProductorRequestButton.innerHTML = '<span class=\'spinner-border spinner-border-sm\' role=\'status\' aria-hidden=\'true\'></span> Gönderiliyor...';">
                 <div class="form-group">
                     <label for="companyName">Şirket Adı:</label>
-                    <input type="text" id="companyName" name="companyName" class="form-control" required />
+                    <input type="text" id="companyName" name="companyName" class="form-control" maxlength="60" required />
+                    <span id="companyNameError" class="error"></span>
                 </div>
                 <div class="form-group">
                     <label for="TaxNumber">Vergi Numarası:</label>
-                    <input type="text" id="TaxNumber" name="TaxNumber" class="form-control" required />
+                    <input type="text" id="TaxNumber" name="TaxNumber" class="form-control" maxlength="10" pattern="[0-9]{10}" required />
+                    <span id="TaxNumberError" class="error"></span>
                 </div>
                 <div class="form-group">
                     <label for="foundDate">Kuruluş Tarihi:</label>
                     <input type="date" id="foundDate" name="foundDate" class="form-control" required />
+                    <span id="foundDateError" class="error"></span>
                 </div>
                 <div class="form-group">
                     <input type="hidden" id="userId" name="applicationUserId" value="@UserManager.GetUserAsync(User).Result.Id" />
@@ -27,23 +33,79 @@
             </form>
         </div>
     </div>
-    
 </div>
+
 @if (ViewBag.response != null)
     {
         <script>
             var response = @Html.Raw(Json.Serialize(ViewBag.response));
         </script>
     }
+
+
 @section scripts{
     <script>
         $(document).ready(function () {
+
+
+
+            $(document).ready(function () {
+                // Validate companyName
+                $('#companyName').on('input', function () {
+                    var input = $(this);
+                    var name = input.val();
+                    var nameRegex = /^[A-Za-zğüşıöçĞÜŞİÖÇ\s]{1,60}$/; // Allow only letters and spaces, and maximum 60 characters
+                    if (!nameRegex.test(name)) {
+                        input.addClass("invalid");
+                        $('#companyNameError').html("Lütfen geçerli bir şirket adı girin.");
+                    } else {
+                        input.removeClass("invalid");
+                        $('#companyNameError').html("");
+                    }
+                });
+
+                // Validate TaxNumber
+                $('#TaxNumber').on('input', function () {
+                    var input = $(this);
+                    var taxNumber = input.val();
+                    var taxNumberRegex = /^\d{10}$/; // Allow only 10 digits
+                    if (!taxNumberRegex.test(taxNumber)) {
+                        input.addClass("invalid");
+                        $('#TaxNumberError').html("Vergi numarası 10 haneli olmalıdır.");
+                    } else {
+                        input.removeClass("invalid");
+                        $('#TaxNumberError').html("");
+                    }
+                });
+
+                // Validate foundDate
+                $('#foundDate').on('change', function () {
+                    var input = $(this);
+                    var date = input.val();
+                    if (date === "") {
+                        input.addClass("invalid");
+                        $('#foundDateError').html("Kuruluş tarihi boş bırakılamaz.");
+                    } else {
+                        input.removeClass("invalid");
+                        $('#foundDateError').html("");
+                    }
+                });
+            });
+
+
+
+
+
+
+
+
+
             var jsonObj = JSON.parse(response);
             console.log(jsonObj)
             if (jsonObj != null && jsonObj.Message != "") {
                 console.log("test");
                 Swal.fire(
-                    'Tebrikler.',
+                    'Başarılı',
                     jsonObj.Message + ' - ' + jsonObj.Email,
                     
                     'success'

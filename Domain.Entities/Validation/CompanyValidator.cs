@@ -12,13 +12,12 @@ namespace Domain.Entities.Validation
     {
         public CompanyValidator()
         {
-            RuleFor(Company => Company.Name).NotEmpty().WithMessage("Lütfen şirket ismi belirtiniz.");
-            RuleFor(Company => Company.TaxNumber)
-                .NotEmpty()
-                .WithMessage("Lütfen vergi numarası giriniz.")
-                .Length(10);
-
-
+            RuleFor(Company => Company.Name).NotEmpty().MaximumLength(60);
+            RuleFor(company => company.TaxNumber)
+            .NotEmpty()
+            .Matches(@"^\d{10}$")
+            .WithMessage("Vergi numarası tam olarak 10 rakamdan oluşmalıdır.");
+            RuleFor(Company => Company.FoundDate).NotEmpty();
         }
 
 

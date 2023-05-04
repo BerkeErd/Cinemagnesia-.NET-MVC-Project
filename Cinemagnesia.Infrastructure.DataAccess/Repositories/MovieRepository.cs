@@ -28,18 +28,20 @@ namespace Infrastructure.DataAccess.Repositories
                 .Include(m => m.Genres)
                 .Include(m => m.CastMembers)
                 .Include(m => m.MovieComments)
+                    .ThenInclude(mc => mc.User)
                 .FirstOrDefault(m => m.Id == id && m.Status == ApprovalStatus.Approved);
 
-            if(movie != null)
+            if (movie != null)
             {
+                movie.MovieComments = movie.MovieComments.OrderByDescending(mc => mc.CreatedAt).ToList();
                 return movie;
             }
             else
             {
                 return new Movie();
             }
-
         }
+
         public IQueryable<Movie> GetAllWaitingMovies()
         {
 

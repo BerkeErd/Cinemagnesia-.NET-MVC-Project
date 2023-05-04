@@ -14,7 +14,9 @@
     color: #E8E8E8;
 }
 
-
+.error {
+    color: white;
+}
 .moviePoster{
     width: 100%;
     object-fit: cover;

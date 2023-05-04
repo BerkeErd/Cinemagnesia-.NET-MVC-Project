@@ -4,11 +4,13 @@ using AutoMapper;
 using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using Cinemagnesia.Presentation.Areas.Admin.Models;
 using Cinemagnesia.Presentation.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cinemagnesia.Presentation.Controllers
 {
+    [Authorize(Roles = "Productor")]
     public class ProductorPageController : Controller
     {
         private readonly IGenreService _genreService;
@@ -28,7 +30,7 @@ namespace Cinemagnesia.Presentation.Controllers
         {
             return View();
         }
-
+        
         public IActionResult AddMovieView()
         {
             List<GenreDto> genredtos = _genreService.GetAllGenres();
