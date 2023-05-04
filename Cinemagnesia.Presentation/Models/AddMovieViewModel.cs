@@ -12,7 +12,7 @@
         public List<AddDirectorViewModel> Directors { get; set; }
         public List<AddGenreToMovieViewModel> Genres { get; set; }
         public List<AddCastMemberViewModel> CastMembers { get; set; }
-        public int MovieMinute { get; set; }
+        public int MovieMinutes { get; set; }
         public string Language { get; set; }
     }
 }

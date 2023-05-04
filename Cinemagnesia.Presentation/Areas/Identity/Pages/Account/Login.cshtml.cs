@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Cinemagnesia.Domain.Domain.Entities.Concrete;
+using System.ComponentModel;
 
 namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
 {
@@ -67,6 +68,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [EmailAddress]
+            [DisplayName("E-Posta")]
             public string Email { get; set; }
 
             /// <summary>
@@ -75,6 +77,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [DataType(DataType.Password)]
+            [DisplayName("Şifre")]
             public string Password { get; set; }
 
             /// <summary>

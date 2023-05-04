@@ -20,7 +20,7 @@ namespace Cinemagnesia.Presentation.Validation
             RuleForEach(vm => vm.Genres).SetValidator(new AddGenreToMovieViewModelValidator());
             RuleFor(vm => vm.CastMembers).NotEmpty().WithMessage("At least one cast member is required.");
             RuleForEach(vm => vm.CastMembers).SetValidator(new AddCastMemberViewModelValidator());
-            RuleFor(vm => vm.MovieMinute).GreaterThan(0).WithMessage("MovieMinute must be greater than 0.");
+            RuleFor(vm => vm.MovieMinutes).GreaterThan(0).WithMessage("MovieMinute must be greater than 0.");
             RuleFor(vm => vm.Language).NotEmpty().WithMessage("Language is required.");
         }
     }

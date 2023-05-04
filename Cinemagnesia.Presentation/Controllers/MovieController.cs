@@ -17,6 +17,7 @@ using Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using FluentValidation.Results;
 using FluentValidation;
+using System.Globalization;
 
 namespace Cinemagnesia.Presentation.Controllers
 {
@@ -70,6 +71,7 @@ namespace Cinemagnesia.Presentation.Controllers
                 List<AddDirectorViewModel> directorNames = JsonConvert.DeserializeObject<List<AddDirectorViewModel>>(directors);
 
                 string fileName;
+                float ImdbRating = 0;
 
                 if (poster == null)
                 {
@@ -85,15 +87,22 @@ namespace Cinemagnesia.Presentation.Controllers
                     }
                 }
 
+                
+                if (float.TryParse(imdbRating, NumberStyles.Float, CultureInfo.InvariantCulture, out var imdb))
+                {
+                   ImdbRating = imdb;
+                }
+               
+
                 AddMovieViewModel addMovieViewModel = new AddMovieViewModel()
                 {
                     Title = title,
                     Description = description,
                     CompanyId = companyId,
                     ReleaseDate = DateTime.Parse(releaseDate),
-                    ImdbRating = float.Parse(imdbRating),
+                    ImdbRating = ImdbRating,
                     TrailerUrl = trailerUrl,
-                    MovieMinute = Convert.ToInt32(movieMinute),
+                    MovieMinutes = Convert.ToInt32(movieMinute),
                     Language = language,
                     Directors = directorNames,
                     Genres = genreNames,
