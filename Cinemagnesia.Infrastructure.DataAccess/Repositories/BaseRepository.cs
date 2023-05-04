@@ -97,7 +97,7 @@ namespace Infrastructure.DataAccess.Repositories
             }
 
         }
-       
+
 
         public string Update(string id, TEntity entity)
         {

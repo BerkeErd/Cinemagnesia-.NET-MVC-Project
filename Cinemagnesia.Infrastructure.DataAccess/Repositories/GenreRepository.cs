@@ -23,9 +23,22 @@ namespace Infrastructure.DataAccess.Repositories
             return _dbSet.Include(c => c.Movies).ToList();
         }
 
-        public bool IsExistsByName(string name) 
+        public bool IsExistsByName(string name)
         {
             return _dbSet.Any(c => c.Name == name);
+        }
+
+        public bool HasItMovie(string id)
+        {
+            var genre = _dbSet.Include(g => g.Movies).FirstOrDefault(g => g.Id == id);
+            if (genre != null && genre.Movies != null && genre.Movies.Any())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
