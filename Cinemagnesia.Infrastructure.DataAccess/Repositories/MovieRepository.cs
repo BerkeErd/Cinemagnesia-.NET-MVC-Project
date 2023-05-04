@@ -22,12 +22,22 @@ namespace Infrastructure.DataAccess.Repositories
         }
         public Movie GetMovieById(string id)
         {
-            return _dbContext.Movies
+            Movie movie = _dbContext.Movies
                 .Include(m => m.Directors)
                 .Include(m => m.Genres)
                 .Include(m => m.CastMembers)
                 .Include(m => m.MovieComments)
                 .FirstOrDefault(m => m.Id == id && m.Status == ApprovalStatus.Approved);
+
+            if(movie != null)
+            {
+                return movie;
+            }
+            else
+            {
+                return new Movie();
+            }
+
         }
         public IQueryable<Movie> GetAllWaitingMovies()
         {
@@ -43,11 +53,15 @@ namespace Infrastructure.DataAccess.Repositories
         public void AddToRatedUsersList(string userId, string movieId)
         {
             var users = _dbContext.Users.Include(m => m.RatedMovies);
+            var user = users.FirstOrDefault(x => x.Id == userId);
             var movie = _dbContext.Movies.Find(movieId);
 
-            users.FirstOrDefault(x => x.Id == userId).RatedMovies.Add(movie);
-
-            _dbContext.SaveChanges();
+            if(movie != null && user != null)
+            {
+                 user.RatedMovies.Add(movie);
+                _dbContext.SaveChanges();
+            }
+            
         }
 
         public IQueryable<Movie> GetAllHomeMovies()
@@ -67,17 +81,19 @@ namespace Infrastructure.DataAccess.Repositories
         }
 
 
-        public int GetNumOfMovies()
+        public int GetNumOfActiveMovies()
         {
-            return _dbContext.Movies.Count();
+            return _dbContext.Movies.Where(m => m.Status == ApprovalStatus.Approved).Count();
         }
 
         public void AddRatingToMovie(Movie movie, ApplicationUser user)
         {
             Movie Movie = _dbContext.Movies.FirstOrDefault(movie);
-            movie.FavoritedUsers.Add(user);
-            _dbContext.SaveChanges();
-
+            if(movie != null)
+            {
+                movie.FavoritedUsers.Add(user);
+                _dbContext.SaveChanges();
+            }
         }
     }
 }

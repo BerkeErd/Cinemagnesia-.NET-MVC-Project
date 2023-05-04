@@ -78,12 +78,11 @@ namespace Infrastructure.DataAccess.Repositories
             var existingEntity = _dbSet.Find(id);
             if (existingEntity == null)
             {
-                throw new InvalidOperationException("Entity not found");
+                return "Güncellenemedi. (Varolan entity bulunamadı)";
             }
             _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
             _dbContext.SaveChanges();
-            return "başarılı";
-            return "başarılı";
+            return "Güncellendi.";
         }
 
 
