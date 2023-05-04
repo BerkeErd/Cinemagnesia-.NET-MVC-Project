@@ -15,6 +15,7 @@ namespace Domain.Interfaces.Repository
         IQueryable<Movie> GetAllMovieswithLikes();
         void AddToRatedUsersList(string userId, string movieId);
         int GetNumOfActiveMovies();
+        void UpdateAverageScore(string movieId, float rating);
         Movie GetMovieById(string id);
     }
 }

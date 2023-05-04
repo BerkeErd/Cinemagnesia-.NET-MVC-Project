@@ -23,34 +23,35 @@ namespace Infrastructure.DataAccess.Repositories
 
         public bool isExist(string movieId, string userId, out Rating oldRating, out bool isExist)
         {
-            var user = _dbContext.Users.Include(m => m.RatedMovies).FirstOrDefault(x=> x.Id == userId);
-
-            if (user != null)
-            {
-                if (user.RatedMovies != null)
-                {
-                    foreach (var movie in user.RatedMovies)
-                    {
-                        movie.Id = movieId;
-                        var rating = _dbContext.Ratings.FirstOrDefault(r => r.MovieId == movie.Id && r.User.Id == user.Id);
-                        oldRating = rating;
-                        isExist = true;
-                        return true;
-                    }
-                    oldRating = null;
-                    isExist = false;
-                    return false;
-                }
-                oldRating = null;
-                isExist = false;
-                return false;
-            }
             oldRating = null;
             isExist = false;
+
+            var user = _dbContext.Users
+                .Include(u => u.RatedMovies)
+                .FirstOrDefault(u => u.Id == userId);
+
+            if (user != null && user.RatedMovies != null)
+            {
+                foreach (var movie in user.RatedMovies)
+                {
+                    if (movie.Id == movieId)
+                    {
+                        var rating = _dbContext.Ratings
+                            .FirstOrDefault(r => r.MovieId == movieId && r.ApplicationUserId == userId);
+
+                        if (rating != null)
+                        {
+                            oldRating = rating;
+                            isExist = true;
+                            return true;
+                        }
+                    }
+                }
+            }
+
             return false;
-
-
         }
+
         public int GetRateoftheUser(string userId, string movieId)
         {
             var rating = GetAllAsync()
@@ -62,6 +63,8 @@ namespace Infrastructure.DataAccess.Repositories
 
         public void UpdateRating(Rating oldRating, Rating newRating)
         {
+            if(oldRating == null || newRating == null) return;
+
             var existingRating = _dbContext.Ratings.Find(new object[] { oldRating.ApplicationUserId, oldRating.MovieId});
 
 
@@ -75,10 +78,21 @@ namespace Infrastructure.DataAccess.Repositories
             }
         }
 
-        public float CalculateAvgScore()
+        public float CalculateAvgScore(string movieId)
         {
-            return 0f;
+            var ratings = _dbContext.Ratings.Where(r => r.MovieId == movieId && r.Score > 0).ToList();
+
+            if (ratings.Count == 0)
+            {
+                return 0f;
+            }
+
+            var totalScore = ratings.Sum(r => r.Score);
+            var avgScore = (float)totalScore / ratings.Count;
+
+            return avgScore;
         }
+
 
     }
 

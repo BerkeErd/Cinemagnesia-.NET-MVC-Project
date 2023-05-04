@@ -85,6 +85,15 @@ namespace Infrastructure.DataAccess.Repositories
             return _dbContext.Movies.Where(m => m.Status == ApprovalStatus.Approved).Count();
         }
 
+        public void UpdateAverageScore(string movieId, float rating)
+        {
+            var movie = _dbContext.Movies.FirstOrDefault(m=> m.Id == movieId);
+
+            if(movie != null)
+            {
+                movie.CinemagAvgScore = rating;
+            }
+        }
         public void AddRatingToMovie(Movie movie, ApplicationUser user)
         {
             Movie Movie = _dbContext.Movies.FirstOrDefault(movie);
