@@ -1,6 +1,7 @@
 ﻿
 <script src="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <link href="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/skins/ui/oxide/skin.min.css" rel="stylesheet" />
+
 <form method="post" action="SendEmail/SendCustomEmail" onsubmit="sendEmailButton.disabled = true; sendEmailButton.innerHTML = '<span class=\'spinner-border spinner-border-sm\' role=\'status\' aria-hidden=\'true\'></span> Gönderiliyor...';">
     <div class="form-group">
         <label for="customerSelect">Gönderilecek kişi:</label>
@@ -8,11 +9,11 @@
             <option value="all">Tüm Üyeler</option>
             @foreach (var customer in ViewBag.Users)
             {
-                if(customer.EmailConfirmed)
+                if (customer.EmailConfirmed)
                 {
                     <option value="@customer.Email">@customer.FirstName @customer.LastName</option>
                 }
-                
+
             }
         </select>
     </div>
@@ -42,4 +43,33 @@
         contextmenu: 'link image | inserttable tableprops deletetable | cell row column'
     });
 
+    $("#sendEmailButton").on("click", function (e) {
+        e.preventDefault(); 
+
+        var form = $("form");
+        form.validate({
+            errorClass: "text-danger",
+            errorElement: "small",
+            rules: {
+                "userEmail": {
+                    required: true,
+                },
+                "emailText": {
+                    required: true,
+                }
+            },
+            messages: {
+                "userEmail": {
+                    required: "Lütfen e-posta göndereceğiniz hesabı seçin.",
+                },
+                "emailText": {
+                    required: "Bu alan zorunludur.",
+                }
+            }
+        });
+
+        if (form.valid()) {
+            // form gönderme kodu burada yer alabilir
+        }
+    });
 </script>
