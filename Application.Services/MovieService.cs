@@ -192,7 +192,7 @@ namespace Application.Services
         }
         public int GetNumOfMovies()
         {
-            return _movieRepository.GetNumOfMovies();
+            return _movieRepository.GetNumOfActiveMovies();
         }
     }
 }
