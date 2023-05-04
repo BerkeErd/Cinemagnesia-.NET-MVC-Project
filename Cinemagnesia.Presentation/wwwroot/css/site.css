@@ -339,3 +339,15 @@ body {
         box-shadow: none;
         border-radius: 0;
     }
+
+#addMovieBtn {
+    position: relative;
+    background-color: #ff0000; /*örnek olarak kýrmýzý renk*/
+    color: #fff; /*buton metin rengi*/
+    border-color: #ff0000; /*buton çerçeve rengi*/
+}
+
+#form-row {
+    background-color: #1f1f1f;
+}
+

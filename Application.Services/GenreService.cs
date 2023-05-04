@@ -41,7 +41,14 @@ namespace Application.Services
 
         public void RemoveGenre(string id)
         {
-            _genreRepository.DeleteAsync(id).Wait();
+            if (!_genreRepository.HasItMovie(id))
+            {
+                _genreRepository.DeleteAsync(id).Wait();
+            }
+            else
+            {
+                throw new InvalidOperationException("Bu kategoride film bulunduğu için kategori silme başarısız.");
+            }
         }
 
         public void UpdateGenre(string id, Genre genre)

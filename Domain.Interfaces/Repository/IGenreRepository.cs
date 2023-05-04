@@ -12,5 +12,6 @@ namespace Domain.Interfaces.Repository
     {
         List<Genre> GetGenresWithMovies();
         bool IsExistsByName(string name);
+        bool HasItMovie(string id);
     }
 }

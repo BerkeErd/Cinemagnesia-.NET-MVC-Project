@@ -53,7 +53,7 @@ namespace Infrastructure.DataAccess.Repositories
         }
         public async Task<TEntity> GetByIdAsync(string id, bool includeMovies = false)
         {
-            
+
             if (includeMovies)
             {
                 var query = _dbSet.AsQueryable();
@@ -65,13 +65,13 @@ namespace Infrastructure.DataAccess.Repositories
                 query = query.Include("Movies.CastMembers");
                 return await query.FirstOrDefaultAsync(e => e.Id == id);
             }
-           else
+            else
             {
                 return await _dbSet.FindAsync(id);
             }
 
         }
-       
+
 
         public string Update(string id, TEntity entity)
         {
