@@ -19,7 +19,7 @@
 
 @if(Model != null)
 {
-    <div class="container">
+    <div class="container movie-detail">
         <div class="row">
             <div class="col-md-6">
                 <article class="card mx-auto">
@@ -197,11 +197,11 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                         <div class="row mt-3 addCommentRow">
-                            <div class="col-md-4">
-                                <div class="text-center mt-2">
-                                    <p class="fw-bold my-0" value="@Model.UserId" id="userId">User.FirstName </p>
+                            <div class="col-md-4 py-2">
+                                <div class="text-center mt-3">
+                                    <p class="fw-bold my-0" value="@Model.UserId" id="userId">@UserManager.GetUserAsync(User).Result.FirstName </p>
                                 <div class="profileImageDiv m-auto" >
-                                    <img src="userProfilePicture"/>
+                                    <img src="/images/Cinemagnesia/@UserManager.GetUserAsync(User).Result.ProfilePicture" />
                                     </div>
 
                                 </div>
@@ -209,13 +209,13 @@
                             <div class="col-md-6">
                                 <div class="panel">
                                     <div class="panel-body">
-                                        <textarea id="commentTxt" class="form-control" rows="2" placeholder="Aklından neler geçiyor?"></textarea>
+                                        <textarea id="commentTxt" class="form-control py-3" rows="2" placeholder="Aklından neler geçiyor?"></textarea>
                                         <div class="mar-top clearfix mt-3 d-flex justify-content-end">
                                             <a class="btn btn-trans btn-icon fa fa-video-camera add-tooltip" href="#"></a>
                                             <a class="btn btn-trans btn-icon fa fa-camera add-tooltip" href="#"></a>
                                             <a class="btn btn-trans btn-icon fa fa-file add-tooltip" href="#"></a>
                                            
-                                            <button class="btn btn-sm btn-primary pull-right" type="button" id="addComment-btn"><i class="fa-solid fa-paper-plane"></i> Gönder</button>
+                                            <button class="btn btn-sm btn-primary pull-right" type="button" id="addComment-btn">Gönder</button>
 
                                         </div>
                                     </div>
@@ -236,36 +236,57 @@
 
             </div>
         </div>
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <ul class="list-unstyled">
+        <div class="row mt-5 commentlistrow py-3">
+            <div class="col-md-12 commentlistdiv">
+               
                     @if (Model.MovieComments.Count > 0)
                     {
                         @foreach (var Comment in Model.MovieComments)
                         {
                             if (Comment.Status == Domain.Entities.Constants.ApprovalStatus.Approved)
                             {
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="me-3 profileImageDiv">
-                                            <img src="@UserManager.FindByIdAsync(Comment.ApplicationUserId).Result.ProfilePicture" alt="Profil Fotoğrafı" width="50" height="50" class="rounded-circle">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <p>
-                                                <strong>@UserManager.FindByIdAsync(Comment.ApplicationUserId).Result.FirstName:</strong>
-                                                @if (Comment.HasSpoiler)
-                                                {
-                                                    <button class="btn btn-outline-primary" id="spoilerBtn" onclick="$(this).hide(); $('#spoilerText').show();">Spoilerı görmek için dokun</button>
-                                                    <span id="spoilerText" style="display:none">@Comment.CommentText</span>
-                                                }
-                                                else
-                                                {
+                            
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="media g-mb-30 media-comment">
+                                            <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="/images/Cinemagnesia/@Comment.User.ProfilePicture" alt="Image Description">
+                                            <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+                                                <div class="g-mb-15">
+                                                <h5 class="h5 g-color-gray-dark-v1 mb-0">@Comment.User.FirstName</h5>
+                                                    <span class="g-color-gray-dark-v4 g-font-size-12">@Comment.CreatedAt</span>
+                                                </div>
+
+                                                <p class="comment-txt my-4">
                                                     @Comment.CommentText
-                                                }
-                                            </p>
+                                                </p>
+
+                                                <ul class="list-inline d-sm-flex my-0 comment-footer py-2">
+                                                    <li class="list-inline-item g-mr-20">
+                                                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
+                                                            <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
+                                                            178
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item g-mr-20">
+                                                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
+                                                            <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
+                                                            34
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item ml-auto">
+                                                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
+                                                            <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>
+                                                            Reply
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </li>
+
+                                    
+                                </div>
+                            
                             }
                         }
                     }
@@ -279,7 +300,6 @@
                     }
 
 
-                </ul>
             </div>
         </div>
     </div>
@@ -302,6 +322,7 @@
             // send comment start
 
             $("#addComment-btn").click(function () {
+                var button = $(this).text;
                 var commentText = $("#commentTxt").val();
                 if (commentText.trim() === "") {
                     $(".panel-body").append("<div class='alert alert-warning mt-2 comment-error' >Yorum alanı boş olamaz</div>");
@@ -318,16 +339,71 @@
                     };
                     
                     // ajax start
-
+                    var user = {
+                        name: "@UserManager.GetUserAsync(User).Result.FirstName",
+                        image: "@UserManager.GetUserAsync(User).Result.ProfilePicture"
+                    }
+                    ;
+                    
                     $.ajax({
                         url: '/MovieComment/SendComment',
                         data:comment,
                         type:'post',
-                        success:function (response){
-                            console.log(response)
+                        beforeSend: function () {
+                            
+                            $("#addComment-btn").prop('disabled', true);
+                            $("#addComment-btn").text('Gönderiliyor...');
                         },
-                        error: function(xhr,status,error){
-                            console.log(error + ' ' + xhr.status)
+                        success: function (response) {
+                            toastr.success('Yorumunuz Eklendi!');
+                            console.log(response);
+                            var date = response.createdAt.split('T')[0];
+                            $('.commentlistdiv').prepend('<div class="row">' +
+                                '<div class="col-md-12">' +
+                                '<div class="media g-mb-30 media-comment">' +
+                                '<img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="/images/Cinemagnesia/' + user.image + '" alt="Image Description">' +
+                                '<div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">' +
+                                '<div class="g-mb-15">' +
+                                '<h5 class="h5 g-color-gray-dark-v1 mb-0">' + user.name + '</h5>' +
+                                '<span class="g-color-gray-dark-v4 g-font-size-12">' + date + '</span>' +
+                                '</div>' +
+                                '<p class="comment-txt my-4">' + response.commentText + '</p>' +
+                                '<ul class="list-inline d-sm-flex my-0 comment-footer py-2">' +
+                                '<li class="list-inline-item g-mr-20">' +
+                                '<a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">' +
+                                '<i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>' +
+                                '178' +
+                                '</a>' +
+                                '</li>' +
+                                '<li class="list-inline-item g-mr-20">' +
+                                '<a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">' +
+                                '<i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>' +
+                                '34' +
+                                '</a>' +
+                                '</li>' +
+                                '<li class="list-inline-item ml-auto">' +
+                                '<a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">' +
+                                '<i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>' +
+                                'Reply' +
+                                '</a>' +
+                                '</li>' +
+                                '</ul>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>');
+                            $("#commentTxt").val('');
+                            $("#commentTxt").text('');
+                            $("#addComment-btn").text('Gönder');
+                        },
+
+                        error: function (jqXHR, textStatus, errorMessage) {
+                            // İstek başarısız olduğunda yapılacak işlemler
+                            console.log(errorMessage);
+                        },
+                        complete: function () {
+                            // İstek tamamlandığında yapılacak işlemler
+                            $("#addComment-btn").prop('disabled', false);
                         }
                     })
 

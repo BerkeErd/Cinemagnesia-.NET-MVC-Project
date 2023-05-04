@@ -21,5 +21,6 @@ namespace Application.Dtos
         public bool HasSpoiler { get; set; }
         public ApprovalStatus Status { get; set; } = ApprovalStatus.Approved;
         public int LikeCount { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

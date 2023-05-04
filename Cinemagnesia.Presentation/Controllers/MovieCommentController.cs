@@ -34,8 +34,10 @@ namespace Cinemagnesia.Presentation.Controllers
 
             if (ModelState.IsValid)
             {
-                var sendMovieCommentDto = _mapper.Map<SendMovieCommentDto>(sendCommentViewModel);
-                var response = _movieCommentService.AddMovieComment(sendMovieCommentDto);
+                SendMovieCommentDto sendMovieCommentDto = _mapper.Map<SendMovieCommentDto>(sendCommentViewModel);
+                sendMovieCommentDto.CreatedAt = DateTime.Now;
+                MovieCommentDto response = _movieCommentService.AddMovieComment(sendMovieCommentDto);
+                
 ;               return Ok(response);
             }
             else
