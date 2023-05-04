@@ -1,8 +1,10 @@
 ﻿using Application.Dtos;
 using Application.Interfaces.AppInterfaces;
 using AutoMapper;
+using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace Application.Services
     {
         private readonly IMovieCommentRepository _movieCommentRepository;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
         public MovieCommentService(IMovieCommentRepository movieCommentRepository, IMapper mapper)
         {
             _movieCommentRepository = movieCommentRepository;
@@ -30,8 +33,7 @@ namespace Application.Services
 
             var response = _movieCommentRepository.CreateAsync(movieComment).Result;
 
-            var movieCommentDto = _mapper.Map<MovieCommentDto>(response);
-
+            MovieCommentDto movieCommentDto = _mapper.Map<MovieCommentDto>(response);      
             return movieCommentDto;
         }
         public void DeleteMovieComment(string id)

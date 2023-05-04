@@ -24,12 +24,16 @@ html {
 .profileImage {
     width: 50px;
     height: 50px;
+    border-radius: 50%;
+    padding:1px;
+    background-color:#151515;
 }
 
     .profileImage img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        object-fit: cover;
+        border-radius:50%;
     }
 
 .seemore-btn{
@@ -134,14 +138,38 @@ body {
     border: 1px solid #282828;
     border-radius: 30px;
     box-shadow: 0 0 10px #282828;
-}
+    height:360px;
 
-.crsImg img {
+}
+#myCarousel img{
+    height: 360px;
+    object-fit:cover;
+}
+    .wTrailer {
+        background-color: #e50914;
+        color: white;
+        transition: all 0.1s ease-in-out;
+    }
+.wTrailer:hover {
+        background-color: #cb0913;
+}
+    .populerFilmDiv {
+
+        border-radius: 8px;
+        background-color: black;
+    }
+.populerFilmDiv img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+}
+.crsImg img, .crsImg iframe{
     border-radius: 30px;
+    object-fit: contain;
 }
-
-.sidebar .list-group-item {
-    transition: all 0.1s ease-in-out;
+.crsImg iframe{
+    height:360px;
 }
 
 .sidecheck {
@@ -194,7 +222,7 @@ body {
 
 .homecards .card {
     background-color: #212121 !important;
-    color: rgb(119,119,119);
+    color: #e4e4e4;
     border-radius: 8px;
 }
 

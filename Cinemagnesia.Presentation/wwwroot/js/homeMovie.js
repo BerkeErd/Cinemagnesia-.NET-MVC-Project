@@ -24,7 +24,7 @@
                     for (var i = 0; i < movies.length; i++) {
                         var movie = movies[i];
                         // colonn ve card ekleme
-                        var col = $("<div>").addClass("col-lg-3 col-sm-6");
+                        var col = $("<div>").addClass("col-lg-3 col-sm-6 px-5");
                         var card = $("<div>").addClass("movie-card");
                         // img oluşturma
                         var img = $("<img>").attr("src", `/images/Cinemagnesia/${movie.posterPath}`).attr("alt", movie.title + " Poster");
@@ -69,9 +69,19 @@
         if ($(this).is(':checked')) {
             var checked = ($(this).val().toLowerCase());
             categoryFilters.push(checked);
+            if (categoryFilters.length > 0) {
+                $("#listedmovieheader").text(categoryFilters.join(', ') + ' filmleri');
+            } else {
+                $("#listedmovieheader").text('Filmler');
+            }
         } else {
             var unchecked = ($(this).val().toLowerCase());
             categoryFilters.splice($.inArray(unchecked, categoryFilters), 1);
+            if (categoryFilters.length > 0) {
+                $("#listedmovieheader").text(categoryFilters.join(', ') + ' filmleri');
+            } else {
+                $("#listedmovieheader").text('Filmler');
+            }
         }
         $(".movie-container").html('');
         getMovies();
