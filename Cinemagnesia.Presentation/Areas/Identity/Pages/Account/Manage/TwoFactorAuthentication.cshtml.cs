@@ -63,7 +63,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"ID'si '{_userManager.GetUserId(User)}' olan kullanıcı yüklenemedi.");
             }
 
             HasAuthenticator = await _userManager.GetAuthenticatorKeyAsync(user) != null;
@@ -79,11 +79,11 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"ID'si '{_userManager.GetUserId(User)}' olan kullanıcı yüklenemedi.");
             }
 
             await _signInManager.ForgetTwoFactorClientAsync();
-            StatusMessage = "The current browser has been forgotten. When you login again from this browser you will be prompted for your 2fa code.";
+            StatusMessage = "Geçerli tarayıcı unutuldu. Bu tarayıcıdan tekrar giriş yaptığınızda 2fa kodunuz sorulacaktır.";
             return RedirectToPage();
         }
     }

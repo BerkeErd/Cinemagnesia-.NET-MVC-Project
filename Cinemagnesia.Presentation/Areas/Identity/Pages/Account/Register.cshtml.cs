@@ -48,73 +48,47 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
             _emailSender = emailSender;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+        
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+      
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+     
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
             [Required]
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [StringLength(25, ErrorMessage = "{0} en az {2}, en fazla {1} karakter uzunluğunda olmalıdır.", MinimumLength = 3)]
             [Display(Name = "İsim")]
             public string FirstName { get; set; }
-            
+
             [Required]
-            [StringLength(25, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            [StringLength(25, ErrorMessage = "{0} en az {2}, en fazla {1} karakter uzunluğunda olmalıdır.", MinimumLength = 2)]
             [Display(Name = "Soy İsim")]
             public string LastName { get; set; }
 
             [Required]
             [Display(Name = "Doğum Günü")]
             public DateTime Birthday { get; set; }
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
+
             [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "E-posta")]
             public string Email { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "{0} en az {2}, en fazla {1} karakter uzunluğunda olmalıdır.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Parola")]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Parolayı Onayla")]
+            [Compare("Password", ErrorMessage = "Parola ve parola onayı eşleşmiyor.")]
             public string ConfirmPassword { get; set; }
         }
-
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -136,7 +110,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("Kullanıcı yeni bir hesap oluşturdu.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -166,7 +140,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
+            // Eğer buraya kadar geldiysek, bir şeyler yanlış gitti, formu tekrar göster
             return Page();
         }
 
@@ -188,17 +162,17 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
-                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+                throw new InvalidOperationException($"'{nameof(ApplicationUser)}' örneği oluşturulamadı. " +
+                $"'{nameof(ApplicationUser)}' soyut bir sınıf değilse ve parametresiz bir yapıcı metodu varsa veya alternatif olarak " +
+                $"/Areas/Identity/Pages/Account/Register.cshtml sayfasını geçersiz kılmışsanız kontrol edin.");
             }
         }
 
-        private IUserEmailStore<ApplicationUser> GetEmailStore()
+    private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
-                throw new NotSupportedException("The default UI requires a user store with email support.");
+                throw new NotSupportedException("Varsayılan kullanıcı arayüzü, e-posta desteği olan bir kullanıcı deposuna ihtiyaç duyar.");
             }
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }

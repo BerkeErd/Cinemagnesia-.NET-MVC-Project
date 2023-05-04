@@ -1,17 +1,15 @@
 ﻿@page
 @model ExternalLoginModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Kaydol";
 }
 
 <h1>@ViewData["Title"]</h1>
-<h2 id="external-login-title">Associate your @Model.ProviderDisplayName account.</h2>
+<h2 id="external-login-title">@Model.ProviderDisplayName hesabınızı bağlayın.</h2>
 <hr />
 
 <p id="external-login-description" class="text-info">
-    You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
-    Please enter an email address for this site below and click the Register button to finish
-    logging in.
+    <strong>@Model.ProviderDisplayName</strong> hesabınızla başarılı bir şekilde kimlik doğrulaması yapıldı. Lütfen bu site için bir e-posta adresi girin ve kayıt olmak için Kaydol düğmesine tıklayın.
 </p>
 
 <div class="row">
@@ -23,7 +21,7 @@
                 <label asp-for="Input.Email" class="form-label"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Kaydol</button>
         </form>
     </div>
 </div>

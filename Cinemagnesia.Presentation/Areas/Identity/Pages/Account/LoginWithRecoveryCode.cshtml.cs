@@ -50,23 +50,23 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
         public class InputModel
         {
             /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
+            /// Bu API, ASP.NET Core Identity varsayılan UI altyapısı tarafından desteklenmektedir ve doğrudan kodunuzdan
+            /// kullanmak için tasarlanmamıştır. Bu API gelecekteki sürümlerde değiştirilebilir veya kaldırılabilir.
             /// </summary>
             [BindProperty]
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Recovery Code")]
+            [Display(Name = "Kurtarma Kodu")]
             public string RecoveryCode { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
-            // Ensure the user has gone through the username & password screen first
+            // Kullanıcının önce kullanıcı adı ve şifre ekranından geçtiğinden emin olun
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException($"İki faktörlü kimlik doğrulama kullanıcısı yüklenemedi.");
             }
 
             ReturnUrl = returnUrl;
@@ -84,7 +84,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException($"İki faktörlü kimlik doğrulama kullanıcısı yüklenemedi.");
             }
 
             var recoveryCode = Input.RecoveryCode.Replace(" ", string.Empty);
@@ -95,18 +95,18 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User with ID '{UserId}' logged in with a recovery code.", user.Id);
+                _logger.LogInformation("ID'si '{UserId}' olan kullanıcı kurtarma koduyla giriş yaptı.", user.Id);
                 return LocalRedirect(returnUrl ?? Url.Content("~/"));
             }
             if (result.IsLockedOut)
             {
-                _logger.LogWarning("User account locked out.");
+                _logger.LogWarning("Kullanıcı hesabı kilitlendi.");
                 return RedirectToPage("./Lockout");
             }
             else
             {
-                _logger.LogWarning("Invalid recovery code entered for user with ID '{UserId}' ", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
+                _logger.LogWarning("Geçersiz kurtarma kodu, ID'si '{UserId}' olan kullanıcı için girildi.", user.Id);
+                ModelState.AddModelError(string.Empty, "Geçersiz kurtarma kodu girildi.");
                 return Page();
             }
         }

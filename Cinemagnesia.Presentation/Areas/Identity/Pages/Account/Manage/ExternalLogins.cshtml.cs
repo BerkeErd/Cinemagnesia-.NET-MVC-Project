@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cinemagnesia.Domain.Domain.Entities.Concrete;
+using Infrastructure.DataAccess.Migrations;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -115,27 +116,27 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"ID'si '{_userManager.GetUserId(User)}' olan kullanıcı yüklenemedi.");
             }
-
+           
             var userId = await _userManager.GetUserIdAsync(user);
             var info = await _signInManager.GetExternalLoginInfoAsync(userId);
             if (info == null)
             {
-                throw new InvalidOperationException($"Unexpected error occurred loading external login info.");
+                throw new InvalidOperationException($"Dış bağlantı giriş bilgileri yüklenirken beklenmeyen bir hata oluştu.");
             }
 
             var result = await _userManager.AddLoginAsync(user, info);
             if (!result.Succeeded)
             {
-                StatusMessage = "The external login was not added. External logins can only be associated with one account.";
+                StatusMessage = "Dış bağlantı girişi eklenemedi. Dış bağlantı girişleri yalnızca bir hesapla ilişkilendirilebilir.";
                 return RedirectToPage();
             }
 
-            // Clear the existing external cookie to ensure a clean login process
+            // Temiz bir giriş işlemi için mevcut harici çerezleri temizleyin
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            StatusMessage = "The external login was added.";
+            StatusMessage = "Dış bağlantı girişi eklendi.";
             return RedirectToPage();
         }
     }

@@ -77,23 +77,20 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
-            [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(7, ErrorMessage = "{0}, en az {2} ve en fazla {1} karakter olmalıdır.", MinimumLength = 6)]
             [DataType(DataType.Text)]
-            [Display(Name = "Verification Code")]
+            [Display(Name = "Doğrulama Kodu")]
             public string Code { get; set; }
         }
 
+        
         public async Task<IActionResult> OnGetAsync([FromServices] QRCodeService qrCodeService)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"ID'si '{_userManager.GetUserId(User)}' olan kullanıcı yüklenemedi.");
             }
 
             await LoadSharedKeyAndQrCodeUriAsync(user);
@@ -106,7 +103,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"ID'si '{_userManager.GetUserId(User)}' olan kullanıcı yüklenemedi.");
             }
 
             if (!ModelState.IsValid)
@@ -115,7 +112,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            // Strip spaces and hyphens
+            // Boşlukları ve tireleri kaldır
             var verificationCode = Input.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
 
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
@@ -123,16 +120,16 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
 
             if (!is2faTokenValid)
             {
-                ModelState.AddModelError("Input.Code", "Verification code is invalid.");
+                ModelState.AddModelError("Input.Code", "Doğrulama kodu geçersiz.");
                 await LoadSharedKeyAndQrCodeUriAsync(user);
                 return Page();
             }
 
             await _userManager.SetTwoFactorEnabledAsync(user, true);
             var userId = await _userManager.GetUserIdAsync(user);
-            _logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app.", userId);
+            _logger.LogInformation("ID'si '{UserId}' olan kullanıcı, bir kimlik doğrulama uygulaması ile 2FA'yı etkinleştirdi.", userId);
 
-            StatusMessage = "Your authenticator app has been verified.";
+            StatusMessage = "Kimlik doğrulama uygulamanız doğrulandı.";
 
             if (await _userManager.CountRecoveryCodesAsync(user) == 0)
             {
