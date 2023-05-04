@@ -26,53 +26,86 @@ namespace Application.Services
 
         public ProductorRequestDto AddProductorRequest(AddProductorRequestDto productorRequest)
         {
-            // eklenecek dto ile entity maplenmesi
-            var addProductorRequest = _mapper.Map<ProductorRequest>(productorRequest);
-            var response = _productorRequestRepository.CreateAsync(addProductorRequest).Result;
-            // dönen entity ile dönüş dto'nun maplenmesi
-            var productorRequestDto = _mapper.Map<ProductorRequestDto>(response);
-            return productorRequestDto;
+            if(productorRequest != null)
+            {
+                var addProductorRequest = _mapper.Map<ProductorRequest>(productorRequest);
+                var response = _productorRequestRepository.CreateAsync(addProductorRequest).Result;
+                var productorRequestDto = _mapper.Map<ProductorRequestDto>(response);
+                return productorRequestDto;
+            }
+
+            return new ProductorRequestDto();
+           
         }
 
         public void DeleteProductorRequest(string id)
         {
-            _productorRequestRepository.DeleteAsync(id).Wait();
+            if(id != null)
+            {
+                _productorRequestRepository.DeleteAsync(id).Wait();
+            }
+            
         }
 
         public List<ProductorRequestDto> GetAllProductorRequest()
         {
             var response = _productorRequestRepository.GetAllAsync().GetAwaiter().GetResult();
-            var productorRequests = _mapper.Map<List<ProductorRequestDto>>(response);
+            if(response != null)
+            {
+                var productorRequests = _mapper.Map<List<ProductorRequestDto>>(response);
+                if(productorRequests != null)
+                {
+                    return productorRequests;
+                }
+            }
+            return new List<ProductorRequestDto>();
 
-            return productorRequests;
+           
         }
 
 
         public ProductorRequestDto GetProductorRequestById(string productorRequestId)
         {
-            var response = _productorRequestRepository.GetByIdAsync(productorRequestId).Result;
-            var responseDTO = _mapper.Map<ProductorRequestDto>(response);
+            if(productorRequestId != null)
+            {
+                var response = _productorRequestRepository.GetByIdAsync(productorRequestId).Result;
+                if (response != null)
+                {
+                    var responseDTO = _mapper.Map<ProductorRequestDto>(response);
+                    return responseDTO;
+                }
+            }
 
-            return responseDTO;
+            return new ProductorRequestDto();
+
+
         }
 
         public void UpdateProductorRequest(string id, ProductorRequestDto productorRequestDto)
         {
-
-            var productorRequest = _mapper.Map<ProductorRequest>(productorRequestDto);
-
-            _productorRequestRepository.Update(id, productorRequest);
+            if(id != null && productorRequestDto != null)
+            {
+                var productorRequest = _mapper.Map<ProductorRequest>(productorRequestDto);
+                _productorRequestRepository.Update(id, productorRequest);
+            }
+            
         }
 
         public List<ProductorRequestDto> GetNumOfApprovedProductorRequests()
         {
             var response = _productorRequestRepository.GetAllAsync().GetAwaiter().GetResult();
-            var productorRequests = _mapper.Map<List<ProductorRequestDto>>(response);
+            if(response != null)
+            {
+                var productorRequests = _mapper.Map<List<ProductorRequestDto>>(response);
 
-            var approvedProductors = productorRequests.Where(productorRequest => productorRequest.ApprovalStatus == ApprovalStatus.Approved).ToList();
+                var approvedProductors = productorRequests.Where(productorRequest => productorRequest.ApprovalStatus == ApprovalStatus.Approved).ToList();
 
 
-            return approvedProductors;
+                return approvedProductors;
+            }
+
+            return new List<ProductorRequestDto>();
+          
         }
     }
 }

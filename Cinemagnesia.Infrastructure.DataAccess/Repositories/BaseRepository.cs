@@ -25,26 +25,46 @@ namespace Infrastructure.DataAccess.Repositories
         }
         public async Task<TEntity> CreateAsync(TEntity entity)
         {
-            await _dbSet.AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
-            return entity;
+            if(entity != null)
+            {
+                await _dbSet.AddAsync(entity);
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            else
+            {
+                return new TEntity();
+            }
+            
         }
 
         public async Task<TEntity> DeleteAsync(string id)
         {
-            var entity = await _dbSet.FindAsync(id);
-            if (entity == null)
+            if(id != null)
             {
-                return null;
+                var entity = await _dbSet.FindAsync(id);
+                if (entity == null)
+                {
+                    return null;
+                }
+                _dbSet.Remove(entity);
+                await _dbContext.SaveChangesAsync();
+                return entity;
             }
-            _dbSet.Remove(entity);
-            await _dbContext.SaveChangesAsync();
-            return entity;
+            return new TEntity();
         }
 
         public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _dbSet.Where(predicate).ToListAsync();
+            if(predicate != null)
+            {
+                return await _dbSet.Where(predicate).ToListAsync();
+            }
+            else
+            {
+                return new List<TEntity>();
+            }
+            
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -53,21 +73,27 @@ namespace Infrastructure.DataAccess.Repositories
         }
         public async Task<TEntity> GetByIdAsync(string id, bool includeMovies = false)
         {
-            
-            if (includeMovies)
+            if(id != null)
             {
-                var query = _dbSet.AsQueryable();
-                query = query.Include("Movies");
-                query = query.Include("Movies.FavoritedUsers");
-                query = query.Include("Movies.RatedUsers");
-                query = query.Include("Movies.Genres");
-                query = query.Include("Movies.Directors");
-                query = query.Include("Movies.CastMembers");
-                return await query.FirstOrDefaultAsync(e => e.Id == id);
+                if (includeMovies)
+                {
+                    var query = _dbSet.AsQueryable();
+                    query = query.Include("Movies");
+                    query = query.Include("Movies.FavoritedUsers");
+                    query = query.Include("Movies.RatedUsers");
+                    query = query.Include("Movies.Genres");
+                    query = query.Include("Movies.Directors");
+                    query = query.Include("Movies.CastMembers");
+                    return await query.FirstOrDefaultAsync(e => e.Id == id);
+                }
+                else
+                {
+                    return await _dbSet.FindAsync(id);
+                }
             }
            else
-            {
-                return await _dbSet.FindAsync(id);
+            { 
+                return new TEntity(); 
             }
 
         }
@@ -75,14 +101,21 @@ namespace Infrastructure.DataAccess.Repositories
 
         public string Update(string id, TEntity entity)
         {
-            var existingEntity = _dbSet.Find(id);
-            if (existingEntity == null)
+            if(id != null && entity != null)
             {
-                return "Güncellenemedi. (Varolan entity bulunamadı)";
+                var existingEntity = _dbSet.Find(id);
+                if (existingEntity == null)
+                {
+                    return "Güncellenemedi. (Varolan entity bulunamadı)";
+                }
+                _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
+                _dbContext.SaveChanges();
+                return "Güncellendi.";
             }
-            _dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
-            _dbContext.SaveChanges();
-            return "Güncellendi.";
+            else
+            {
+                return "";
+            }
         }
 
 

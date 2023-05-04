@@ -29,31 +29,43 @@ namespace Application.Services
 
         public float CalculateAvgScore(string movieId)
         {
-           return _ratingRepository.CalculateAvgScore(movieId);
+            if(movieId == null) return 0;
+            return _ratingRepository.CalculateAvgScore(movieId);
         }
 
         public void SetAvgScore(float score, string movieId)
         {
-          var movie =  _movieRepository.GetByIdAsync(movieId).Result;
-          
-            if(movie != null)
+            if(movieId == null)
             {
-                movie.CinemagAvgScore = CalculateAvgScore(movieId);
+
             }
+            else
+            {
+                var movie = _movieRepository.GetByIdAsync(movieId).Result;
+
+                if (movie != null)
+                {
+                    movie.CinemagAvgScore = CalculateAvgScore(movieId);
+                }
+            }
+          
 
         }
 
         public void AddRating(Rating rating)
         {
-            if (_ratingRepository.isExist(rating.MovieId, rating.ApplicationUserId, out Rating oldRating, out bool isRatingExist))
+            if(rating != null)
             {
-                UpdateRating(oldRating, rating);
-                SetAvgScore(rating.Score, rating.MovieId);
-            }
-            else
-            {
-                _ratingRepository.CreateAsync(rating).Wait();
-                SetAvgScore(rating.Score, rating.MovieId);
+                if (_ratingRepository.isExist(rating.MovieId, rating.ApplicationUserId, out Rating oldRating, out bool isRatingExist))
+                {
+                    UpdateRating(oldRating, rating);
+                    SetAvgScore(rating.Score, rating.MovieId);
+                }
+                else
+                {
+                    _ratingRepository.CreateAsync(rating).Wait();
+                    SetAvgScore(rating.Score, rating.MovieId);
+                }
             }
         }
 
@@ -66,35 +78,53 @@ namespace Application.Services
 
         public Rating GetById(string id)
         {
+            if(id == null)
+            {
+                return new Rating();
+            }
             return _ratingRepository.GetByIdAsync(id).Result;
         }
 
         public void RemoveRating(string id)
         {
-            _ratingRepository.DeleteAsync(id).Wait();
+            if (id != null)
+            {
+                _ratingRepository.DeleteAsync(id).Wait();
+            }
+            
         }
 
         public void UpdateRating(Rating oldRating, Rating newRating)
         {
-            _ratingRepository.UpdateRating(oldRating, newRating);
+            if(oldRating != null && newRating != null)
+            {
+                _ratingRepository.UpdateRating(oldRating, newRating);
+            }
+            
         }
 
         public int GetRateoftheUser(string userId,string movieId)
         {
             var user = _usermanager.Users.Include(u => u.RatedMovies).FirstOrDefault(u => u.Id == userId);
-
-            var ratedMovies = user.RatedMovies;
-            if (ratedMovies != null)
+            if(user != null)
             {
-                foreach (var movie in ratedMovies) // Film daha önce oylanmış mı?
+                var ratedMovies = user.RatedMovies;
+                if (ratedMovies != null)
                 {
-                    if (movie.Id == movieId)
+                    foreach (var movie in ratedMovies) // Film daha önce oylanmış mı?
                     {
-                        return _ratingRepository.GetRateoftheUser(userId, movie.Id); // set the Rate to the user's previous rating
+                        if (movie.Id == movieId)
+                        {
+                            return _ratingRepository.GetRateoftheUser(userId, movie.Id); // set the Rate to the user's previous rating
+                        }
                     }
                 }
+                return _ratingRepository.GetRateoftheUser(userId, movieId);
             }
-            return _ratingRepository.GetRateoftheUser(userId, movieId);
+            else
+            {
+                return 0;
+            }
         }
 
        

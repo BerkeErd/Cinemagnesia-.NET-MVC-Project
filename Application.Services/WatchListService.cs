@@ -20,7 +20,11 @@ namespace Application.Services
 
         public void AddWatchList(WatchList watchList)
         {
-            _watchListRepository.CreateAsync(watchList).Wait();
+            if(watchList != null)
+            {
+                _watchListRepository.CreateAsync(watchList).Wait();
+            }
+           
         }
 
         public IEnumerable<WatchList> GetAllWatchList()
@@ -30,17 +34,29 @@ namespace Application.Services
 
         public WatchList GetById(string id)
         {
+            if(id  == null)
+            {
+                return null;
+            }
             return _watchListRepository.GetByIdAsync(id).Result;
         }
 
         public void RemoveWatchList(string id)
         {
-            _watchListRepository.DeleteAsync(id).Wait();
+            if (id != null)
+            {
+                _watchListRepository.DeleteAsync(id).Wait();
+            }
+            
         }
 
         public void UpdateWatchList(string id, WatchList watchList)
         {
-            _watchListRepository.Update(id, watchList);
+            if (id != null && watchList != null)
+            {
+                _watchListRepository.Update(id, watchList);
+            }
+            
         }
 
     }
