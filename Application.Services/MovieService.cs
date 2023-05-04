@@ -208,6 +208,7 @@ namespace Application.Services
                         return "Invalid movie id";
                     }
                 }
+                return"" ;
             }
             else 
             {
@@ -246,6 +247,7 @@ namespace Application.Services
                         return "Invalid movie id";
                     }
                 }
+                return "";
             }
             else
             {
