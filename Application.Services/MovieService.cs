@@ -194,5 +194,9 @@ namespace Application.Services
         {
             return _movieRepository.GetNumOfActiveMovies();
         }
+        public List<MovieRankingDto> GetMovieRankings()
+        {
+            return _movieRepository.GetMovieRankings();
+        }
     }
 }

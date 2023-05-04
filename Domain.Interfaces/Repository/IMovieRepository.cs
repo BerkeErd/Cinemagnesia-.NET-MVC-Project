@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Concrete;
+﻿using Application.Dtos;
+using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,6 @@ namespace Domain.Interfaces.Repository
         int GetNumOfActiveMovies();
         void UpdateAverageScore(string movieId, float rating);
         Movie GetMovieById(string id);
+        List<MovieRankingDto> GetMovieRankings();
     }
 }

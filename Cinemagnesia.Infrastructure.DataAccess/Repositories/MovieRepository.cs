@@ -1,4 +1,5 @@
-﻿using Cinemagnesia.Domain.Domain.Entities.Concrete;
+﻿using Application.Dtos;
+using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
 using Domain.Entities.Constants;
@@ -103,5 +104,17 @@ namespace Infrastructure.DataAccess.Repositories
                 _dbContext.SaveChanges();
             }
         }
+
+        public List<MovieRankingDto> GetMovieRankings()
+        {
+            var movies = _dbContext.Movies.Where(m => m.CinemagAvgScore > 0).ToList();
+
+            return movies.Select(m => new MovieRankingDto
+            {
+                Title = m.Title,
+                CinemagnesiaAvgScore = m.CinemagAvgScore
+            }).OrderByDescending(m => m.CinemagnesiaAvgScore).ToList();
+        }
+
     }
 }

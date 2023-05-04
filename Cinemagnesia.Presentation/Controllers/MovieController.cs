@@ -201,6 +201,13 @@ namespace Cinemagnesia.Presentation.Controllers
             return View(movieDetailViewModel);
         }
 
+        [HttpGet]
+        public IActionResult MovieRankings()
+        {
+            var movieRankings = _movieService.GetMovieRankings();
+            return Ok(movieRankings);
+        }
+
         public int GetNumOfActiveMovies()
         {
             return _movieService.GetNumOfActiveMovies();
