@@ -27,20 +27,34 @@ namespace Application.Services
             _usermanager = usermanager;
         }
 
-       
+        public float CalculateAvgScore(string movieId)
+        {
+           return _ratingRepository.CalculateAvgScore(movieId);
+        }
+
+        public void SetAvgScore(float score, string movieId)
+        {
+          var movie =  _movieRepository.GetByIdAsync(movieId).Result;
+          
+            if(movie != null)
+            {
+                movie.CinemagAvgScore = CalculateAvgScore(movieId);
+            }
+
+        }
+
         public void AddRating(Rating rating)
         {
-            string ratingId;
-            bool isRatingExist;
-            if (_ratingRepository.isExist(rating.MovieId, rating.ApplicationUserId, out Rating oldRating, out isRatingExist))
+            if (_ratingRepository.isExist(rating.MovieId, rating.ApplicationUserId, out Rating oldRating, out bool isRatingExist))
             {
                 UpdateRating(oldRating, rating);
+                SetAvgScore(rating.Score, rating.MovieId);
             }
             else
             {
                 _ratingRepository.CreateAsync(rating).Wait();
+                SetAvgScore(rating.Score, rating.MovieId);
             }
-
         }
 
 

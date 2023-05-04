@@ -22,6 +22,6 @@ namespace Application.Interfaces.AppInterfaces
         string ComfirmMovie(string id);
         string RejectMovie(string id);
         void AddToRatedUsersList(string userId, string movieId);
-        int GetNumOfMovies();
+        int GetNumOfActiveMovies();
     }
 }

@@ -20,7 +20,7 @@ namespace Infrastructure.DataAccess.Repositories
 
         public int GetNumOfMovieComments()
         {
-            Console.WriteLine(_dbSet.Count());
+            //Console.WriteLine(_dbSet.Count());
             return _dbSet.Count();
         }
     }

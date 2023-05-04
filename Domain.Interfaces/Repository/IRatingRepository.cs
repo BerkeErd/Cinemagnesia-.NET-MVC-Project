@@ -14,6 +14,8 @@ namespace Domain.Interfaces.Repository
 
          bool isExist(string movieId, string userId, out Rating oldRating, out bool isRatingExist);
         void UpdateRating(Rating oldRating, Rating newRating);
+
+        public float CalculateAvgScore(string movieId);
     }
     
 }

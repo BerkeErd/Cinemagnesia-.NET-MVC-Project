@@ -47,7 +47,7 @@ namespace ASPNET_Core_2_1.Controllers
         public List<GenreStatisticViewModel> GetStatisticOfGenre()
         {
             var GenreWithCount = _genreService.GetGenresWithMovies();
-            var MovieCount = _movieService.GetNumOfMovies();
+            var MovieCount = _movieService.GetNumOfActiveMovies();
             var MovieCountDec = Convert.ToDecimal(MovieCount);
             List<GenreStatisticViewModel> statistic = new List<GenreStatisticViewModel>();
             foreach (var genre in GenreWithCount) 
