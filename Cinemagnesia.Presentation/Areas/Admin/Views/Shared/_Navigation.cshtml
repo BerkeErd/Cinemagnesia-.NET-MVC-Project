@@ -88,7 +88,7 @@
                     <span class="nav-label" data-i18n="nav.dashboard">Yapımcı Veri İstekleri</span>
                 </a>
             </li>
-            <li class="@Html.IsSelected(controller: "LogList")">
+            @*<li class="@Html.IsSelected(controller: "LogList")">
                 <a href="@Url.CustomAction("Index", "LogList")">
                     <i class="fa-solid fa-clipboard"></i>
                     <span class="nav-label" data-i18n="nav.dashboard">Log Kayıtları</span>
@@ -99,13 +99,7 @@
                     <i class="fa-solid fa-pen-to-square"></i>
                     <span class="nav-label" data-i18n="nav.dashboard">UI Güncelleme</span>
                 </a>
-            </li>
-            <li class="@Html.IsSelected(controller: "ExportFile")">
-                <a href="@Url.CustomAction("Index", "ExportFile")">
-                    <i class="fa-solid fa-file-export"></i>
-                    <span class="nav-label" data-i18n="nav.dashboard">Dosya Çıktısı Al</span>
-                </a>
-            </li>
+            </li>*@
             <li class="@Html.IsSelected(controller: "SendEmail")">
                 <a href="@Url.CustomAction("Index", "SendEmail")">
                     <i class="fa-solid fa-envelope"></i>
