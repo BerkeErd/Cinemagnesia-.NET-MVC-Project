@@ -121,13 +121,14 @@ namespace Infrastructure.DataAccess.Repositories
         public async Task<List<LanguageStatisticDto>> GetLanguageStatistics()
         {
             var result = await _dbContext.Movies
-                .GroupBy(m => m.Language)
-                .Select(g => new LanguageStatisticDto
-                {
-                    Name = g.Key,
-                    MovieCount = g.Count()
-                })
-                .ToListAsync();
+                 .Where(m => m.Status == ApprovalStatus.Approved)
+                 .GroupBy(m => m.Language)
+                 .Select(g => new LanguageStatisticDto
+                 {
+                     Name = g.Key,
+                     MovieCount = g.Count()
+                 })
+                 .ToListAsync();
 
             return result;
         }

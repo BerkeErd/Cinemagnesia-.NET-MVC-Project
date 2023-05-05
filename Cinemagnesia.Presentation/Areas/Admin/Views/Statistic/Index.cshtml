@@ -310,7 +310,7 @@
             $.get("/Admin/Statistic/GetStatisticOfGenre", function (data) {
                 $.each(data, function (index, genre) {
                     if (genre.percentage != 0) {
-                        let dataItem = { name: genre.name, y: genre.percentage }
+                        let dataItem = { name: genre.name, y: genre.count }
                         list.push(dataItem);
                     }
 
@@ -340,7 +340,8 @@
                             allowPointSelect: true,
                             cursor: 'pointer',
                             dataLabels: {
-                                enabled: false
+                                enabled: true,
+                                format: '{point.name}: {y}'
                             },
                             showInLegend: true
                         }
@@ -359,7 +360,7 @@
             $.get("Admin/Statistic/GetLanguageStatistics", function (data) {
                 $.each(data, function (index, language) {
                     if (language.percentage != 0) {
-                        let dataItem = { name: language.name, y: language.percentage }
+                        let dataItem = { name: language.name, y: language.count }
                         languageList.push(dataItem);
                     }
                 })
@@ -378,7 +379,7 @@
                         align: 'left'
                     },
                     tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f} ½</b>'
                     },
                     plotOptions: {
                         pie: {
@@ -386,7 +387,7 @@
                             cursor: 'pointer',
                             dataLabels: {
                                 enabled: true,
-                                format: '{point.name}: {y} %'
+                                format: '{point.name}: {y}'
                             },
                             showInLegend: true
                         }

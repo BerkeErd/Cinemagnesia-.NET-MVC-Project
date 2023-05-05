@@ -48,13 +48,13 @@ namespace ASPNET_Core_2_1.Controllers
         {
             var GenreWithCount = _genreService.GetGenresWithMovies();
             var MovieCount = _movieService.GetNumOfActiveMovies();
-            var MovieCountDec = Convert.ToDecimal(MovieCount);
+
             List<GenreStatisticViewModel> statistic = new List<GenreStatisticViewModel>();
             foreach (var genre in GenreWithCount)
             {
                 GenreStatisticViewModel genreStatisticViewModel = new GenreStatisticViewModel();
                 genreStatisticViewModel.Name = genre.Name;
-                genreStatisticViewModel.Percentage = decimal.Round((genre.MovieCount / MovieCountDec) * 100, 2);
+                genreStatisticViewModel.Count = genre.MovieCount;
                 statistic.Add(genreStatisticViewModel);
             }
             return statistic;
