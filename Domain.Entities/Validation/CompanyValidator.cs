@@ -15,7 +15,7 @@ namespace Domain.Entities.Validation
             RuleFor(Company => Company.Name).NotEmpty().MaximumLength(60);
             RuleFor(company => company.TaxNumber)
             .NotEmpty()
-            .Matches(@"^\d{10}$")
+            .Length(10)
             .WithMessage("Vergi numarası tam olarak 10 rakamdan oluşmalıdır.");
             RuleFor(Company => Company.FoundDate).NotEmpty();
         }
