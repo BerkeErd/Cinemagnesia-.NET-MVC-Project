@@ -6,7 +6,7 @@
 
 <h1>@ViewData["Title"]</h1>
 @{
-    if (!@Model.DisplayConfirmAccountLink)
+    if (@Model.DisplayConfirmAccountLink)
     {
         <p>
             Bu uygulamanın şu anda gerçek bir e-posta göndericisi kayıtlı değil, gerçek bir e-posta göndericisi nasıl yapılandırılacağına ilişkin bilgiler için <a href="https://aka.ms/aspaccountconf">bu dokümantasyona</a> bakın.
