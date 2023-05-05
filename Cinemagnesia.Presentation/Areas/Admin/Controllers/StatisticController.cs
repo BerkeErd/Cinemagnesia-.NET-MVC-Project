@@ -65,14 +65,13 @@ namespace ASPNET_Core_2_1.Controllers
         {
             List<LanguageStatisticDto> languageWithCount = await _movieService.GetLanguageStatistics();
             var movieCount = _movieService.GetNumOfActiveMovies();
-            var MovieCountDec = Convert.ToDecimal(movieCount);
 
             List<GetMovieLanguagesViewModel> statistic = new List<GetMovieLanguagesViewModel>();
             foreach (var language in languageWithCount)
             {
                 GetMovieLanguagesViewModel languageStatisticsViewModel = new GetMovieLanguagesViewModel();
                 languageStatisticsViewModel.Name = language.Name;
-                languageStatisticsViewModel.Percentage = decimal.Round((language.MovieCount / MovieCountDec) / 100, 2);
+                languageStatisticsViewModel.Count = language.MovieCount;
                 statistic.Add(languageStatisticsViewModel);
             }
             return statistic;

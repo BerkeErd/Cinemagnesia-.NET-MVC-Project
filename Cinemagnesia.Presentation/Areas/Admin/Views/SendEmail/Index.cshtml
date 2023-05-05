@@ -42,34 +42,4 @@
         },
         contextmenu: 'link image | inserttable tableprops deletetable | cell row column'
     });
-
-    $("#sendEmailButton").on("click", function (e) {
-        e.preventDefault(); 
-
-        var form = $("form");
-        form.validate({
-            errorClass: "text-danger",
-            errorElement: "small",
-            rules: {
-                "userEmail": {
-                    required: true,
-                },
-                "emailText": {
-                    required: true,
-                }
-            },
-            messages: {
-                "userEmail": {
-                    required: "Lütfen e-posta göndereceğiniz hesabı seçin.",
-                },
-                "emailText": {
-                    required: "Bu alan zorunludur.",
-                }
-            }
-        });
-
-        if (form.valid()) {
-            // form gönderme kodu burada yer alabilir
-        }
-    });
 </script>
