@@ -1,24 +1,20 @@
 ﻿.btn-primary {
-    background-color: #E8E8E8 !important;
-    border-color: #282828 !important;
-    color: #646464 !important;
+  
+    color: white;
+    transition: all 0.1s ease-in-out;
+
 }
 
-h1 {
-    color: #E8E8E8 !important;
+.nav-pills li a:hover{
+    color:white;
 }
-
-h2 {
-    color: #E8E8E8 !important;
+.nav-pills li a {
+    transition: all 0.1s ease-in-out;
 }
-.active {
-    background-color: #F5141F !important;
-}
-
-label {
-    color: #E8E8E8 !important;
-}
-
-a:hover {
-    color: #F5141F !important;
+    .nav-pills li a:hover {
+        background-color: #2781ff73 !important;
+        transition: all 0.1s ease-in-out;
+    }
+.personaldata p, .personaldata div{
+    color:#0d0d0d !important;
 }
