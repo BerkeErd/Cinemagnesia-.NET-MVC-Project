@@ -55,7 +55,7 @@
                             else
                             {
                                 <h5>Doğrulayıcı uygulama</h5>
-                                @if (!Model.HasAuthenticator)
+                                @if (!Model.Is2faEnabled)
                                 {
                                     <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Doğrulayıcı uygulama ekle</a>
                                 }

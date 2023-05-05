@@ -63,6 +63,8 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Phone]
+            [MaxLength(12)]
+            [MinLength(12)]
             [Display(Name = "Telefon Numarası")]
             public string PhoneNumber { get; set; }
 

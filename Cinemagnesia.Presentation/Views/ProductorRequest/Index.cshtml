@@ -2,12 +2,12 @@
 @using Cinemagnesia.Domain.Domain.Entities.Concrete;
 @inject UserManager<ApplicationUser> UserManager
 
-    <link rel="stylesheet" href="~/css/movieDetails.css" />
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-8 offset-lg-2">
+        <div class="col-lg-6 offset-lg-3">
             <form method="post" asp-action="CreateProductorRequest" asp-controller="ProductorRequest" class="form" onsubmit="sendProductorRequestButton.disabled = true; sendProductorRequestButton.innerHTML = '<span class=\'spinner-border spinner-border-sm\' role=\'status\' aria-hidden=\'true\'></span> Gönderiliyor...';">
+                <h5 class="py-4">Yapımcı Başvuru Sayfası</h5>
                 <div class="form-group">
                     <label for="companyName">Şirket Adı:</label>
                     <input type="text" id="companyName" name="companyName" class="form-control" maxlength="60" required />

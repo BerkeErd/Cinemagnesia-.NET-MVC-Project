@@ -61,7 +61,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account.Manage
 
             personalData.Add($"Doğrulayıcı Anahtar", await _userManager.GetAuthenticatorKeyAsync(user));
 
-            Response.Headers.Add("Content-Disposition", "attachment; filename=KişiselVeriler.json");
+            Response.Headers.Add("Content-Disposition", "attachment; filename=KisiselVeriler.json");
             return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData), "application/json");
         }
 
