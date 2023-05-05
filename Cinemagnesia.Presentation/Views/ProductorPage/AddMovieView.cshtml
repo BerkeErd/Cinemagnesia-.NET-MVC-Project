@@ -128,14 +128,16 @@
             var poster;
 
             function readURL(input) {
+                $('#addmovieform button[type="submit"]').prop('disabled', true).text('Resim Yükleniyor...');
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-
+                        
                         poster = input.files[0];
                         $('#image-preview').attr('src', e.target.result);
                         $('#image-preview').hide();
                         $('#image-preview').fadeIn(650);
+                        $('#addmovieform button[type="submit"]').prop('disabled', false).text('Film Ekle');
                     }
                     reader.readAsDataURL(input.files[0]);
                 }
