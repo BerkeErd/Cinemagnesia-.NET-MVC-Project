@@ -464,3 +464,16 @@ body {
         #file-input::file-selector-button:hover {
             background: #e50914;
         }
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        z-index: 5;
+        background-color: #1c1c1c;
+        
+    }
+        .navbar-collapse img {
+            display: none;
+        }
+        .navbar-collapse .profileImage {
+            display: none;
+        }
+}

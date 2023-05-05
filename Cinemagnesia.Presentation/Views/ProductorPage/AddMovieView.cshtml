@@ -29,8 +29,8 @@
                     <input id="movieImdbRating" type="number" class="form-control" name="ImdbRating" step="0.1">
                 </div>
                 <div class="form-group">
-                    <label>Fragman URL:</label>
-                    <input id="movieTrailerUrl" type="url" class="form-control" name="TrailerUrl">
+                    <label>Fragman URL(youtube id):</label>
+                    <input id="movieTrailerUrl" type="text" class="form-control" name="TrailerUrl">
                 </div>
 
                 <div class="form-group">
@@ -40,7 +40,7 @@
 
                 <div class="form-group">
                     <label class="font-normal">Kategori Seçin</label>
-                    <div>
+                    <div >
                         <select name="Genres" data-placeholder="Kategori seçin" class="chosen-select" multiple tabindex="4">
                             @foreach (var genre in Model)
                             {
@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Film Süresi:</label>
+                    <label>Film Süresi(dk):</label>
                     <input id="movieMinutes" type="number" class="form-control" name="MovieMinutes">
                 </div>
                 <div class="form-group">
@@ -322,7 +322,8 @@
                                         'İşlem Başarılı!',
                                         'Film başarıyla eklendi!',
                                         'success'
-                                    )
+                                    );
+                                    
                                 },
                                 error: function (xhr, status, error) {
                                     Swal.fire(
