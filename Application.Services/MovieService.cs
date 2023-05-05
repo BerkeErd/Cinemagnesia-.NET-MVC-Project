@@ -277,5 +277,10 @@ namespace Application.Services
         {
             return await _movieRepository.GetLanguageStatistics();
         }
+
+        public async Task<string> GetMostRatedMovie()
+        {
+            return await _movieRepository.GetMostRatedMovie();
+        }
     }
 }

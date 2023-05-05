@@ -87,12 +87,12 @@ namespace Cinemagnesia.Presentation.Controllers
                     }
                 }
 
-                
+
                 if (float.TryParse(imdbRating, NumberStyles.Float, CultureInfo.InvariantCulture, out var imdb))
                 {
-                   ImdbRating = imdb;
+                    ImdbRating = imdb;
                 }
-               
+
 
                 AddMovieViewModel addMovieViewModel = new AddMovieViewModel()
                 {
@@ -158,7 +158,7 @@ namespace Cinemagnesia.Presentation.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                var user =  _userManager.GetUserAsync(User).Result;
+                var user = _userManager.GetUserAsync(User).Result;
                 if (user != null)
                 {
                     movieDetailViewModel.UserId = user.Id;
@@ -228,6 +228,14 @@ namespace Cinemagnesia.Presentation.Controllers
             return Ok("oldu herhalde");
         }
 
+
+        [HttpGet]
+        public async Task<string> GetMostRatedMovie()
+         {
+            var result = await _movieService.GetMostRatedMovie();
+            
+            return result;
+        }
 
 
 

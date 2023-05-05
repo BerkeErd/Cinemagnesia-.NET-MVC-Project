@@ -1,5 +1,6 @@
 ﻿using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
+using Domain.Entities.Constants;
 using Domain.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,6 +39,27 @@ namespace Infrastructure.DataAccess.Repositories
             else
             {
                 return false;
+            }
+        }
+
+        public async Task<string> GetMostRatedGenre()
+        {
+            var result = await _dbContext.Genres
+         .Select(g => new
+         {
+             GenreName = g.Name,
+             AverageScore = g.Movies.Where(m => m.Status == ApprovalStatus.Approved && m.CinemagAvgScore > 0).Average(m => m.CinemagAvgScore)
+         })
+         .OrderByDescending(g => g.AverageScore)
+         .FirstOrDefaultAsync();
+
+            if (result != null)
+            {
+                return result.GenreName;
+            }
+            else
+            {
+                return "-";
             }
         }
     }

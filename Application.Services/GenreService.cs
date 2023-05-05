@@ -68,5 +68,10 @@ namespace Application.Services
 
             return statistic;
         }
+
+        public async Task<string> GetMostRatedGenre()
+        {
+           return await _genreRepository.GetMostRatedGenre();
+        }
     }
 }

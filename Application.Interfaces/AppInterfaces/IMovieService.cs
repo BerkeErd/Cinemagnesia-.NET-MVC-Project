@@ -25,5 +25,7 @@ namespace Application.Interfaces.AppInterfaces
         int GetNumOfActiveMovies();
         List<MovieRankingDto> GetMovieRankings();
         Task<List<LanguageStatisticDto>> GetLanguageStatistics();
+
+        Task<string> GetMostRatedMovie();
     }
 }

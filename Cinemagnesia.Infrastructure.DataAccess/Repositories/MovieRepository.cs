@@ -132,5 +132,16 @@ namespace Infrastructure.DataAccess.Repositories
 
             return result;
         }
+
+        public async Task<string> GetMostRatedMovie()
+        {
+            var movie = await _dbContext.Movies
+                .Where(m => m.Status == ApprovalStatus.Approved)
+                .OrderByDescending(m => m.CinemagAvgScore)
+                .Select(m => m.Title)
+                .FirstOrDefaultAsync();
+
+            return movie ?? "Film bulunamadı.";
+        }
     }
 }

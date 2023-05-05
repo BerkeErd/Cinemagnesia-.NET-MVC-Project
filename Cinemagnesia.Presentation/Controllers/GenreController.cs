@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Interfaces.AppInterfaces;
+using Application.Services;
 using AutoMapper;
 using Cinemagnesia.Presentation.Areas.Admin.Models;
 using Cinemagnesia.Presentation.Models;
@@ -69,6 +70,20 @@ namespace Cinemagnesia.Presentation.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet]
+        public async Task<string> GetMostRatedGenre()
+        {
+            var result = await _genreService.GetMostRatedGenre();
+
+            return result;
+        }
+
+        [HttpGet]
+        public IActionResult GetGenreRankings()
+        {
+            return Ok("");
         }
     }
 }

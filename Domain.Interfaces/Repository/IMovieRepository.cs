@@ -20,5 +20,6 @@ namespace Domain.Interfaces.Repository
         Movie GetMovieById(string id);
         List<MovieRankingDto> GetMovieRankings();
         Task<List<LanguageStatisticDto>> GetLanguageStatistics();
+        Task<string> GetMostRatedMovie();
     }
 }

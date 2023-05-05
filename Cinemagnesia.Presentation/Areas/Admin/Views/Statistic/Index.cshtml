@@ -81,7 +81,7 @@
                     <h5>En Beğenilen Film</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">Leon</h1>
+                    <h1 class="no-margins" id="mostRatedMovie">Leon</h1>
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
                     <h5>En Beğenilen Kategori</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">Komedi</h1>
+                    <h1 class="no-margins" id="mostRatedGenre">Komedi</h1>
                 </div>
             </div>
         </div>
@@ -306,6 +306,15 @@
             $.get("/MovieComment/GetNumOfMovieComments", function (data) {
                 $("#numOfMovieComments").html(data)
             });
+            
+            $.get("/Movie/GetMostRatedMovie", function (data) {
+                $("#mostRatedMovie").html(data)
+            });
+
+            $.get("/Genre/GetMostRatedGenre", function (data) {
+                $("#mostRatedGenre").html(data)
+            });
+
 
             $.get("/Admin/Statistic/GetStatisticOfGenre", function (data) {
                 $.each(data, function (index, genre) {
