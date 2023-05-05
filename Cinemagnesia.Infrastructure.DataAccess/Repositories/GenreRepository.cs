@@ -1,4 +1,5 @@
-﻿using Cinemagnesia.Infrastructure.DataAccess.DbContext;
+﻿using Application.Dtos;
+using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
 using Domain.Entities.Constants;
 using Domain.Interfaces.Repository;
@@ -21,8 +22,9 @@ namespace Infrastructure.DataAccess.Repositories
 
         public List<Genre> GetGenresWithMovies()
         {
-            return _dbSet.Include(c => c.Movies).ToList();
+            return _dbSet.Include(c => c.Movies.Where(m => m.Status == ApprovalStatus.Approved)).ToList();
         }
+
 
         public bool IsExistsByName(string name)
         {
@@ -62,5 +64,23 @@ namespace Infrastructure.DataAccess.Repositories
                 return "-";
             }
         }
+
+        public IEnumerable<GenreScoreDto> GetGenreRankings()
+        {
+            var genreScores = _dbContext.Genres
+                .Select(g => new GenreScoreDto
+                {
+                    Name = g.Name,
+                    Score = g.Movies
+                        .Where(m => m.Status == ApprovalStatus.Approved && m.CinemagAvgScore > 0)
+                        .Any() ? g.Movies
+                            .Where(m => m.Status == ApprovalStatus.Approved && m.CinemagAvgScore > 0)
+                            .Average(m => m.CinemagAvgScore) : 0
+                })
+                .OrderByDescending(g => g.Score);
+
+            return genreScores;
+        }
+
     }
 }

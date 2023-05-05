@@ -73,5 +73,10 @@ namespace Application.Services
         {
            return await _genreRepository.GetMostRatedGenre();
         }
+
+        public IEnumerable<GenreScoreDto> GenreRankings()
+        {
+            return  _genreRepository.GetGenreRankings();
+        }
     }
 }

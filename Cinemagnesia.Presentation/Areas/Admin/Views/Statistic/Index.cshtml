@@ -118,17 +118,26 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6 offset-lg-3">
+        <div class="col-lg-6">
             <figure class="highcharts-figure">
-                <div id="asdasd">
+                <div id="movieRatings">
                 </div>
                 <p class="highcharts-description">
                     Bu grafik en beğenilen filmleri göstermektedir.
                 </p>
             </figure>
         </div>
+        <div class="col-lg-6">
+            <figure class="highcharts-figure">
+                <div id="genreRatings">
+                </div>
+                <p class="highcharts-description">
+                    Bu grafik en beğenilen film türlerini göstermektedir.
+                </p>
+            </figure>
+        </div>
     </div>
-
+    
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox ">
@@ -233,7 +242,7 @@
                     }
 
                     // Render the chart
-                    Highcharts.chart('asdasd', {
+                    Highcharts.chart('movieRatings', {
                         chart: {
                             type: 'column'
                         },
@@ -282,6 +291,73 @@
                 }
             });
 
+            $.ajax({
+                url: '/Genre/GenreRankings',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    var seriesData = []; for (var i = 0; i < data.length; i++) {
+                        var genre = data[i];
+                        var name = genre.name;
+                        var score = genre.score;
+
+                        seriesData.push({
+                            name: name,
+                            y: score,
+                            drilldown: null
+                        });
+                    }
+
+                    // Render the chart
+                    Highcharts.chart('genreRatings', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            align: 'left',
+                            text: 'En Yüksek Puanı Alan Tür'
+                        },
+                        subtitle: {
+                            align: 'left',
+                            text: 'Cinemagnesia verilerine göre düzenlenmiştir.'
+                        },
+                        xAxis: {
+                            type: 'category'
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Aldığı Yıldız'
+                            }
+                        },
+                        plotOptions: {
+                            series: {
+                                borderWidth: 0,
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.y:.2f} Puan',
+                                    style: {
+                                        textOutline: false
+                                    }
+                                }
+                            }
+                        },
+                        tooltip: {
+                            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> yıldıza sahip<br/>'
+                        },
+                        series: [{
+                            name: 'Türler',
+                            colorByPoint: true,
+                            data: seriesData
+                        }]
+                    });
+                },
+                error: function () {
+                    // Handle the error
+                    console.log('An error occurred while fetching the genre ranking data.');
+                }
+            });
+
 
             $.get("/Admin/Statistic/GetNumOfUsers", function (data) {
                 $("#numOfUsers").html(data)
@@ -318,7 +394,7 @@
 
             $.get("/Admin/Statistic/GetStatisticOfGenre", function (data) {
                 $.each(data, function (index, genre) {
-                    if (genre.percentage != 0) {
+                    if (genre.count != 0) {
                         let dataItem = { name: genre.name, y: genre.count }
                         list.push(dataItem);
                     }
@@ -368,7 +444,7 @@
             var languageList = [];
             $.get("Admin/Statistic/GetLanguageStatistics", function (data) {
                 $.each(data, function (index, language) {
-                    if (language.percentage != 0) {
+                    if (language.count != 0) {
                         let dataItem = { name: language.name, y: language.count }
                         languageList.push(dataItem);
                     }

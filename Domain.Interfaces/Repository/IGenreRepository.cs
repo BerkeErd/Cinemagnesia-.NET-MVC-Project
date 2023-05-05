@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Concrete;
+﻿using Application.Dtos;
+using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,6 @@ namespace Domain.Interfaces.Repository
         bool IsExistsByName(string name);
         bool HasItMovie(string id);
         Task<string> GetMostRatedGenre();
+        IEnumerable<GenreScoreDto> GetGenreRankings();
     }
 }

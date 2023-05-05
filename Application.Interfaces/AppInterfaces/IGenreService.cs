@@ -17,5 +17,6 @@ namespace Application.Interfaces.AppInterfaces
         Genre GetById(string id);
         List<GenreStatisticDto> GetGenresWithMovies();
         Task<string> GetMostRatedGenre();
+        IEnumerable<GenreScoreDto> GenreRankings();
     }
 }

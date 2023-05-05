@@ -81,9 +81,10 @@ namespace Cinemagnesia.Presentation.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetGenreRankings()
+        public IActionResult GenreRankings()
         {
-            return Ok("");
+            var genreScores = _genreService.GenreRankings();
+            return Json(genreScores);
         }
     }
 }
