@@ -27,8 +27,8 @@
                 // Accordion HTML
                 var accordionHTML = `
                                 <div class="set">
-                                  <a >
-                                    <h3>${item.title} ${item.status == 0 ? "bekliyor..." : ""}<i class="fa fa-plus"></i></h3>
+                                  <a>
+                                    <h3>${item.title}(${new Date(item.releaseDate).getFullYear()}) <strong>${item.status == 0 ? "Onay Bekliyor" : ""}</strong><i class="fa fa-plus"></i></h3>
                                   </a>
                                   <div class="content">
                                     
