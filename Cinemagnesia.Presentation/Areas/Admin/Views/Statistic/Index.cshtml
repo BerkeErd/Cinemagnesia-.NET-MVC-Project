@@ -442,7 +442,7 @@
             });
 
             var languageList = [];
-            $.get("Admin/Statistic/GetLanguageStatistics", function (data) {
+            $.get("Statistic/GetLanguageStatistics", function (data) {
                 $.each(data, function (index, language) {
                     if (language.count != 0) {
                         let dataItem = { name: language.name, y: language.count }
