@@ -81,7 +81,7 @@
                     <h5>En Beğenilen Film</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins" id="mostRatedMovie">Leon</h1>
+                    <h1 class="no-margins" id="mostRatedMovie"></h1>
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
                     <h5>En Beğenilen Kategori</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins" id="mostRatedGenre">Komedi</h1>
+                    <h1 class="no-margins" id="mostRatedGenre"></h1>
                 </div>
             </div>
         </div>
@@ -448,7 +448,7 @@
                         let dataItem = { name: language.name, y: language.count }
                         languageList.push(dataItem);
                     }
-                })
+                });
                 Highcharts.chart('container-donut', {
                     chart: {
                         type: 'pie'

@@ -64,7 +64,6 @@ namespace ASPNET_Core_2_1.Controllers
         public async Task<List<GetMovieLanguagesViewModel>> GetLanguageStatistics()
         {
             List<LanguageStatisticDto> languageWithCount = await _movieService.GetLanguageStatistics();
-            var movieCount = _movieService.GetNumOfActiveMovies();
 
             List<GetMovieLanguagesViewModel> statistic = new List<GetMovieLanguagesViewModel>();
             foreach (var language in languageWithCount)

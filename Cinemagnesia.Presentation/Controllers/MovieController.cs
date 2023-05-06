@@ -228,8 +228,11 @@ namespace Cinemagnesia.Presentation.Controllers
             return Ok("oldu herhalde");
         }
 
-
-
+        [HttpGet]
+        public async Task<string> GetMostRatedMovie()
+        {
+            return await _movieService.GetMostRatedMovie();
+        }
 
 
     }
