@@ -23,5 +23,10 @@ namespace Infrastructure.DataAccess.Repositories
             //Console.WriteLine(_dbSet.Count());
             return _dbSet.Count();
         }
+
+        public List<MovieComment> GetAllComments()
+        {
+            return _dbContext.MovieComments.Include(m => m.Movie).Include(m => m.Movie.Genres).ToList();
+        }
     }
 }

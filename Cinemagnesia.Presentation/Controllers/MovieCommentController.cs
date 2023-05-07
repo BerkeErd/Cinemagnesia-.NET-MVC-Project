@@ -50,5 +50,25 @@ namespace Cinemagnesia.Presentation.Controllers
                 return BadRequest(errors);
             }
         }
+
+        [HttpGet]
+        public IActionResult GetCommentStats()
+        {
+            var stats = _movieCommentService.GetCommentStats();
+            var result = stats
+                .GroupBy(s => s.GenreName)
+                .Select(g => new
+                {
+                    genreName = g.Key,
+                    data = g.GroupBy(s => s.MovieName)
+                        .Select(movieGroup => new
+                        {
+                            movieName = movieGroup.FirstOrDefault().MovieName,
+                            commentcount = movieGroup.Sum(s => s.CommentCount)
+                        })
+                });
+
+            return Ok(result);
+        }
     }
 }

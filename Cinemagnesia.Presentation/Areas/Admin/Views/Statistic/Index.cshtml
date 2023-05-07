@@ -139,7 +139,19 @@
     </div>
     
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6 offset-md-3">
+            <figure class="highcharts-figure">
+                <div id="movieCommentsGraph">
+
+                </div>
+                <p class="highcharts-description">
+                    
+                </p>
+            </figure>
+        </div>
+    </div>
+    @*<div class="row">
+        <div class="col-lg-6">
             <div class="ibox ">
                 <div class="ibox-title">
                     <h5>Son Eklenen Filmler</h5>
@@ -205,7 +217,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 @section scripts
     {
@@ -215,6 +227,7 @@
     </environment>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
@@ -485,6 +498,94 @@
                     }]
                 });
             });
+
+
+
+
+
+                
+                var options = {
+                    chart: {
+                        type: 'packedbubble',
+                        height: '100%'
+                    },
+                    title: {
+                        text: 'En Çok Yorum Alan Filmler',
+                        align: 'left'
+                    },
+                    tooltip: {
+                        useHTML: true,
+                        pointFormat: '<b>{point.name}:</b> {point.value} Yorum</sub>'
+                    }, 
+                    credits: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        packedbubble: {
+                            minSize: '30%',
+                            maxSize: '120%',
+                            zMin: 0,
+                            zMax: 1000,
+                            layoutAlgorithm: {
+                                splitSeries: false,
+                                gravitationalConstant: 0.02
+                            },
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.name}',
+                                style: {
+                                    color: 'black',
+                                    textOutline: 'none',
+                                    fontWeight: 900,
+                                    fontSize: '14px'
+                                }
+                            }
+                        }
+                    },
+                    series: []
+                };
+
+                $.ajax({
+                    url: '/MovieComment/GetCommentStats',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        var seriesData = [];
+                        $.each(data, function (index, value) {
+                            var movieData = {
+                                name: value.data[0].movieName,
+                                value: value.data[0].commentcount
+                            };
+                            var continentExists = false;
+                            for (var i = 0; i < seriesData.length; i++) {
+                                if (seriesData[i].name === value.genreName) {
+                                    seriesData[i].data.push(movieData);
+                                    continentExists = true;
+                                    break;
+                                }
+                            }
+                            if (!continentExists) {
+                                seriesData.push({
+                                    name: value.genreName,
+                                    data: [movieData]
+                                });
+                            }
+                        });
+
+                        options.series = seriesData;
+
+                        // Create the chart with the options
+                        Highcharts.chart('movieCommentsGraph', options);
+                    }
+                });
+
+
+
+
+
+
+
+
 
         });
 

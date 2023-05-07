@@ -15,5 +15,6 @@ namespace Application.Interfaces.AppInterfaces
         void DeleteMovieComment(string id);
         void UpdateMovieComment(string movieCommentId, MovieComment movieComment);
         int GetNumOfMovieComments();
+        List<CommentStatsDto> GetCommentStats();
     }
 }

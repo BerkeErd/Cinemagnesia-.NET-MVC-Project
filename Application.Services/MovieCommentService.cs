@@ -50,5 +50,22 @@ namespace Application.Services
         {
             return _movieCommentRepository.GetNumOfMovieComments();
         }
+
+        public List<CommentStatsDto> GetCommentStats()
+        {
+            var allComments = _movieCommentRepository.GetAllComments();
+
+            var commentStats = allComments
+                .GroupBy(c => new { c.Movie.Genres.FirstOrDefault()?.Name, c.Movie.Title })
+                .Select(g => new CommentStatsDto
+                {
+                    GenreName = g.Key.Name,
+                    MovieName = g.Key.Title,
+                    CommentCount = g.Count()
+                })
+                .ToList();
+
+            return commentStats;
+        }
     }
 }
