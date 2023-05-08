@@ -68,7 +68,7 @@ namespace Infrastructure.DataAccess.Repositories
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
-        {
+        {   
             return await _dbSet.ToListAsync();
         }
         public async Task<TEntity> GetByIdAsync(string id, bool includeMovies = false)

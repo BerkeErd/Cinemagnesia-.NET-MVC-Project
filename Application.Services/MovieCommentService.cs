@@ -56,11 +56,11 @@ namespace Application.Services
             var allComments = _movieCommentRepository.GetAllComments();
 
             var commentStats = allComments
-                .GroupBy(c => new { c.Movie.Genres.FirstOrDefault()?.Name, c.Movie.Title })
+                .GroupBy(c => new { c.Movie.Title, GenreNames = c.Movie.Genres.Select(g => g.Name).ToList() })
                 .Select(g => new CommentStatsDto
                 {
-                    GenreName = g.Key.Name,
                     MovieName = g.Key.Title,
+                    GenreNames = g.Key.GenreNames,
                     CommentCount = g.Count()
                 })
                 .ToList();

@@ -25,6 +25,33 @@
                 });
 
                 // Accordion HTML
+                var accordionHTML = `
+                                <div class="set">
+                                  <a>
+                                    <h3>${item.title}(${new Date(item.releaseDate).getFullYear()}) <strong>${item.status == 0 ? "Onay Bekliyor" : ""}</strong><i class="fa fa-plus"></i></h3>
+                                  </a>
+                                  <div class="content">
+                                    
+                                    <ul class="list-group">
+                                <li class="list-group-item"><img src="~/wwwroot/images/Cinemagnesia/${item.posterPath}"/></li>
+                                      <li class="list-group-item">Şirket : ${item.companyName}</li>
+
+                                        <li class="list-group-item">Açıklama : ${item.description}</li>
+                                        <li class="list-group-item">Başvuru Tarihi: ${item.createdAt}</li>
+                                      <li class="list-group-item">Yayım Tarihi: ${item.releaseDate}</li>
+                                      <li class="list-group-item">IMDb Puanı: ${item.imdbRating}</li>
+                                      <li class="list-group-item">Durum: ${item.status == 0 ? "Onay Bekliyor" : ""}</li>
+                                      <li class="list-group-item"><iframe width="560" height="315" src="https://www.youtube.com/embed/${item.trailerUrl}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></li>
+                                      <li class="list-group-item">Yönetmenler: <ul class="list-group">${directorsHTML}</ul></li>
+                                      <li class="list-group-item">Kategoriler: <ul class="list-group">${genresHTML}</ul></li>
+                                      <li class="list-group-item">Oyuncular: <ul class="list-group">${castMembersHTML}</ul></li>
+                                      <li class="list-group-item">Film Süresi: ${item.movieMinutes}</li>
+                                      <li class="list-group-item">Dil: ${item.language}</li>
+                                      <li class="list-group-item">Aksiyonlar: <button class='btn btn-warning comfirmMovieBtn' value='${item.id}'>Onayla</button>  <button class='btn btn-danger rejectMovieBtn' value='${item.id}'>Reddet</button></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              `;
         
         var accordionHTML = `
 <div class="set">

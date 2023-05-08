@@ -41,17 +41,17 @@ namespace Cinemagnesia.Presentation.Controllers
 
         public IActionResult ListMovieView()
         {
-                string userId = _userManager.GetUserId(User);
-                var user = _userManager.FindByIdAsync(userId).Result;
-                string companyId = user.CompanyId;
-            // Get the movies associated with the specified company
-            List<MovieDto> movieDtos = _movieService.GetMoviesByCompanyId(companyId,true);
+            string userId = _userManager.GetUserId(User);
+            var user = _userManager.FindByIdAsync(userId).Result;
+            string companyId = user.CompanyId;
+
+            // Get the movies associated with the specified company and order by status
+            List<MovieDto> movieDtos = _movieService.GetMoviesByCompanyId(companyId, true).OrderBy(m => m.Status).ToList();
 
             // Map the movie DTOs to movie view models
             List<MovieViewModel> movieViewModels = _mapper.Map<List<MovieViewModel>>(movieDtos);
 
             return View(movieViewModels);
-            
         }
 
         public IActionResult _EditMovie()

@@ -9,10 +9,10 @@ namespace Application.Dtos
 {
     public class CommentStatsDto
     {
-        public string GenreName { get; set; }
-        public string MovieName { get; set; }
-
-        public int CommentCount { get; set; }
+            public string MovieName { get; set; }
+            public List<string> GenreNames { get; set; }
+            public int CommentCount { get; set; }
+        
 
     }
 }

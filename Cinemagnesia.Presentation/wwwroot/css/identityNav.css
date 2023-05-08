@@ -1,20 +1,24 @@
 ﻿.btn-primary {
-  
-    color: white;
-    transition: all 0.1s ease-in-out;
-
+    background-color: #F5141F !important;
+    border-color: #EB0A15 !important
 }
 
-.nav-pills li a:hover{
-    color:white;
+.btn-danger {
+    background-color: #4E0307 !important;
+    border-color: #270103 !important;
 }
-.nav-pills li a {
-    transition: all 0.1s ease-in-out;
+
+.nav-pills li a:hover {
+    background-color: #F62832 !important;
+    color : white;
+    background-position: right center;
+    transition: all 0.2s ease-in-out;
 }
-    .nav-pills li a:hover {
-        background-color: #2781ff73 !important;
-        transition: all 0.1s ease-in-out;
-    }
+
+.nav-link.active {
+    background-color: #F5141F !important;
+}
+
 .personaldata p, .personaldata div{
     color:#0d0d0d !important;
 }

@@ -19,7 +19,9 @@ html {
     min-height: 100%;
 }
 
-
+a.text-dark:hover, a.text-dark:focus {
+    color: #F5141F !important;
+}
 
 .profileImage {
     width: 50px;

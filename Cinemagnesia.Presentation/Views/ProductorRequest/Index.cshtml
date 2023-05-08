@@ -11,17 +11,17 @@
                 <div class="form-group">
                     <label for="companyName">Şirket Adı:</label>
                     <input type="text" id="companyName" name="companyName" class="form-control" maxlength="60" required />
-                    <span id="companyNameError" class="error"></span>
+                    <span id="companyNameError" class="error text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label for="TaxNumber">Vergi Numarası:</label>
                     <input type="text" id="TaxNumber" name="TaxNumber" class="form-control" maxlength="10" pattern="[0-9]{10}" required />
-                    <span id="TaxNumberError" class="error"></span>
+                    <span id="TaxNumberError" class="error text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label for="foundDate">Kuruluş Tarihi:</label>
                     <input type="date" id="foundDate" name="foundDate" class="form-control" required />
-                    <span id="foundDateError" class="error"></span>
+                    <span id="foundDateError" class="error text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="hidden" id="userId" name="applicationUserId" value="@UserManager.GetUserAsync(User).Result.Id" />
@@ -47,7 +47,8 @@
     <script>
         $(document).ready(function () {
 
-
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById("foundDate").setAttribute('max', today);
 
             $(document).ready(function () {
                 // Validate companyName
@@ -71,7 +72,7 @@
                     var taxNumberRegex = /^\d{10}$/; // Allow only 10 digits
                     if (!taxNumberRegex.test(taxNumber)) {
                         input.addClass("invalid");
-                        $('#TaxNumberError').html("Vergi numarası 10 haneli olmalıdır.");
+                        $('#TaxNumberError').html("Vergi numarası 10 haneli ve sadece rakamlardan oluşmalıdır.");
                     } else {
                         input.removeClass("invalid");
                         $('#TaxNumberError').html("");
@@ -101,15 +102,22 @@
 
 
             var jsonObj = JSON.parse(response);
-            console.log(jsonObj)
-            if (jsonObj != null && jsonObj.Message != "") {
-                console.log("test");
-                Swal.fire(
-                    'Başarılı',
-                    jsonObj.Message + ' - ' + jsonObj.Email,
-                    
-                    'success'
-                );
+            console.log(jsonObj);
+
+            if (jsonObj != null) {
+                if (jsonObj.Code === 200) {
+                    Swal.fire(
+                        'Başarılı',
+                        jsonObj.Message,
+                        'success'
+                    );
+                } else {
+                    Swal.fire(
+                        'Hata',
+                        'Yapımcı başvurusu yapılamadı : ' + jsonObj.Message,
+                        'error'
+                    );
+                }
             }
         });
 
