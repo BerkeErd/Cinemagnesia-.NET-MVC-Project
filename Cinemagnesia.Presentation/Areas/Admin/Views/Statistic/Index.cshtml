@@ -503,29 +503,29 @@
 
 
 
-                
+
                 var options = {
                     chart: {
                         type: 'packedbubble',
                         height: '100%'
                     },
                     title: {
-                        text: 'En Çok Yorum Alan Filmler',
+                        text: 'Türlerine Göre En Çok Yorum Alan Filmler',
                         align: 'left'
                     },
                     tooltip: {
                         useHTML: true,
                         pointFormat: '<b>{point.name}:</b> {point.value} Yorum</sub>'
-                    }, 
+                    },
                     credits: {
                         enabled: false
                     },
                     plotOptions: {
                         packedbubble: {
-                            minSize: '30%',
+                            minSize: '10%',
                             maxSize: '120%',
                             zMin: 0,
-                            zMax: 1000,
+                            zMax: 10,
                             layoutAlgorithm: {
                                 splitSeries: false,
                                 gravitationalConstant: 0.02
@@ -552,24 +552,26 @@
                     success: function (data) {
                         var seriesData = [];
                         $.each(data, function (index, value) {
-                            var movieData = {
-                                name: value.data[0].movieName,
-                                value: value.data[0].commentcount
-                            };
-                            var continentExists = false;
-                            for (var i = 0; i < seriesData.length; i++) {
-                                if (seriesData[i].name === value.genreName) {
-                                    seriesData[i].data.push(movieData);
-                                    continentExists = true;
-                                    break;
+                            $.each(value.genreNames, function (genreIndex, genreName) {
+                                var movieData = {
+                                    name: value.movieName,
+                                    value: value.commentCount
+                                };
+                                var genreExists = false;
+                                for (var i = 0; i < seriesData.length; i++) {
+                                    if (seriesData[i].name === genreName) {
+                                        seriesData[i].data.push(movieData);
+                                        genreExists = true;
+                                        break;
+                                    }
                                 }
-                            }
-                            if (!continentExists) {
-                                seriesData.push({
-                                    name: value.genreName,
-                                    data: [movieData]
-                                });
-                            }
+                                if (!genreExists) {
+                                    seriesData.push({
+                                        name: genreName,
+                                        data: [movieData]
+                                    });
+                                }
+                            });
                         });
 
                         options.series = seriesData;
@@ -578,6 +580,8 @@
                         Highcharts.chart('movieCommentsGraph', options);
                     }
                 });
+
+
 
 
 

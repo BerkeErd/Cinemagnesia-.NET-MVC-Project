@@ -56,16 +56,19 @@ namespace Cinemagnesia.Presentation.Controllers
         {
             var stats = _movieCommentService.GetCommentStats();
             var result = stats
-                .GroupBy(s => s.GenreName)
-                .Select(g => new
+                .GroupBy(s => new { s.MovieName, s.GenreNames })
+                .Select(g => new CommentStatsDto
                 {
-                    genreName = g.Key,
-                    data = g.GroupBy(s => s.MovieName)
-                        .Select(movieGroup => new
-                        {
-                            movieName = movieGroup.FirstOrDefault().MovieName,
-                            commentcount = movieGroup.Sum(s => s.CommentCount)
-                        })
+                    MovieName = g.Key.MovieName,
+                    GenreNames = g.Key.GenreNames,
+                    CommentCount = g.Sum(s => s.CommentCount)
+                })
+                .GroupBy(s => s.MovieName)
+                .Select(g => new CommentStatsDto
+                {
+                    MovieName = g.Key,
+                    GenreNames = g.SelectMany(s => s.GenreNames).Distinct().ToList(),
+                    CommentCount = g.Sum(s => s.CommentCount)
                 });
 
             return Ok(result);
