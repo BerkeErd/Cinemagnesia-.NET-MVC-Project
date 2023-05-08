@@ -30,14 +30,16 @@ namespace Cinemagnesia.Presentation.Controllers
         {
             return View();
         }
-        
+
         public IActionResult AddMovieView()
         {
             List<GenreDto> genredtos = _genreService.GetAllGenres();
+            genredtos = genredtos.OrderBy(g => g.Name).ToList(); // Order genres by name
             List<GenreViewModel> genreViewModels = _mapper.Map<List<GenreViewModel>>(genredtos);
 
             return View(genreViewModels);
         }
+
 
         public IActionResult ListMovieView()
         {
