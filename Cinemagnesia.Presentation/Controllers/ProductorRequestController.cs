@@ -36,6 +36,8 @@ namespace Cinemagnesia.Presentation.Controllers
         {
             List<ProductorRequestDto> productorRequestDtos = _productorRequestService.GetAllProductorRequest();
             var productorRequest = productorRequestDtos.Find(x => x.Email == productorRequestViewModel.Email);
+            UserProductorRequestViewModel errorMessage = new UserProductorRequestViewModel();
+            errorMessage.Code = 400;
             if (productorRequest == null)
             {
                 if (ModelState.IsValid)
@@ -45,15 +47,17 @@ namespace Cinemagnesia.Presentation.Controllers
                         AddProductorRequestDto addProductorRequestDto = _mapper.Map<AddProductorRequestDto>(productorRequestViewModel);
                         var response = _productorRequestService.AddProductorRequest(addProductorRequestDto);
                         UserProductorRequestViewModel model = _mapper.Map<UserProductorRequestViewModel>(response);
-
+                        model.Code = 200;
                         TempData["response"] = JsonConvert.SerializeObject(model);
                         _emailSender.SendProductorRequestCreatedEmailAsync(addProductorRequestDto.Email);
                         return RedirectToAction("Index");
                     }
                     catch (Exception e)
-                    {
-
-                        return BadRequest(e.Message);
+                    { 
+                        errorMessage.Message = e.Message;
+                        throw e;
+                        TempData["response"] = JsonConvert.SerializeObject(errorMessage);
+                        return RedirectToAction("Index");
                     }
 
 
@@ -71,7 +75,9 @@ namespace Cinemagnesia.Presentation.Controllers
             }
             else
             {
-                return Ok("Zaten daha önce başvuru yapmışsınız.");
+                errorMessage.Message = "Zaten daha önce başvuru yapmışsınız.";
+                TempData["response"] = JsonConvert.SerializeObject(errorMessage);
+                return RedirectToAction("Index");
             }
 
 

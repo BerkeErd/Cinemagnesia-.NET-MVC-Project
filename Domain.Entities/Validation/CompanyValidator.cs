@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Domain.Entities.Validation
@@ -16,8 +17,14 @@ namespace Domain.Entities.Validation
             RuleFor(company => company.TaxNumber)
             .NotEmpty()
             .Length(10)
+            .Matches("^[0-9]{10}$")
             .WithMessage("Vergi numarası tam olarak 10 rakamdan oluşmalıdır.");
-            RuleFor(Company => Company.FoundDate).NotEmpty();
+
+
+            RuleFor(company => company.FoundDate)
+            .NotEmpty()
+            .Must(date => date <= DateTime.Today)
+            .WithMessage("Kuruluş tarihi bugünden sonraki bir tarih olamaz.");
         }
 
 
