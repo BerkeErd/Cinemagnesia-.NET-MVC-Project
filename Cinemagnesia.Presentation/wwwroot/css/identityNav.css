@@ -8,17 +8,12 @@
     border-color: #270103 !important;
 }
 
-
 .nav-pills li a:hover {
     background-color: #F62832 !important;
+    color : white;
     background-position: right center;
     transition: all 0.2s ease-in-out;
 }
-
-.nav-pills li a {
-    transition: all 0.1s ease-in-out;
-}
-
 
 .nav-link.active {
     background-color: #F5141F !important;
