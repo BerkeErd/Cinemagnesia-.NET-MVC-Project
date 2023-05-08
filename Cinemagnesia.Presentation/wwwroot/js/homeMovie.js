@@ -73,7 +73,7 @@
             var checked = ($(this).val().toLowerCase());
             categoryFilters.push(checked);
             if (categoryFilters.length > 0) {
-                $("#listedmovieheader").text(categoryFilters.join(', ') + ' filmleri');
+                $("#listedmovieheader").text(categoryFilters.join(', ') + ' Filmleri');
             } else {
                 $("#listedmovieheader").text('Filmler');
             }
@@ -81,7 +81,7 @@
             var unchecked = ($(this).val().toLowerCase());
             categoryFilters.splice($.inArray(unchecked, categoryFilters), 1);
             if (categoryFilters.length > 0) {
-                $("#listedmovieheader").text(categoryFilters.join(', ') + ' filmleri');
+                $("#listedmovieheader").text(categoryFilters.join(', ') + ' Filmleri');
             } else {
                 $("#listedmovieheader").text('Filmler');
             }

@@ -72,6 +72,7 @@ namespace Cinemagnesia.Presentation.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "Doğum Günü")]
+            [DataType(DataType.Date)]
             public DateTime Birthday { get; set; }
 
             [Required]

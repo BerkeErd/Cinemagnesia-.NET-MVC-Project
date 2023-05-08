@@ -72,7 +72,7 @@
                         </div>
                   </div>
                  <div class="row mt-3">
-                        <div class="col-md-12 p-5">
+                        <div class="col-md-12 p-5 d-flex justify-content-center">
                 <iframe class="mt-4" width="560" height="315" src="https://www.youtube.com/embed/${item.trailerUrl}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
                         </div>
@@ -202,7 +202,7 @@
                         setDiv.remove(); // set class'ına sahip div'i kaldırmak
                         Swal.fire(
                             'Başarılı!',
-                            'reddedildi!',
+                            'Reddedildi!',
                             'success'
                         )
                     }

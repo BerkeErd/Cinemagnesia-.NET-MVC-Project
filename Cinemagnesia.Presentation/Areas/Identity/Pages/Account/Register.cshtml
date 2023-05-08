@@ -61,5 +61,10 @@
 
 
 @section Scripts {
+    <script>
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById("Input.Birthday").setAttribute('max', today);
+    </script>
+       
     <partial name="_ValidationScriptsPartial" />
 }

@@ -19,7 +19,8 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-
+            ViewBag.Message = TempData["Message"];
+            ViewBag.Code = TempData["Code"];
             ViewBag.Users = _usermanager.Users;
             return View();
         }
@@ -45,25 +46,33 @@ namespace Cinemagnesia.Presentation.Areas.Admin.Controllers
                             }
                             catch (Exception e)
                             {
-                                return BadRequest(e.Message);
+                                TempData["Message"] = e.Message;
+                                TempData["Code"] = "400";
+                                return RedirectToAction("SendEmail", "Admin");
                             }
                         }
-                        return Ok("Mesaj tüm kullanıcılara gönderildi.");
+                        TempData["Message"] = "Mesaj tüm kullanıcılara gönderildi.";
+                        TempData["Code"] = "200";
+                        return RedirectToAction("SendEmail", "Admin");
                     }
                     else
                     {
                         
-                            _customEmailSender.SendCustomEmailAsync(userEmail, emailSubject, emailText).Wait();
-                            return Ok("Mesaj başarıyla" + userEmail + " eposta adresine gönderildi.");
-                        
+                        _customEmailSender.SendCustomEmailAsync(userEmail, emailSubject, emailText).Wait();
+                        TempData["Message"] = "Mesaj " + userEmail + " eposta adresine gönderildi.";
+                        TempData["Code"] = "200";
+                        return RedirectToAction("SendEmail", "Admin");
                     }
                 }
-
-                return BadRequest("Lütfen bütün inputları doldurunuz.");
+                TempData["Message"] = "Lütfen bütün inputları doldurunuz.";
+                TempData["Code"] = "400";
+                return RedirectToAction("SendEmail", "Admin");
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                TempData["Message"] = e.Message;
+                TempData["Code"] = "400";
+                return RedirectToAction("SendEmail", "Admin");
             }
         }
 

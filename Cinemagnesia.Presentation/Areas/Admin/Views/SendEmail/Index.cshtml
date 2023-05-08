@@ -1,4 +1,6 @@
 ﻿
+
+
 <script src="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <link href="https://cdn.tiny.cloud/1/3wjvpyjjmza9aahw76uwfh57h5kzsy1gv23kjg2b5oexaz37/tinymce/5/skins/ui/oxide/skin.min.css" rel="stylesheet" />
 
@@ -19,7 +21,7 @@
     </div>
     <div class="form-group">
         <label for="emailSubject">Başlık:</label>
-        <input id="emailSubject" name="emailSubject" />
+        <input id="emailSubject" name="emailSubject" required />
     </div>
     <div class="form-group">
         <label for="emailText">Email:</label>
@@ -27,19 +29,51 @@
     </div>
     <button id="sendEmailButton" type="submit" class="btn btn-primary">Gönder</button>
 </form>
-<!-- Initialize TinyMCE -->
-<script>
-    tinymce.init({
-        selector: 'textarea',
-        plugins: 'advlist autolink lists link image charmap preview',
-        toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | link image | removeformat | preview',
-        height: 300,
-        menubar: false,
-        branding: false,
-        mobile: {
-            theme: 'mobile',
-            plugins: ['autosave', 'lists', 'autolink']
-        },
-        contextmenu: 'link image | inserttable tableprops deletetable | cell row column'
-    });
-</script>
+
+
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            tinymce.init({
+                selector: 'textarea',
+                plugins: 'advlist autolink lists link image charmap preview',
+                toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | link image | removeformat | preview',
+                height: 300,
+                menubar: false,
+                branding: false,
+                mobile: {
+                    theme: 'mobile',
+                    plugins: ['autosave', 'lists', 'autolink']
+                },
+                contextmenu: 'link image | inserttable tableprops deletetable | cell row column'
+            });
+
+
+
+
+            //if (Message != null || Message != "") {
+
+
+            //}
+            if ("@ViewBag.Message" != null || "@ViewBag.Message" != "") {
+                if ("@ViewBag.Code" == 200) {
+                    Swal.fire(
+                        'Başarılı',
+                        "@ViewBag.Message",
+                        'success'
+                    );
+                } else if ("@ViewBag.Code" == 400) {
+                    Swal.fire(
+                        'Hata',
+                        'Email Gönderilemedi : ' + "@ViewBag.Message",
+                        'error'
+                    );
+                }
+
+            }
+
+        });
+    </script>
+}
