@@ -24,7 +24,7 @@
                     for (var i = 0; i < movies.length; i++) {
                         var movie = movies[i];
                         // colonn ve card ekleme
-                        var col = $("<div>").addClass("col-lg-3 col-sm-6 px-5");
+                        var col = $("<div>").addClass("col-lg-3 col-sm-6 px-3");
                         var card = $("<div>").addClass("movie-card");
                         // img oluşturma
                         var img = $("<img>").attr("src", `/images/Cinemagnesia/${movie.posterPath}`).attr("alt", movie.title + " Poster");
@@ -55,9 +55,12 @@
                         }
                     }
                 } else {
-                    var row = $("<div>").addClass("alert alert-warning mb-4").text("Bu türde film bulunmamaktadır");
-                    
+                    var row = $("<div>").addClass(" mb-4 nothingMovie d-flex flex-column align-items-center");
+                    row.append("<img src=\"/images/Cinemagnesia/nothing.gif\" width=\"350\" height=\"300\" loading=\"lazy\" frameBorder=\"0\" class=\"img-fluid\" allowFullScreen></img>");
+                    row.append("<p class=\"mt-2\">Bu türde film bulunmamaktadır</p>");
                     $(".movie-container").append(row);
+
+
                 }
             }
         });

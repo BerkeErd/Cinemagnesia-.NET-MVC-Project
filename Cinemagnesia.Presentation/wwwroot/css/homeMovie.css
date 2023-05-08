@@ -96,3 +96,16 @@
     .movie-info .button:hover {
         background-color: #da0712;
     }
+
+.nothingMovie{
+    background-color:rgb(25,25,25) !important;
+    padding:10px !important;
+    border-radius:5px !important;
+}
+.nothingMovie img{
+    border-radius:5px;
+
+}
+    .nothingMovie p {
+        color: #f3f3f3 !important;
+    }
