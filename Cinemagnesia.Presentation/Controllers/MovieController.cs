@@ -43,23 +43,23 @@ namespace Cinemagnesia.Presentation.Controllers
             _validator = validator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            _logger.LogInformation("");
+        //[HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    _logger.LogInformation("");
 
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri("/titles?page=2", UriKind.Relative)
-            };
-            using (var response = await _httpClient.SendAsync(request))
-            {
-                response.EnsureSuccessStatusCode();
-                var body = await response.Content.ReadAsStringAsync();
-                return Ok(body);
-            }
-        }
+        //    var request = new HttpRequestMessage
+        //    {
+        //        Method = HttpMethod.Get,
+        //        RequestUri = new Uri("/titles?page=2", UriKind.Relative)
+        //    };
+        //    using (var response = await _httpClient.SendAsync(request))
+        //    {
+        //        response.EnsureSuccessStatusCode();
+        //        var body = await response.Content.ReadAsStringAsync();
+        //        return Ok(body);
+        //    }
+        //}
 
         [HttpPost]
         public async Task<IActionResult> AddMovie(IFormFile poster, string companyId, string title, string description, string releaseDate, string imdbRating, string trailerUrl, string directors, string genres, string castMembers, string movieMinute, string language)

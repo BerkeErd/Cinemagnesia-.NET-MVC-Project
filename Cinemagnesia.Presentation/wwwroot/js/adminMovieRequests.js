@@ -40,7 +40,7 @@
                                         <li class="list-group-item">Başvuru Tarihi: ${item.createdAt}</li>
                                       <li class="list-group-item">Yayım Tarihi: ${item.releaseDate}</li>
                                       <li class="list-group-item">IMDb Puanı: ${item.imdbRating}</li>
-                                              <li class="list-group-item">Durum: ${item.status == 0 ? "bekliyor..." : ""}</li>
+                                      <li class="list-group-item">Durum: ${item.status == 0 ? "Onay Bekliyor" : ""}</li>
                                       <li class="list-group-item"><iframe width="560" height="315" src="https://www.youtube.com/embed/${item.trailerUrl}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></li>
                                       <li class="list-group-item">Yönetmenler: <ul class="list-group">${directorsHTML}</ul></li>
                                       <li class="list-group-item">Kategoriler: <ul class="list-group">${genresHTML}</ul></li>
