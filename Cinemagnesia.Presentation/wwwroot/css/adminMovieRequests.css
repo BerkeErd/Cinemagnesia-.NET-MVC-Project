@@ -33,7 +33,7 @@
         transition: all 0.2s linear;
     }
 
-        .set > a i {
+        .set > a .plusicon {
             float: right;
             margin-top: 2px;
         }

@@ -107,12 +107,16 @@
                     </li>
                 </ul>
             </li>*@
+           
+            <li>
+                <a class="nav-link btn btn-link text-dark" href="/">Ana Sayfa</a>
+            </li>
             <li>
                 @{
                     if (User.Identity?.IsAuthenticated ?? false)
                     {
-                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
-                            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                        <form style="float:right" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
+                            <button type="submit" class="nav-link btn btn-link text-dark">Çıkış Yap</button>
                         </form>
                     }
                     else
@@ -120,9 +124,6 @@
                         <p>You have successfully logged out of the application.</p>
                     }
                 }
-            </li>
-            <li>
-                <a class="nav-link btn btn-link text-dark" href="/">Ana Sayfa</a>
             </li>
             @*<li>
                 <a class="right-sidebar-toggle">

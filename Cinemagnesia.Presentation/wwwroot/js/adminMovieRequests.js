@@ -56,7 +56,7 @@
         var accordionHTML = `
 <div class="set">
     <a>
-        <h3>${item.title} (${new Date(item.releaseDate).getFullYear()}) <strong>${item.status == 0 ? "Onay Bekliyor" : ""}</strong><i class="fa fa-plus"></i></h3>
+        <h3>${item.title} (${new Date(item.releaseDate).getFullYear()}) <strong>${item.status == 0 ? "Onay Bekliyor " : ""} </strong><i class="fa fa-plus plusicon"></i></h3>
     </a>
     <div class="content">
         <div class="card">
@@ -83,18 +83,18 @@
                     <div class="col-lg-12">
                              <div class="card-body">
                                 <ul class="list-group">
-                                    <li class="list-group-item">Şirket : ${item.companyName}</li>
-                                    <li class="list-group-item">Açıklama : ${item.description}</li>
-                                    <li class="list-group-item">Başvuru Tarihi: ${item.createdAt}</li>
-                                    <li class="list-group-item">Yayım Tarihi: ${item.releaseDate}</li>
-                                    <li class="list-group-item">IMDb Puanı: ${item.imdbRating}</li>
-                                    <li class="list-group-item">Durum: ${item.status == 0 ? "bekliyor..." : ""}</li>
-                                    <li class="list-group-item">Yönetmenler: <ul class="list-group">${directorsHTML}</ul></li>
-                                    <li class="list-group-item">Kategoriler: <ul class="list-group">${genresHTML}</ul></li>
-                                    <li class="list-group-item">Oyuncular: <ul class="list-group">${castMembersHTML}</ul></li>
-                                    <li class="list-group-item">Film Süresi: ${item.movieMinutes}</li>
-                                    <li class="list-group-item">Dil: ${item.language}</li>
-                                    <li class="list-group-item">Aksiyonlar: <button class='btn btn-warning comfirmMovieBtn' value='${item.id}'>Onayla</button>  <button class='btn btn-danger rejectMovieBtn' value='${item.id}'>Reddet</button></li>
+                                    <li class="list-group-item"><strong>Şirket: </strong> ${item.companyName}</li>
+                                    <li class="list-group-item"><strong>Açıklama: </strong> ${item.description}</li>
+                                    <li class="list-group-item"><strong>Başvuru Tarihi: </strong> ${item.createdAt}</li>
+                                    <li class="list-group-item"><strong>Yayın Tarihi: </strong> ${item.releaseDate}</li>
+                                    <li class="list-group-item"><strong>IMDb Puanı: </strong> ${item.imdbRating}</li>
+                                    <li class="list-group-item"><strong>Durum: </strong> ${item.status == 0 ? "Onay Bekliyor" : ""}</li>
+                                    <li class="list-group-item"><strong>Yönetmenler: </strong> <ul class="list-group">${directorsHTML}</ul></li>
+                                    <li class="list-group-item"><strong>Kategoriler: </strong> <ul class="list-group">${genresHTML}</ul></li>
+                                    <li class="list-group-item"><strong>Oyuncular: </strong> <ul class="list-group">${castMembersHTML}</ul></li>
+                                    <li class="list-group-item"><strong>Film Süresi: </strong> ${item.movieMinutes}</li>
+                                    <li class="list-group-item"><strong>Dil: </strong> ${item.language}</li>
+                                    <li class="list-group-item"><strong>Aksiyonlar: </strong> <button class='btn btn-warning comfirmMovieBtn' value='${item.id}'>Onayla</button>  <button class='btn btn-danger rejectMovieBtn' value='${item.id}'>Reddet</button></li>
                                 </ul>
                             </div>
                     </div>
