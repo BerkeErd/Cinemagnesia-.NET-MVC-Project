@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Assistant";
+}
+
+<h2>Assistant</h2>
+
+<form method="post">
+    <label for="message">Message:</label>
+    <input type="text" name="message" /><br />
+    <button type="submit">Send</button>
+</form>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <p>@ViewBag.Message</p>
+}
+
