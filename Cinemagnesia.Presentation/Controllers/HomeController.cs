@@ -94,10 +94,10 @@ namespace Cinemagnesia.Presentation.Controllers
                 Method = HttpMethod.Post,
                 RequestUri = new Uri("https://openai80.p.rapidapi.com/chat/completions"),
                 Headers =
-        {
+                {
             { "X-RapidAPI-Key", "fdcfdb9d98mshf0a8ac4934e1a88p138684jsn90c0b90433f3" },
             { "X-RapidAPI-Host", "openai80.p.rapidapi.com" },
-        },
+                },
                 Content = new StringContent("{\r\n    \"model\": \"gpt-3.5-turbo\",\r\n    \"messages\": [\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"" + message + "\"\r\n        }\r\n    ]\r\n}")
                 {
                     Headers =
