@@ -66,7 +66,7 @@ namespace Application.Services
         }
         public List<WatchListDto> GetWatchListByUserId(string userId)
         {
-            var watchLists = _watchListRepository.GetByUserIdAsync(userId);
+            var watchLists =  _watchListRepository.GetByUserIdAsync(userId).Result;
             var watchListDtos = _mapper.Map<List<WatchListDto>>(watchLists);
 
             foreach (var watchListDto in watchListDtos)

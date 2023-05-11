@@ -101,6 +101,7 @@ builder.Services.AddAutoMapper(typeof(GenreDtoMapper));
 builder.Services.AddAutoMapper(typeof(ProductorRequestMapper));
 builder.Services.AddAutoMapper(typeof(ViewModelMapper));
 builder.Services.AddAutoMapper(typeof(MovieDtoMapper));
+builder.Services.AddAutoMapper(typeof(WatchListDtoMapper));
 
 
 
