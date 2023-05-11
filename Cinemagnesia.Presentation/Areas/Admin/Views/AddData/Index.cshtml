@@ -170,12 +170,12 @@
                 var genreData = { id: genrId };
                 console.log(genrId);
                 swal({
-                    title: "Are you sure?",
-                    text: "You will not be able to recover this imaginary file!",
+                    title: "Emin misin?",
+                    text: "Kategoriyi silmek üzeresin!",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes, delete it!",
+                    confirmButtonText: "Evet, sil!",
                     closeOnConfirm: false
                 }, function () {
                     console.log(genreData);
@@ -190,7 +190,7 @@
                             table.ajax.reload();
                         },
                         error: function (xhr, textStatus, errorThrown) {
-                            swal('İşlem Başarısız.', 'Bir hata meydana geldi.', 'error');
+                            swal('İşlem Başarısız.', 'Bu kategoride film bulunduğundan kategori silinemiyor.', 'error');
                             console.log(xhr.responseText);
                         }
                     });
