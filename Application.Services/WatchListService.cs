@@ -1,6 +1,9 @@
-﻿using Application.Interfaces.AppInterfaces;
+﻿using Application.Dtos;
+using Application.Interfaces.AppInterfaces;
+using AutoMapper;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
+using Infrastructure.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +15,13 @@ namespace Application.Services
     public class WatchListService : IWatchListService
     {
         private readonly IWatchListRepository _watchListRepository;
-
-       public WatchListService(IWatchListRepository watchListRepository)
+        private readonly IRatingRepository _ratingRepository;
+        private readonly IMapper _mapper;
+       public WatchListService(IWatchListRepository watchListRepository, IMapper mapper, IRatingRepository ratingRepository)
         {
+            _mapper = mapper;
             _watchListRepository = watchListRepository;
+            _ratingRepository = ratingRepository;
         }
 
         public void AddWatchList(WatchList watchList)
@@ -57,6 +63,19 @@ namespace Application.Services
                 _watchListRepository.Update(id, watchList);
             }
             
+        }
+        public List<WatchListDto> GetWatchListByUserId(string userId)
+        {
+            var watchLists = _watchListRepository.GetByUserIdAsync(userId);
+            var watchListDtos = _mapper.Map<List<WatchListDto>>(watchLists);
+
+            foreach (var watchListDto in watchListDtos)
+            {
+                var rating = _ratingRepository.GetRateoftheUser(userId, watchListDto.MovieId);
+                watchListDto.Rating = rating;
+            }
+
+            return watchListDtos;
         }
 
     }

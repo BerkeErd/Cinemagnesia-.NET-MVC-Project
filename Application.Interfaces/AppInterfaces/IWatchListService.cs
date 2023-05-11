@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Concrete;
+﻿using Application.Dtos;
+using Domain.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Application.Interfaces.AppInterfaces
         void RemoveWatchList(string id);
         void UpdateWatchList(string id, WatchList watchList);
         WatchList GetById(string id);
+        List<WatchListDto> GetWatchListByUserId(string userId);
     }
 }
 

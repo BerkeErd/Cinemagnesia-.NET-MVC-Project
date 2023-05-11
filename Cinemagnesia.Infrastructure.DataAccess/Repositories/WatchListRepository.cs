@@ -1,6 +1,8 @@
-﻿using Cinemagnesia.Infrastructure.DataAccess.DbContext;
+﻿using Application.Dtos;
+using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
 using Domain.Interfaces.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,14 @@ namespace Infrastructure.DataAccess.Repositories
         public WatchListRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
 
+        }
+
+        public async Task<List<WatchList>> GetByUserIdAsync(string userId)
+        {
+            return await _dbContext.WatchList
+                .Where(w => w.ApplicationUserId == userId)
+                .Include(w => w.Movie)
+                .ToListAsync();
         }
     }
 }

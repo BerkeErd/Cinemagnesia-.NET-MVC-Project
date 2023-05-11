@@ -1,0 +1,44 @@
+﻿@model List<WatchListViewModel>
+
+@{
+    ViewData["Title"] = "İzleme Listesi";
+}
+
+<table id="watchListTable" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Filmin Adı</th>
+            <th>Poster</th>
+            <th>Durumu</th>
+            <th>Puan</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MovieTitle</td>
+                <td><img src="@item.PosterUrl" alt="@item.MovieTitle" height="200" /></td>
+                <td>@item.WatchStatus</td>
+                <td>@(item.rating == 0 ? "-" : item.rating.ToString())</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#watchListTable').DataTable({
+                "order": [[0, "asc"]],
+                "columnDefs": [
+                    {
+                        "targets": [1],
+                        "orderable": false
+                    }
+                ]
+            });
+        });
+    </script>
+}

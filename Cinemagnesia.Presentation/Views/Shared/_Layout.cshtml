@@ -52,6 +52,10 @@
                         {
                             <li class="nav-item"><a class="nav-link " asp-area="" asp-controller="ProductorPage" asp-action="AddMovieView">Yapımcı Sayfası</a></li>
                         }
+                        @if (User.IsInRole("User") || User.IsInRole("Productor"))
+                        {
+                            <li class="nav-item"><a class="nav-link " asp-area="" asp-controller="WatchList">İzleme Listem</a></li>
+                        }
                     </ul>
                     <ul class="navbar-nav">
                         @if (SignInManager.IsSignedIn(User))

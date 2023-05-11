@@ -43,6 +43,15 @@ namespace Cinemagnesia.Presentation.Mappings
 
             CreateMap<SendCommentViewModel, SendMovieCommentDto>();
             CreateMap<SendMovieCommentDto, SendCommentViewModel>();
+
+            CreateMap<WatchListDto, WatchListViewModel>()
+            .ForMember(dest => dest.MovieId, opt => opt.MapFrom(src => src.MovieId))
+            .ForMember(dest => dest.MovieTitle, opt => opt.MapFrom(src => src.MovieName))
+            .ForMember(dest => dest.WatchStatus, opt => opt.MapFrom(src => src.WatchStatus))
+            .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.Rating))
+            .ForMember(dest => dest.PosterUrl, opt => opt.MapFrom(src => src.MovieImage));
+            CreateMap<WatchListViewModel, WatchListDto>();
+
         }
     }
 
