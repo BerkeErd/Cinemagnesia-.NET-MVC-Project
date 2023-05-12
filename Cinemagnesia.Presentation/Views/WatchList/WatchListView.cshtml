@@ -1,45 +1,144 @@
-﻿@model List<WatchListViewModel>
+﻿@using Domain.Entities.Constants;
+@model List<WatchListViewModel>
 
 @{
-     Layout = "~/Views/WatchList/_WatchListLayout.cshtml";
+    Layout = "~/Views/WatchList/_WatchListLayout.cshtml";
     ViewData["Title"] = "İzleme Listesi";
 }
+<link rel="stylesheet" href="~/css/movieDetails.css" />
 
 <table id="watchListTable" class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Filmin Adı</th>
-            <th>Poster</th>
-            <th>Durumu</th>
-            <th>Puan</th>
+            <th class= "text-center align-middle">Filmin Adı</th>
+            <th class="text-center align-middle">Poster</th>
+            <th class= "text-center align-middle" data-orderable="true">Durumu</th>
+            <th class="text-center align-middle" data-orderable="true" data-order="desc">Puan</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Where(x => x.WatchStatus != 0))
         {
             <tr>
-                <td>@item.MovieTitle</td>
-                <td><img src="@item.PosterUrl" alt="@item.MovieTitle" height="200" /></td>
-                <td>@item.WatchStatus</td>
-                <td>@(item.Rating == 0 ? "-" : item.Rating.ToString())</td>
+                <td class="text-center align-middle">@item.MovieTitle</td>
+                <td class="text-center align-middle"><img src="~/images/Cinemagnesia/@item.PosterUrl" alt="@item.MovieTitle" height="200" /></td>
+                <td class="text-center align-middle">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @item.WatchStatus
+                        </button>
+                        <div class="dropdown-menu">
+                            @foreach (WatchStatus status in Enum.GetValues(typeof(WatchStatus)))
+                            {
+                                <button class="dropdown-item @(status == item.WatchStatus ? "active" : "")" onclick="updateStatus('@item.ApplicationUserId', '@item.MovieId', '@status')">@status.ToString()</button>
+                            }
+                        </div>
+                    </div>
+                </td>
+                <td class="text-center align-middle">
+                    <div class="rating">
+                        <div class="stars">
+                            <form action="">
+                                @if (item.WatchStatus == WatchStatus.Watched)
+                                {
+                                    <input class="star star-5 starButton" value="5" id="star-5-@item.MovieId" type="radio" name="star" @(item.Rating == 5 ? "checked" : "") onclick="addRating('@item.ApplicationUserId', '@item.MovieId', 5)" />
+                                    <label class="star star-5" for="star-5-@item.MovieId"></label>
+                                    <input class="star star-4 starButton" value="4" id="star-4-@item.MovieId" type="radio" name="star" @(item.Rating == 4 ? "checked" : "") onclick="addRating('@item.ApplicationUserId', '@item.MovieId', 4)" />
+                                    <label class="star star-4" for="star-4-@item.MovieId"></label>
+                                    <input class="star star-3 starButton" value="3" id="star-3-@item.MovieId" type="radio" name="star" @(item.Rating == 3 ? "checked" : "") onclick="addRating('@item.ApplicationUserId', '@item.MovieId', 3)" />
+                                    <label class="star star-3" for="star-3-@item.MovieId"></label>
+                                    <input class="star star-2 starButton" value="2" id="star-2-@item.MovieId" type="radio" name="star" @(item.Rating == 2 ? "checked" : "") onclick="addRating('@item.ApplicationUserId', '@item.MovieId', 2)" />
+                                    <label class="star star-2" for="star-2-@item.MovieId"></label>
+                                    <input class="star star-1 starButton" value="1" id="star-1-@item.MovieId" type="radio" name="star" @(item.Rating == 1 ? "checked" : "") onclick="addRating('@item.ApplicationUserId', '@item.MovieId', 1)" />
+                                    <label class="star star-1" for="star-1-@item.MovieId"></label>
+
+                                }
+                                else{
+                                <input class="star star-5 starButton" value="5" id="star-5" type="radio" name="star" disabled/>
+                                <label class="star star-5" for="star-5"></label>
+                                <input class="star star-4 starButton" value="4" id="star-4" type="radio" name="star" disabled/>
+                                <label class="star star-4" for="star-4"></label>
+                                <input class="star star-3 starButton" value="3" id="star-3" type="radio" name="star" disabled />
+                                <label class="star star-3" for="star-3"></label>
+                                <input class="star star-2 starButton" value="2" id="star-2" type="radio" name="star" disabled />
+                                <label class="star star-2" for="star-2"></label>
+                                <input class="star star-1 starButton" value="1" id="star-1" type="radio" name="star" disabled />
+                                <label class="star star-1" for="star-1"></label>
+                                }
+                            </form>
+                        </div>
+                    </div>
+                </td>
             </tr>
         }
+
     </tbody>
 </table>
 
 @section scripts {
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready(function () {
+
+        $.noConflict();
+        jQuery(document).ready(function ($) {
             $('#watchListTable').DataTable({
                 "order": [[0, "asc"]],
-                "columnDefs": [
-                    {
-                        "targets": [1],
-                        "orderable": false
+                "columnDefs": [{
+                    "targets": 3, // Puan column
+                    "orderable": true,
+                    "type": "numeric",
+                    "sort": function (a, b) {
+                        // Get the value of the checked radio button
+                        var aValue = $('input[name=star]:checked', $(a)).val();
+                        var bValue = $('input[name=star]:checked', $(b)).val();
+
+                        // If none of the radio buttons are checked, assume a value of 0
+                        aValue = aValue ? parseInt(aValue) : 0;
+                        bValue = bValue ? parseInt(bValue) : 0;
+
+                        // Compare the values
+                        return aValue - bValue;
                     }
-                ]
+                }]
             });
         });
-    </script>
+
+
+        function updateStatus(userId, movieId, status) {
+            $.ajax({
+                type: "POST",
+                url: "/WatchList/UpdateorAddStatus",
+                data: {
+                    userId: userId,
+                    movieId: movieId,
+                    status: status
+                },
+                success: function () {
+                    location.reload(); // refresh the page on success
+                },
+                error: function (xhr, status, error) {
+                    console.log(error); // log any errors to the console
+                }
+            });
+        }
+
+        function addRating(userId, movieId, rating) {
+            $.ajax({
+                type: "POST",
+                url: "/Movie/AddRating",
+                data: {
+                    ApplicationUserId: userId,
+                    MovieId: movieId,
+                    Score: rating
+                },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+        </script>
 }
+

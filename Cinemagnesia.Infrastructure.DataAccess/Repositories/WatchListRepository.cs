@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Cinemagnesia.Infrastructure.DataAccess.DbContext;
 using Domain.Entities.Concrete;
+using Domain.Entities.Constants;
 using Domain.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,6 +25,19 @@ namespace Infrastructure.DataAccess.Repositories
                 .Where(w => w.ApplicationUserId == userId)
                 .Include(w => w.Movie)
                 .ToListAsync();
+        }
+
+        public IEnumerable<WatchList> GetAll()
+        {
+            return _dbContext.WatchList.ToList();
+        }
+
+        public WatchStatus GetWatchStatus(string userId, string movieId)
+        {
+            return _dbContext.WatchList
+                .Where(w => w.ApplicationUserId == userId && w.MovieId == movieId)
+                .Select(w => w.WatchStatus)
+                .FirstOrDefault();
         }
     }
 }

@@ -5,11 +5,13 @@
     ViewBag.Title = "Film Detayları";
     bool isRatedBefore = (bool)ViewData["isRatedBefore"];
     bool isLikedBefore = (bool)ViewData["isLikedBefore"];
+    var watchStatus = ViewData["WatchStatus"] as WatchStatus? ?? WatchStatus.None;
     int Rate = (int)ViewData["Rate"];
     var user = UserManager.GetUserAsync(User);
     var userProfilePicture = user.Result.ProfilePicture;
 }
 @using Cinemagnesia.Domain.Domain.Entities.Concrete;
+@using Domain.Entities.Constants;
 @using Microsoft.AspNetCore.Identity
 
 
@@ -41,7 +43,7 @@
                         <p id="movie-description" class="card_description">@Model.Description</p>
                     </div>
                 </article>
-            </div>@*BURASI SONRA*@
+            </div>
 
 
             <div class="col-md-6">
@@ -99,16 +101,16 @@
                                     <strong>Çıkış Tarihi:</strong> @Model.ReleaseDate.ToString("yyyy")
                                 </div>
                                 <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="movie-status-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                İzledim
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="movie-status-dropdown">
-                                                @*Giriş yapılmadan tıklandığında giriş yapın sweetalert veya herhangi bir şekilde ekrana gelebilir*@
-                                                <li><button class="dropdown-item" href="#">İzlemedim</button></li>
-                                                <li><button class="dropdown-item active" href="#">İzledim</button></li>
-                                                <li><button class="dropdown-item" href="#">İzlemek İstiyorum</button></li>
-                                            </ul>
-                                   </div>
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="movie-status-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        @watchStatus.ToString()
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="movie-status-dropdown">
+                                        @foreach (WatchStatus status in Enum.GetValues(typeof(WatchStatus)))
+                                        {
+                                            <button class="dropdown-item @(status == watchStatus ? "active" : "")" onclick="updateStatus('@Model.UserId', '@Model.Id', '@status')">@status.ToString()</button>
+                                        }
+                                    </div>
+                                </div>
                             </li>
                             <li class="list-group-item"><strong>Film Süresi:</strong> @Model.MovieMinutes Dakika</li>
                             <li class="list-group-item"><strong>Filmin Dili:</strong> @Model.Language</li>
@@ -153,7 +155,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 mt-4 text-center">
-                        @if (@User.IsInRole("User") || @User.IsInRole("Productor"))
+                        @if ((@User.IsInRole("User") || @User.IsInRole("Productor")) && watchStatus == WatchStatus.Watched)
                         {
                             if (isRatedBefore)
                             {
@@ -453,10 +455,26 @@
             });
         });
                 //Send Rate end
-       
 
 
 
+        function updateStatus(userId, movieId, status) {
+            $.ajax({
+                type: "POST",
+                url: "/WatchList/UpdateorAddStatus",
+                data: {
+                    userId: userId,
+                    movieId: movieId,
+                    status: status
+                },
+                success: function () {
+                    location.reload(); // refresh the page on success
+                },
+                error: function (xhr, status, error) {
+                    console.log(error); // log any errors to the console
+                }
+            });
+        }
 
 
     </script>

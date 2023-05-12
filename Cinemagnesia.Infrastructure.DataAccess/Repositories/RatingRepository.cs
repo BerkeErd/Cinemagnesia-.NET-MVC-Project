@@ -77,6 +77,15 @@ namespace Infrastructure.DataAccess.Repositories
                 _dbContext.SaveChanges();
             }
         }
+        public Rating GetByUserIdandMovieId(string userId, string movieId)
+        {
+            if (userId == null || movieId == null)
+            {
+                return new Rating();
+            }
+
+            return _dbContext.Ratings.FirstOrDefault(r => r.ApplicationUserId == userId && r.MovieId == movieId);
+        }
 
         public float CalculateAvgScore(string movieId)
         {
