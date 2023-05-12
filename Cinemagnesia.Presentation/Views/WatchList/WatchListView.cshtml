@@ -20,7 +20,9 @@
         @foreach (var item in Model.Where(x => x.WatchStatus != 0))
         {
             <tr>
-                <td class="text-center align-middle">@item.MovieTitle</td>
+                <td class="text-center align-middle">
+                    <a href="~/Movie/MoviePage/id?id=@item.MovieId">@item.MovieTitle</a>
+                </td>
                 <td class="text-center align-middle"><img src="~/images/Cinemagnesia/@item.PosterUrl" alt="@item.MovieTitle" height="200" /></td>
                 <td class="text-center align-middle">
                     <div class="dropdown">
