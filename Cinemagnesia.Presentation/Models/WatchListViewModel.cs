@@ -5,6 +5,8 @@ namespace Cinemagnesia.Presentation.Models
     public class WatchListViewModel
     {
             public string MovieId { get; set; }
+
+            public string ApplicationUserId { get; set; }
             public string MovieTitle { get; set; }
             public WatchStatus WatchStatus { get; set; }
             public int? Rating { get; set; }

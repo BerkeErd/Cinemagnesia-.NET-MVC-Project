@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authorization;
 using FluentValidation.Results;
 using FluentValidation;
 using System.Globalization;
+using Domain.Interfaces.Repository;
 
 namespace Cinemagnesia.Presentation.Controllers
 {
@@ -31,8 +32,9 @@ namespace Cinemagnesia.Presentation.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRatingService _ratingService;
         private readonly IValidator<AddMovieViewModel> _validator;
+        private readonly IWatchListService _watchListService;
 
-        public MovieController(IHttpClientFactory httpClientFactory, IMapper mapper, IWebHostEnvironment env, IMovieService movieService, UserManager<ApplicationUser> usermanager, IRatingService ratingService, IValidator<AddMovieViewModel> validator)
+        public MovieController(IHttpClientFactory httpClientFactory, IMapper mapper, IWebHostEnvironment env, IMovieService movieService, UserManager<ApplicationUser> usermanager, IRatingService ratingService, IValidator<AddMovieViewModel> validator, IWatchListService watchListService)
         {
             _userManager = usermanager;
             _movieService = movieService;
@@ -41,6 +43,7 @@ namespace Cinemagnesia.Presentation.Controllers
             _env = env;
             _ratingService = ratingService;
             _validator = validator;
+            _watchListService = watchListService;
         }
 
         //[HttpGet]
@@ -152,6 +155,7 @@ namespace Cinemagnesia.Presentation.Controllers
 
             MovieDetailViewModel movieDetailViewModel = _mapper.Map<MovieDetailViewModel>(movieDto);
 
+            WatchStatus WatchStatusTransfer = WatchStatus.None;
             bool isRatedBefore = false;
             bool isLikedBefore = false;
             int Rate = 0;
@@ -171,6 +175,15 @@ namespace Cinemagnesia.Presentation.Controllers
                     isRatedBefore = true;
                 }
 
+                var watchlistDto = _watchListService.GetWatchListByUserId(user.Id);
+
+                var watchListMovie = watchlistDto?.FirstOrDefault(m => m.MovieId == movieDetailViewModel.Id);
+
+                WatchStatusTransfer = watchListMovie != null ? watchListMovie.WatchStatus : WatchStatus.None;
+
+
+
+
             }
 
 
@@ -189,10 +202,12 @@ namespace Cinemagnesia.Presentation.Controllers
                 }
             }
 
+            
 
 
             ViewData["isRatedBefore"] = isRatedBefore;
             ViewData["isLikedBefore"] = isLikedBefore;
+            ViewData["WatchStatus"] = WatchStatusTransfer;
             ViewData["Rate"] = Rate;
 
 
@@ -225,7 +240,7 @@ namespace Cinemagnesia.Presentation.Controllers
         {
             _ratingService.AddRating(rating);
             _movieService.AddToRatedUsersList(rating.ApplicationUserId, rating.MovieId);
-            return Ok("oldu herhalde");
+            return Ok("Yıldız Bırakıldı");
         }
 
         [HttpGet]

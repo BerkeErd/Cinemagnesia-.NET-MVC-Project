@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.AppInterfaces;
 using Cinemagnesia.Domain.Domain.Entities.Concrete;
 using Domain.Entities.Concrete;
+using Domain.Entities.Constants;
 using Domain.Interfaces.Repository;
 using Infrastructure.DataAccess.Migrations;
 using Microsoft.AspNetCore.Identity;
@@ -18,13 +19,15 @@ namespace Application.Services
     public class RatingService : IRatingService
     {
         private readonly IRatingRepository _ratingRepository;
+        private readonly IWatchListRepository _watchListRepository;
         private readonly IMovieRepository _movieRepository;
         private readonly UserManager<ApplicationUser> _usermanager;
-        public RatingService(IRatingRepository ratingRepository, IMovieRepository movieRepository, UserManager<ApplicationUser> usermanager)
+        public RatingService(IRatingRepository ratingRepository, IMovieRepository movieRepository, UserManager<ApplicationUser> usermanager, IWatchListRepository watchListRepository)
         {
             _movieRepository = movieRepository;
             _ratingRepository = ratingRepository;
             _usermanager = usermanager;
+            _watchListRepository = watchListRepository;
         }
 
         public float CalculateAvgScore(string movieId)
@@ -54,18 +57,27 @@ namespace Application.Services
 
         public void AddRating(Rating rating)
         {
-            if(rating != null)
+            if (rating == null)
             {
-                if (_ratingRepository.isExist(rating.MovieId, rating.ApplicationUserId, out Rating oldRating, out bool isRatingExist))
-                {
-                    UpdateRating(oldRating, rating);
-                    SetAvgScore(rating.Score, rating.MovieId);
-                }
-                else
-                {
-                    _ratingRepository.CreateAsync(rating).Wait();
-                    SetAvgScore(rating.Score, rating.MovieId);
-                }
+                return;
+            }
+
+            // Check if the movie is watched before adding the rating
+            var movieStatus = _watchListRepository.GetWatchStatus(rating.ApplicationUserId, rating.MovieId);
+            if (movieStatus != WatchStatus.Watched)
+            {
+                throw new InvalidOperationException("Cannot add rating for a movie that is not watched.");
+            }
+
+            if (_ratingRepository.isExist(rating.MovieId, rating.ApplicationUserId, out Rating oldRating, out bool isRatingExist))
+            {
+                UpdateRating(oldRating, rating);
+                SetAvgScore(rating.Score, rating.MovieId);
+            }
+            else
+            {
+                _ratingRepository.CreateAsync(rating).Wait();
+                SetAvgScore(rating.Score, rating.MovieId);
             }
         }
 
@@ -84,7 +96,6 @@ namespace Application.Services
             }
             return _ratingRepository.GetByIdAsync(id).Result;
         }
-
         public void RemoveRating(string id)
         {
             if (id != null)

@@ -16,6 +16,8 @@ namespace Application.Interfaces.AppInterfaces
         void UpdateWatchList(string id, WatchList watchList);
         WatchList GetById(string id);
         List<WatchListDto> GetWatchListByUserId(string userId);
+
+        WatchList GetWatchListByUserIdAndMovieId(string userId, string movieId);
     }
 }
 

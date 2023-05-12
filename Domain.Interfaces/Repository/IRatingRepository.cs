@@ -16,6 +16,7 @@ namespace Domain.Interfaces.Repository
         void UpdateRating(Rating oldRating, Rating newRating);
 
         public float CalculateAvgScore(string movieId);
+        Rating GetByUserIdandMovieId(string userId, string movieId);
     }
     
 }
