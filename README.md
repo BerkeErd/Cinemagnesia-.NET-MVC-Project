@@ -115,12 +115,6 @@ Sistem 3 Rol üzerinden ilerleyecektir .
     
     Productor'dan gelen film ekleme/silme/güncelleme istekleri.
     
-    Log kayıtlarının görüneceği sayfa.
-    
-    Sistemin UI'ını güncelleyebileceği sayfa.
-    
-    Excel/PDF export sayfası.
-    
     Mail gönderebileceği sayfa.
     
 
